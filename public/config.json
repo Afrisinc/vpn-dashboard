@@ -1,4 +1,4 @@
 {
-  "serverUrl": "",
-  "authUiUrl": ""
+  "serverUrl": "__VITE_API_URL__",
+  "authUiUrl": "__VITE_AUTH_UI_URL__"
 }

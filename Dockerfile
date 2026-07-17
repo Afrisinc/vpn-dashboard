@@ -2,13 +2,6 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-ARG VITE_API_URL=http://localhost:8091
-ARG VITE_NOTIFY_URL=""
-ARG VITE_NOTIFY_APP_ID=""
-ARG VITE_GA_MEASUREMENT_ID=""
-ARG VITE_GA_DEBUG=false
-ARG VITE_FB_APP_ID=""
-
 # Enable pnpm via Corepack
 RUN corepack enable && corepack prepare pnpm@10 --activate
 
@@ -20,13 +13,7 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 
 # Build the Vite client app
-RUN VITE_API_URL=${VITE_API_URL} \
-    VITE_NOTIFY_URL=${VITE_NOTIFY_URL} \
-    VITE_NOTIFY_APP_ID=${VITE_NOTIFY_APP_ID} \
-    VITE_GA_MEASUREMENT_ID=${VITE_GA_MEASUREMENT_ID} \
-    VITE_GA_DEBUG=${VITE_GA_DEBUG} \
-    VITE_FB_APP_ID=${VITE_FB_APP_ID} \
-    pnpm build
+RUN pnpm build
 
 # Build the SSR server
 RUN pnpm build:server
