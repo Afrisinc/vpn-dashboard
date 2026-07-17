@@ -3,6 +3,7 @@
 ## Pre-Commit Hooks
 
 Automatically runs on every commit:
+
 - Format & lint staged files
 - Type checking
 - Build validation
@@ -19,26 +20,31 @@ pnpm prepare
 Run anytime before committing:
 
 ### Format Code
+
 ```bash
 pnpm format
 ```
 
 ### Lint Only
+
 ```bash
 pnpm lint
 ```
 
 ### Type Check
+
 ```bash
 pnpm type-check
 ```
 
 ### Build
+
 ```bash
 pnpm build
 ```
 
 ### Quick Check (lint + type + build)
+
 ```bash
 pnpm check
 ```
@@ -46,6 +52,7 @@ pnpm check
 ### Full Validation (format + lint + type + build)
 
 **macOS/Linux:**
+
 ```bash
 pnpm validate
 # or
@@ -53,6 +60,7 @@ sh scripts/validate.sh
 ```
 
 **Windows:**
+
 ```bash
 pnpm validate
 # or
@@ -72,6 +80,7 @@ GitHub Actions automatically runs all checks on pull requests to `main` and `dev
 ## Staged Files Only
 
 To format and lint only staged files:
+
 ```bash
 pnpm exec lint-staged
 ```

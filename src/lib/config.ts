@@ -35,22 +35,30 @@ export async function loadRuntimeConfig(): Promise<RuntimeConfig> {
       runtimeConfig = await response.json();
     }
 
-    config = {
-      serverUrl:
-        (isValidValue(windowEnv.VITE_API_URL)
-          ? windowEnv.VITE_API_URL
-          : null) ||
-        import.meta.env.VITE_API_URL ||
-        runtimeConfig.serverUrl ||
-        "",
-      authUiUrl:
-        (isValidValue(windowEnv.VITE_AUTH_UI_URL)
-          ? windowEnv.VITE_AUTH_UI_URL
-          : null) ||
-        import.meta.env.VITE_AUTH_UI_URL ||
-        runtimeConfig.authUiUrl ||
-        "",
-    };
+    const serverUrl =
+      (isValidValue(windowEnv.VITE_API_URL) ? windowEnv.VITE_API_URL : null) ||
+      import.meta.env.VITE_API_URL ||
+      runtimeConfig.serverUrl;
+
+    const authUiUrl =
+      (isValidValue(windowEnv.VITE_AUTH_UI_URL)
+        ? windowEnv.VITE_AUTH_UI_URL
+        : null) ||
+      import.meta.env.VITE_AUTH_UI_URL ||
+      runtimeConfig.authUiUrl;
+
+    if (!serverUrl) {
+      throw new Error(
+        "VITE_API_URL is required. Set via env var, window.__ENV__, or config.json",
+      );
+    }
+    if (!authUiUrl) {
+      throw new Error(
+        "VITE_AUTH_UI_URL is required. Set via env var, window.__ENV__, or config.json",
+      );
+    }
+
+    config = { serverUrl, authUiUrl };
 
     configLoaded = true;
     return config;
@@ -58,20 +66,27 @@ export async function loadRuntimeConfig(): Promise<RuntimeConfig> {
     const windowEnv =
       (window as Window & { __ENV__?: WindowEnv }).__ENV__ || {};
 
-    config = {
-      serverUrl:
-        (isValidValue(windowEnv.VITE_API_URL)
-          ? windowEnv.VITE_API_URL
-          : null) ||
-        import.meta.env.VITE_API_URL ||
-        "",
-      authUiUrl:
-        (isValidValue(windowEnv.VITE_AUTH_UI_URL)
-          ? windowEnv.VITE_AUTH_UI_URL
-          : null) ||
-        import.meta.env.VITE_AUTH_UI_URL ||
-        "",
-    };
+    const serverUrl =
+      (isValidValue(windowEnv.VITE_API_URL) ? windowEnv.VITE_API_URL : null) ||
+      import.meta.env.VITE_API_URL;
+
+    const authUiUrl =
+      (isValidValue(windowEnv.VITE_AUTH_UI_URL)
+        ? windowEnv.VITE_AUTH_UI_URL
+        : null) || import.meta.env.VITE_AUTH_UI_URL;
+
+    if (!serverUrl) {
+      throw new Error(
+        "VITE_API_URL is required. Set via env var or window.__ENV__",
+      );
+    }
+    if (!authUiUrl) {
+      throw new Error(
+        "VITE_AUTH_UI_URL is required. Set via env var or window.__ENV__",
+      );
+    }
+
+    config = { serverUrl, authUiUrl };
     configLoaded = true;
     return config;
   }
@@ -88,7 +103,7 @@ export function getRuntimeConfig(): RuntimeConfig {
 
 export function getConfigValue(key: keyof RuntimeConfig): string {
   const cfg = getRuntimeConfig();
-  return cfg[key] || "";
+  return cfg[key];
 }
 
 export function isRuntimeConfigLoaded(): boolean {
