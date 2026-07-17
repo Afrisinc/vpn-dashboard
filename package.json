@@ -14,6 +14,8 @@
     "preview": "vite preview",
     "format": "prettier --write .",
     "type-check": "tsc --noEmit",
+    "validate": "sh scripts/validate.sh",
+    "check": "pnpm lint && pnpm type-check && pnpm build",
     "prepare": "husky install"
   },
   "lint-staged": {
