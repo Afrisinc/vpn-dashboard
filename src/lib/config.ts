@@ -11,6 +11,10 @@ interface WindowEnv {
 let config: RuntimeConfig | null = null;
 let configLoaded = false;
 
+const isValidValue = (value: string | undefined): boolean => {
+  return !!(value && !value.startsWith("__") && !value.endsWith("__"));
+};
+
 export async function loadRuntimeConfig(): Promise<RuntimeConfig> {
   if (configLoaded) {
     return config!;
@@ -33,12 +37,16 @@ export async function loadRuntimeConfig(): Promise<RuntimeConfig> {
 
     config = {
       serverUrl:
-        windowEnv.VITE_API_URL ||
+        (isValidValue(windowEnv.VITE_API_URL)
+          ? windowEnv.VITE_API_URL
+          : null) ||
         import.meta.env.VITE_API_URL ||
         runtimeConfig.serverUrl ||
         "",
       authUiUrl:
-        windowEnv.VITE_AUTH_UI_URL ||
+        (isValidValue(windowEnv.VITE_AUTH_UI_URL)
+          ? windowEnv.VITE_AUTH_UI_URL
+          : null) ||
         import.meta.env.VITE_AUTH_UI_URL ||
         runtimeConfig.authUiUrl ||
         "",
@@ -51,9 +59,18 @@ export async function loadRuntimeConfig(): Promise<RuntimeConfig> {
       (window as Window & { __ENV__?: WindowEnv }).__ENV__ || {};
 
     config = {
-      serverUrl: windowEnv.VITE_API_URL || import.meta.env.VITE_API_URL || "",
+      serverUrl:
+        (isValidValue(windowEnv.VITE_API_URL)
+          ? windowEnv.VITE_API_URL
+          : null) ||
+        import.meta.env.VITE_API_URL ||
+        "",
       authUiUrl:
-        windowEnv.VITE_AUTH_UI_URL || import.meta.env.VITE_AUTH_UI_URL || "",
+        (isValidValue(windowEnv.VITE_AUTH_UI_URL)
+          ? windowEnv.VITE_AUTH_UI_URL
+          : null) ||
+        import.meta.env.VITE_AUTH_UI_URL ||
+        "",
     };
     configLoaded = true;
     return config;
