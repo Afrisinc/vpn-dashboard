@@ -17,7 +17,10 @@ const articleTypes: { value: ArticleType | "all"; label: string }[] = [
   { value: "opinion", label: "Opinion" },
 ];
 
-export function ArticleFiltersComponent({ filters, onFiltersChange }: ArticleFiltersProps) {
+export function ArticleFiltersComponent({
+  filters,
+  onFiltersChange,
+}: ArticleFiltersProps) {
   const { data: categories = [] } = useCategories();
   const [searchValue, setSearchValue] = useState(filters.search || "");
   const debounceTimer = useRef<ReturnType<typeof setTimeout>>();
@@ -79,7 +82,10 @@ export function ArticleFiltersComponent({ filters, onFiltersChange }: ArticleFil
           <Button
             key={type.value}
             variant={
-              filters.type === type.value || (!filters.type && type.value === "all") ? "default" : "outline"
+              filters.type === type.value ||
+              (!filters.type && type.value === "all")
+                ? "default"
+                : "outline"
             }
             size="sm"
             onClick={() => handleTypeChange(type.value)}

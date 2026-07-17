@@ -59,7 +59,10 @@ export const useTopics = () => {
     queryKey: ["topics"],
     queryFn: async () => {
       try {
-        const { data, error } = await supabase.from("topics").select("*").order("name");
+        const { data, error } = await supabase
+          .from("topics")
+          .select("*")
+          .order("name");
 
         if (error) {
           return DEFAULT_TOPICS;

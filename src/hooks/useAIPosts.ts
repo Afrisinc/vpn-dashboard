@@ -80,25 +80,32 @@ export const useGenerateAIPost = () => {
       const timeoutId = setTimeout(() => controller.abort(), 60000);
 
       try {
-        const response = await fetch(`${config.serverUrl}/content/ai/generate`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+        const response = await fetch(
+          `${config.serverUrl}/content/ai/generate`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(params),
+            signal: controller.signal,
           },
-          body: JSON.stringify(params),
-          signal: controller.signal,
-        });
+        );
 
         if (!response.ok) {
           const error = await response.json();
-          throw new Error(error.resp_msg || error.error || "Failed to generate post");
+          throw new Error(
+            error.resp_msg || error.error || "Failed to generate post",
+          );
         }
 
         return response.json();
       } catch (error) {
         if (error instanceof Error && error.name === "AbortError") {
-          throw new Error("Request timeout - AI generation took too long (max 1 minute)");
+          throw new Error(
+            "Request timeout - AI generation took too long (max 1 minute)",
+          );
         }
         throw error;
       } finally {

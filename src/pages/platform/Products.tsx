@@ -19,7 +19,9 @@ export default function PlatformProducts() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="heading-section">Product Enrollments</h1>
-          <p className="text-secondary">View enrollment stats and manage accounts per product</p>
+          <p className="text-secondary">
+            View enrollment stats and manage accounts per product
+          </p>
         </div>
         <Button onClick={() => setCreateDialogOpen(true)}>
           <Plus className="h-4 w-4 mr-2" />
@@ -39,7 +41,9 @@ export default function PlatformProducts() {
             <Card
               key={product.productId}
               className="border-border hover:shadow-card-hover transition-all duration-300 cursor-pointer hover:-translate-y-1"
-              onClick={() => navigate(`/dashboard/platform/products/${product.productId}`)}
+              onClick={() =>
+                navigate(`/dashboard/platform/products/${product.productId}`)
+              }
             >
               <CardHeader className="pb-4">
                 <div className="flex items-start justify-between">
@@ -51,24 +55,36 @@ export default function PlatformProducts() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <CardTitle className="text-lg">{product.productName}</CardTitle>
+                  <CardTitle className="text-lg">
+                    {product.productName}
+                  </CardTitle>
                   {product.productCode && (
-                    <p className="text-xs text-muted-foreground mt-1 font-mono">{product.productCode}</p>
+                    <p className="text-xs text-muted-foreground mt-1 font-mono">
+                      {product.productCode}
+                    </p>
                   )}
                 </div>
 
                 <div className="grid grid-cols-3 gap-3 text-center">
                   <div>
-                    <p className="text-2xl font-bold">{product.totalEnrollments}</p>
+                    <p className="text-2xl font-bold">
+                      {product.totalEnrollments}
+                    </p>
                     <p className="text-xs text-muted-foreground mt-1">Total</p>
                   </div>
                   <div>
-                    <p className="text-2xl font-bold text-emerald-600">{product.active}</p>
+                    <p className="text-2xl font-bold text-emerald-600">
+                      {product.active}
+                    </p>
                     <p className="text-xs text-muted-foreground mt-1">Active</p>
                   </div>
                   <div>
-                    <p className="text-2xl font-bold text-red-600">{product.suspended}</p>
-                    <p className="text-xs text-muted-foreground mt-1">Suspended</p>
+                    <p className="text-2xl font-bold text-red-600">
+                      {product.suspended}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Suspended
+                    </p>
                   </div>
                 </div>
 
@@ -90,7 +106,10 @@ export default function PlatformProducts() {
       )}
 
       {/* Create Product Dialog */}
-      <CreateProductDialog isOpen={createDialogOpen} onClose={() => setCreateDialogOpen(false)} />
+      <CreateProductDialog
+        isOpen={createDialogOpen}
+        onClose={() => setCreateDialogOpen(false)}
+      />
     </div>
   );
 }

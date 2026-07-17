@@ -16,8 +16,12 @@ const isProduction = process.env.NODE_ENV === "production";
 
 // In production, server runs from /app/dist-server/server/
 // In dev, server runs from /project/server/
-const distPath = isProduction ? resolve(__dirname, "../../dist") : resolve(__dirname, "../dist");
-const rootPath = isProduction ? resolve(__dirname, "../..") : resolve(__dirname, "..");
+const distPath = isProduction
+  ? resolve(__dirname, "../../dist")
+  : resolve(__dirname, "../dist");
+const rootPath = isProduction
+  ? resolve(__dirname, "../..")
+  : resolve(__dirname, "..");
 
 // Backend article response shape
 interface BackendArticle {
@@ -42,19 +46,31 @@ const ARTICLE_PATTERN = /^\/media\/articles\/([^/]+)$/;
 
 // Category placeholder images (mirrors articlesService.ts)
 const CATEGORY_PLACEHOLDERS: Record<string, string> = {
-  technology: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80",
-  business: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&q=80",
-  africa: "https://images.unsplash.com/photo-1526304640581-d334cdbbf92e?w=1200&q=80",
-  crypto: "https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=1200&q=80",
-  blockchain: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=1200&q=80",
-  fintech: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&q=80",
-  innovation: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=80",
+  technology:
+    "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80",
+  business:
+    "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&q=80",
+  africa:
+    "https://images.unsplash.com/photo-1526304640581-d334cdbbf92e?w=1200&q=80",
+  crypto:
+    "https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=1200&q=80",
+  blockchain:
+    "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=1200&q=80",
+  fintech:
+    "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&q=80",
+  innovation:
+    "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=80",
   ai: "https://images.unsplash.com/photo-1677442d019cecf3e5fa5aeddab77b02ef61208fa?w=1200&q=80",
-  healthcare: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=80",
-  edtech: "https://images.unsplash.com/photo-1516534775068-bb57e39c139f?w=1200&q=80",
-  startup: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&q=80",
-  infrastructure: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80",
-  general: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1200&q=80",
+  healthcare:
+    "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=80",
+  edtech:
+    "https://images.unsplash.com/photo-1516534775068-bb57e39c139f?w=1200&q=80",
+  startup:
+    "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&q=80",
+  infrastructure:
+    "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80",
+  general:
+    "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1200&q=80",
 };
 
 /**
@@ -124,9 +140,12 @@ async function fetchArticle(slug: string): Promise<ArticleSEO | null> {
       console.warn("[SEO] No API URL configured");
       return null;
     }
-    const response = await fetch(`${apiUrl}/articles/slug/${encodeURIComponent(slug)}`, {
-      headers: { "Content-Type": "application/json" },
-    });
+    const response = await fetch(
+      `${apiUrl}/articles/slug/${encodeURIComponent(slug)}`,
+      {
+        headers: { "Content-Type": "application/json" },
+      },
+    );
 
     if (!response.ok) return null;
 
@@ -198,7 +217,11 @@ function injectMetaTags(html: string, metaTags: string): string {
  * SSR Middleware for social media crawlers
  * Intercepts article page requests from bots and injects proper meta tags
  */
-export async function seoMiddleware(req: Request, res: Response, next: NextFunction): Promise<void> {
+export async function seoMiddleware(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> {
   const userAgent = req.headers["user-agent"] || "";
 
   // Only process for social crawlers
@@ -220,11 +243,15 @@ export async function seoMiddleware(req: Request, res: Response, next: NextFunct
     const article = await fetchArticle(slug);
 
     // Read HTML template
-    const indexPath = isProduction ? resolve(distPath, "index.html") : resolve(rootPath, "index.html");
+    const indexPath = isProduction
+      ? resolve(distPath, "index.html")
+      : resolve(rootPath, "index.html");
     let html = fs.readFileSync(indexPath, "utf-8");
 
     // Generate and inject meta tags
-    const metaTags = article ? generateArticleMetaTags(article) : generateDefaultMetaTags();
+    const metaTags = article
+      ? generateArticleMetaTags(article)
+      : generateDefaultMetaTags();
 
     html = injectMetaTags(html, metaTags);
 

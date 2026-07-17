@@ -7,8 +7,18 @@ import { useToast } from "@/hooks/use-toast";
 import { submitContactForm } from "@/services/notifyService";
 
 const contactMeta = [
-  { label: "Email", value: "hello@afrisinc.com", href: "mailto:hello@afrisinc.com", icon: Mail },
-  { label: "Global Presence", value: "Africa · Europe · Americas", href: null, icon: Globe },
+  {
+    label: "Email",
+    value: "hello@afrisinc.com",
+    href: "mailto:hello@afrisinc.com",
+    icon: Mail,
+  },
+  {
+    label: "Global Presence",
+    value: "Africa · Europe · Americas",
+    href: null,
+    icon: Globe,
+  },
   // { label: "Phone",           value: "+1 (555) 123-4567",         href: "tel:+15551234567",          icon: Phone },
 ];
 
@@ -22,7 +32,12 @@ const socials = [
 export const ContactSection = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,7 +75,10 @@ export const ContactSection = () => {
           </div>
           <div>
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground leading-[1.0]">
-              We Read <span className="font-display italic text-gradient-primary">Every Message.</span>
+              We Read{" "}
+              <span className="font-display italic text-gradient-primary">
+                Every Message.
+              </span>
             </h2>
           </div>
         </div>
@@ -69,8 +87,8 @@ export const ContactSection = () => {
           {/* Left — contact info */}
           <div className="space-y-10">
             <p className="text-muted-foreground leading-relaxed text-sm">
-              A question, a half-formed idea, or a proper proposal — send it over. We respond to every message
-              within 24 hours.
+              A question, a half-formed idea, or a proper proposal — send it
+              over. We respond to every message within 24 hours.
             </p>
 
             <div className="space-y-5">
@@ -83,7 +101,10 @@ export const ContactSection = () => {
                       border: "1px solid hsl(var(--terra) / 0.18)",
                     }}
                   >
-                    <info.icon className="w-4 h-4" style={{ color: "hsl(var(--terra))" }} />
+                    <info.icon
+                      className="w-4 h-4"
+                      style={{ color: "hsl(var(--terra))" }}
+                    />
                   </div>
                   <div>
                     <span className="block text-[10px] uppercase tracking-[0.18em] text-muted-foreground/55 mb-0.5">
@@ -97,7 +118,9 @@ export const ContactSection = () => {
                         {info.value}
                       </a>
                     ) : (
-                      <span className="text-foreground font-medium text-sm">{info.value}</span>
+                      <span className="text-foreground font-medium text-sm">
+                        {info.value}
+                      </span>
                     )}
                   </div>
                 </div>
@@ -108,7 +131,9 @@ export const ContactSection = () => {
             <div className="kente-border rounded-full overflow-hidden opacity-65" />
 
             <div>
-              <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground/55 mb-4">Follow</p>
+              <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground/55 mb-4">
+                Follow
+              </p>
               <div className="flex flex-wrap gap-2.5">
                 {socials.map((social) => (
                   <a
@@ -134,7 +159,9 @@ export const ContactSection = () => {
                 <Input
                   placeholder="Your name"
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
                   className="h-12 bg-muted/30 border-border/60 focus:border-primary/40 transition-colors"
                 />
               </div>
@@ -146,7 +173,9 @@ export const ContactSection = () => {
                   type="email"
                   placeholder="you@example.com"
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                   className="h-12 bg-muted/30 border-border/60 focus:border-primary/40 transition-colors"
                 />
               </div>
@@ -159,7 +188,9 @@ export const ContactSection = () => {
               <Input
                 placeholder="What's on your mind?"
                 value={formData.subject}
-                onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, subject: e.target.value })
+                }
                 className="h-12 bg-muted/30 border-border/60 focus:border-primary/40 transition-colors"
               />
             </div>
@@ -172,7 +203,9 @@ export const ContactSection = () => {
                 placeholder="Give us the details — or just say hi. We'll figure it out from there."
                 rows={6}
                 value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, message: e.target.value })
+                }
                 className="bg-muted/30 border-border/60 focus:border-primary/40 resize-none transition-colors"
               />
             </div>

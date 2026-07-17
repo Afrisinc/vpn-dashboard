@@ -2,7 +2,13 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -18,10 +24,16 @@ interface ConfigGeneratorProps {
   isLoading: boolean;
 }
 
-export function ConfigGenerator({ servers, devices, isLoading }: ConfigGeneratorProps) {
+export function ConfigGenerator({
+  servers,
+  devices,
+  isLoading,
+}: ConfigGeneratorProps) {
   const [selectedDevice, setSelectedDevice] = useState<string>("");
   const [selectedServer, setSelectedServer] = useState<string>("");
-  const [selectedProtocol, setSelectedProtocol] = useState<"wireguard" | "openvpn" | "ikev2">("wireguard");
+  const [selectedProtocol, setSelectedProtocol] = useState<
+    "wireguard" | "openvpn" | "ikev2"
+  >("wireguard");
   const [generatedConfig, setGeneratedConfig] = useState<string>("");
   const [copied, setCopied] = useState(false);
   const [showQR, setShowQR] = useState(false);
@@ -142,7 +154,9 @@ export function ConfigGenerator({ servers, devices, isLoading }: ConfigGenerator
               <Label>Protocol</Label>
               <Select
                 value={selectedProtocol}
-                onValueChange={(v: "wireguard" | "openvpn" | "ikev2") => setSelectedProtocol(v)}
+                onValueChange={(v: "wireguard" | "openvpn" | "ikev2") =>
+                  setSelectedProtocol(v)
+                }
               >
                 <SelectTrigger>
                   <SelectValue />
@@ -166,10 +180,16 @@ export function ConfigGenerator({ servers, devices, isLoading }: ConfigGenerator
           <Button
             variant="default"
             onClick={handleGenerate}
-            disabled={!selectedDevice || !selectedServer || generateConfigMutation.isPending}
+            disabled={
+              !selectedDevice ||
+              !selectedServer ||
+              generateConfigMutation.isPending
+            }
             className="w-full sm:w-auto"
           >
-            {generateConfigMutation.isPending ? "Generating..." : "Generate Configuration"}
+            {generateConfigMutation.isPending
+              ? "Generating..."
+              : "Generate Configuration"}
           </Button>
 
           {generatedConfig && (
@@ -178,7 +198,11 @@ export function ConfigGenerator({ servers, devices, isLoading }: ConfigGenerator
                 <Label>Generated Configuration</Label>
                 <div className="flex flex-wrap gap-2">
                   <Button variant="outline" size="sm" onClick={handleCopy}>
-                    {copied ? <Check className="h-4 w-4 mr-2" /> : <Copy className="h-4 w-4 mr-2" />}
+                    {copied ? (
+                      <Check className="h-4 w-4 mr-2" />
+                    ) : (
+                      <Copy className="h-4 w-4 mr-2" />
+                    )}
                     {copied ? "Copied" : "Copy"}
                   </Button>
                   <Button variant="outline" size="sm" onClick={handleDownload}>
@@ -191,9 +215,14 @@ export function ConfigGenerator({ servers, devices, isLoading }: ConfigGenerator
                   </Button>
                 </div>
               </div>
-              <Textarea value={generatedConfig} readOnly className="font-mono text-xs h-64 bg-muted/50" />
+              <Textarea
+                value={generatedConfig}
+                readOnly
+                className="font-mono text-xs h-64 bg-muted/50"
+              />
               <p className="text-xs text-muted-foreground">
-                ⚠️ Keep this configuration secure. Replace placeholder values with your actual keys.
+                ⚠️ Keep this configuration secure. Replace placeholder values
+                with your actual keys.
               </p>
             </div>
           )}

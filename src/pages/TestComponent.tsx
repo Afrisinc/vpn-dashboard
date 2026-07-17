@@ -2,7 +2,11 @@ import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Eye } from "lucide-react";
-import { DataTable, type ColumnConfig, type DataTableQuery } from "@/components/data-table";
+import {
+  DataTable,
+  type ColumnConfig,
+  type DataTableQuery,
+} from "@/components/data-table";
 import { CopyableText } from "@/components/ui/copyable-text";
 import { toast } from "sonner";
 
@@ -24,7 +28,8 @@ const mockData: TestUser[] = Array.from({ length: 50 }, (_, i) => ({
   role: ["Admin", "User", "Guest"][i % 3],
   status: ["active", "inactive", "pending"][i % 3] as TestUser["status"],
   createdAt: new Date(Date.now() - i * 86400000).toISOString(),
-  lastLogin: i % 5 === 0 ? null : new Date(Date.now() - i * 3600000).toISOString(),
+  lastLogin:
+    i % 5 === 0 ? null : new Date(Date.now() - i * 3600000).toISOString(),
 }));
 
 export default function TestComponent() {
@@ -44,13 +49,16 @@ export default function TestComponent() {
       const searchLower = query.search.toLowerCase();
       filtered = filtered.filter(
         (user) =>
-          user.name.toLowerCase().includes(searchLower) || user.email.toLowerCase().includes(searchLower)
+          user.name.toLowerCase().includes(searchLower) ||
+          user.email.toLowerCase().includes(searchLower),
       );
     }
 
     // Status filter
     if (query.filters?.status) {
-      filtered = filtered.filter((user) => user.status === query.filters?.status);
+      filtered = filtered.filter(
+        (user) => user.status === query.filters?.status,
+      );
     }
 
     // Role filter
@@ -223,7 +231,9 @@ export default function TestComponent() {
         {/* Debug Info */}
         <div className="mt-8 p-4 border rounded-lg bg-muted/50">
           <h3 className="font-semibold mb-2">Current Query State:</h3>
-          <pre className="text-xs overflow-auto">{JSON.stringify(query, null, 2)}</pre>
+          <pre className="text-xs overflow-auto">
+            {JSON.stringify(query, null, 2)}
+          </pre>
         </div>
       </div>
     </div>

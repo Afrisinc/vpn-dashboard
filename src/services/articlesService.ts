@@ -1,8 +1,17 @@
 // Articles Service - Integrates with N8N Articles API
 
-import type { Article, ArticleCategory, ArticlesResponse, ArticleFilters } from "@/types/article";
+import type {
+  Article,
+  ArticleCategory,
+  ArticlesResponse,
+  ArticleFilters,
+} from "@/types/article";
 import { getRuntimeConfig } from "@/lib/config";
-import { mockArticles, mockFeaturedArticle, mockCategories } from "@/lib/mockArticles";
+import {
+  mockArticles,
+  mockFeaturedArticle,
+  mockCategories,
+} from "@/lib/mockArticles";
 import { stripHtmlTags } from "@/lib/seo";
 
 // Backend article response shape
@@ -28,23 +37,37 @@ let categoriesCache: ArticleCategory[] | null = null;
 
 // Category placeholder images mapping
 const categoryPlaceholders: Record<string, string> = {
-  technology: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80",
-  business: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&q=80",
-  africa: "https://images.unsplash.com/photo-1526304640581-d334cdbbf92e?w=1200&q=80",
-  crypto: "https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=1200&q=80",
-  blockchain: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=1200&q=80",
-  fintech: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&q=80",
-  innovation: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=80",
+  technology:
+    "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80",
+  business:
+    "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&q=80",
+  africa:
+    "https://images.unsplash.com/photo-1526304640581-d334cdbbf92e?w=1200&q=80",
+  crypto:
+    "https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=1200&q=80",
+  blockchain:
+    "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=1200&q=80",
+  fintech:
+    "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&q=80",
+  innovation:
+    "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=80",
   ai: "https://images.unsplash.com/photo-1677442d019cecf3e5fa5aeddab77b02ef61208fa?w=1200&q=80",
-  healthcare: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=80",
-  edtech: "https://images.unsplash.com/photo-1516534775068-bb57e39c139f?w=1200&q=80",
-  startup: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&q=80",
-  infrastructure: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80",
-  general: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1200&q=80",
+  healthcare:
+    "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=80",
+  edtech:
+    "https://images.unsplash.com/photo-1516534775068-bb57e39c139f?w=1200&q=80",
+  startup:
+    "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&q=80",
+  infrastructure:
+    "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80",
+  general:
+    "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1200&q=80",
 };
 
 // Get placeholder image by category (supports string or array)
-export function getCategoryPlaceholderImage(category?: string | string[]): string {
+export function getCategoryPlaceholderImage(
+  category?: string | string[],
+): string {
   // Handle empty/null input
   if (!category) {
     return categoryPlaceholders.general;
@@ -102,7 +125,9 @@ function parseCategories(categoryString?: string): string | string[] {
 }
 
 // Map backend article response to our Article type
-async function mapBackendArticle(backendArticle: BackendArticle): Promise<Article> {
+async function mapBackendArticle(
+  backendArticle: BackendArticle,
+): Promise<Article> {
   // Parse categories from backend (handles comma-separated string)
   const parsedCategories = parseCategories(backendArticle.category);
   const categoryForPlaceholder = Array.isArray(parsedCategories)
@@ -119,7 +144,10 @@ async function mapBackendArticle(backendArticle: BackendArticle): Promise<Articl
   // Derive a human-readable source name from the source URL
   const sourceName = (() => {
     try {
-      return new URL(backendArticle.source_url || "").hostname.replace(/^www\./, "");
+      return new URL(backendArticle.source_url || "").hostname.replace(
+        /^www\./,
+        "",
+      );
     } catch {
       return "News Feed";
     }
@@ -143,10 +171,15 @@ async function mapBackendArticle(backendArticle: BackendArticle): Promise<Articl
       url: backendArticle.source_url || "",
     },
     published_at: backendArticle.pub_date || new Date().toISOString(),
-    updated_at: backendArticle.updated_at || backendArticle.pub_date || new Date().toISOString(),
+    updated_at:
+      backendArticle.updated_at ||
+      backendArticle.pub_date ||
+      new Date().toISOString(),
     read_time:
       backendArticle.read_time ||
-      Math.ceil((backendArticle.source_summary?.split(" ").length || 0) / 200) ||
+      Math.ceil(
+        (backendArticle.source_summary?.split(" ").length || 0) / 200,
+      ) ||
       1,
     is_featured: backendArticle.is_featured || false,
     ai_generated: backendArticle.ai_generated || false,
@@ -164,7 +197,9 @@ async function mapBackendArticle(backendArticle: BackendArticle): Promise<Articl
  * Fetch all articles with optional search and pagination
  * GET /articles?search=...&page=1&limit=10
  */
-export async function fetchArticles(filters: ArticleFilters = {}): Promise<ArticlesResponse> {
+export async function fetchArticles(
+  filters: ArticleFilters = {},
+): Promise<ArticlesResponse> {
   try {
     const config = getRuntimeConfig();
     const searchParams = new URLSearchParams();
@@ -194,7 +229,9 @@ export async function fetchArticles(filters: ArticleFilters = {}): Promise<Artic
     const data = await response.json();
 
     // Map backend response to our format
-    const articles = await Promise.all((data.data?.data || []).map(mapBackendArticle));
+    const articles = await Promise.all(
+      (data.data?.data || []).map(mapBackendArticle),
+    );
 
     return {
       articles,
@@ -211,7 +248,9 @@ export async function fetchArticles(filters: ArticleFilters = {}): Promise<Artic
     if (filters.search) {
       const q = filters.search.toLowerCase();
       filtered = filtered.filter(
-        (a) => a.title.toLowerCase().includes(q) || a.summary.toLowerCase().includes(q)
+        (a) =>
+          a.title.toLowerCase().includes(q) ||
+          a.summary.toLowerCase().includes(q),
       );
     }
     const start = (page - 1) * limit;
@@ -231,7 +270,7 @@ export async function fetchArticles(filters: ArticleFilters = {}): Promise<Artic
  */
 export async function fetchArticlesByCategory(
   category: string,
-  filters: ArticleFilters = {}
+  filters: ArticleFilters = {},
 ): Promise<ArticlesResponse> {
   try {
     const config = getRuntimeConfig();
@@ -252,13 +291,17 @@ export async function fetchArticlesByCategory(
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch articles by category: ${response.status}`);
+      throw new Error(
+        `Failed to fetch articles by category: ${response.status}`,
+      );
     }
 
     const data = await response.json();
 
     // Map backend response to our format
-    const articles = await Promise.all((data.data?.data || []).map(mapBackendArticle));
+    const articles = await Promise.all(
+      (data.data?.data || []).map(mapBackendArticle),
+    );
 
     return {
       articles,
@@ -316,7 +359,9 @@ export async function fetchArticleById(id: string): Promise<Article | null> {
  * Fetch article by slug
  * Tries GET /articles/slug/:slug first; falls back to mock data.
  */
-export async function fetchArticleBySlug(slug: string): Promise<Article | null> {
+export async function fetchArticleBySlug(
+  slug: string,
+): Promise<Article | null> {
   try {
     const config = getRuntimeConfig();
     const url = `${config.serverUrl}/articles/slug/${encodeURIComponent(slug)}`;
@@ -370,7 +415,9 @@ export async function fetchCategories(): Promise<ArticleCategory[]> {
     const categoryMap = new Map<string, ArticleCategory>();
     (data.data?.data || []).forEach((article: BackendArticle) => {
       // Handle category as string or array of strings
-      const categoryArray = Array.isArray(article.category) ? article.category : [article.category];
+      const categoryArray = Array.isArray(article.category)
+        ? article.category
+        : [article.category];
 
       // Process all categories in the array
       categoryArray.forEach((categoryRaw: string) => {

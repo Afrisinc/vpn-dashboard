@@ -12,27 +12,47 @@ import {
   useNotificationSecurityLoginEvents,
   useNotificationUsers,
 } from "@/hooks/useNotificationProduct";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const DashboardNotifications = () => {
   const [loginEventsLimit, setLoginEventsLimit] = useState(10);
 
   // Analytics Queries
-  const { data: analyticsOverview, isLoading: overviewLoading } = useNotificationAnalyticsOverview();
-  const { data: analyticsUsers, isLoading: usersLoading } = useNotificationAnalyticsUsers();
-  const { data: analyticsAccounts, isLoading: accountsLoading } = useNotificationAnalyticsAccounts();
-  const { data: analyticsGrowth, isLoading: growthLoading } = useNotificationAnalyticsGrowth();
+  const { data: analyticsOverview, isLoading: overviewLoading } =
+    useNotificationAnalyticsOverview();
+  const { data: analyticsUsers, isLoading: usersLoading } =
+    useNotificationAnalyticsUsers();
+  const { data: analyticsAccounts, isLoading: accountsLoading } =
+    useNotificationAnalyticsAccounts();
+  const { data: analyticsGrowth, isLoading: growthLoading } =
+    useNotificationAnalyticsGrowth();
 
   // Users Query
-  const { data: usersData, isLoading: usersDataLoading } = useNotificationUsers();
+  const { data: usersData, isLoading: usersDataLoading } =
+    useNotificationUsers();
 
   // Security Queries
-  const { data: securityOverview, isLoading: securityLoading } = useNotificationSecurityOverview();
-  const { data: loginEvents, isLoading: loginEventsLoading } = useNotificationSecurityLoginEvents({
-    page: 1,
-    limit: loginEventsLimit,
-  });
+  const { data: securityOverview, isLoading: securityLoading } =
+    useNotificationSecurityOverview();
+  const { data: loginEvents, isLoading: loginEventsLoading } =
+    useNotificationSecurityLoginEvents({
+      page: 1,
+      limit: loginEventsLimit,
+    });
 
   const renderSkeleton = () => <Skeleton className="h-12 w-full" />;
 
@@ -41,7 +61,9 @@ const DashboardNotifications = () => {
       {/* Header */}
       <div>
         <h1 className="heading-section">Notifications Product</h1>
-        <p className="text-secondary">Monitor and manage notification analytics and security events</p>
+        <p className="text-secondary">
+          Monitor and manage notification analytics and security events
+        </p>
       </div>
 
       {/* Analytics Overview */}
@@ -60,15 +82,25 @@ const DashboardNotifications = () => {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Total Users:</span>
-                  <span className="font-semibold">{analyticsOverview.data.total_users || 0}</span>
+                  <span className="font-semibold">
+                    {analyticsOverview.data.total_users || 0}
+                  </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Total Organizations:</span>
-                  <span className="font-semibold">{analyticsOverview.data.total_organizations || 0}</span>
+                  <span className="text-muted-foreground">
+                    Total Organizations:
+                  </span>
+                  <span className="font-semibold">
+                    {analyticsOverview.data.total_organizations || 0}
+                  </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Active Enrollments:</span>
-                  <span className="font-semibold">{analyticsOverview.data.active_enrollments || 0}</span>
+                  <span className="text-muted-foreground">
+                    Active Enrollments:
+                  </span>
+                  <span className="font-semibold">
+                    {analyticsOverview.data.active_enrollments || 0}
+                  </span>
                 </div>
               </div>
             ) : (
@@ -92,13 +124,19 @@ const DashboardNotifications = () => {
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Users (Latest):</span>
                   <span className="font-semibold">
-                    {analyticsGrowth.data.users?.[analyticsGrowth.data.users.length - 1]?.count || 0}
+                    {analyticsGrowth.data.users?.[
+                      analyticsGrowth.data.users.length - 1
+                    ]?.count || 0}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Accounts (Latest):</span>
+                  <span className="text-muted-foreground">
+                    Accounts (Latest):
+                  </span>
                   <span className="font-semibold">
-                    {analyticsGrowth.data.accounts?.[analyticsGrowth.data.accounts.length - 1]?.count || 0}
+                    {analyticsGrowth.data.accounts?.[
+                      analyticsGrowth.data.accounts.length - 1
+                    ]?.count || 0}
                   </span>
                 </div>
                 <div className="flex justify-between">
@@ -131,7 +169,9 @@ const DashboardNotifications = () => {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Total Users:</span>
-                  <span className="font-semibold">{analyticsUsers.data.total_users || 0}</span>
+                  <span className="font-semibold">
+                    {analyticsUsers.data.total_users || 0}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Active Users:</span>
@@ -166,15 +206,21 @@ const DashboardNotifications = () => {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Total Accounts:</span>
-                  <span className="font-semibold">{analyticsAccounts.data.total_accounts || 0}</span>
+                  <span className="font-semibold">
+                    {analyticsAccounts.data.total_accounts || 0}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Individual:</span>
-                  <span className="font-semibold">{analyticsAccounts.data.individual_accounts || 0}</span>
+                  <span className="font-semibold">
+                    {analyticsAccounts.data.individual_accounts || 0}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Organization:</span>
-                  <span className="font-semibold">{analyticsAccounts.data.organization_accounts || 0}</span>
+                  <span className="font-semibold">
+                    {analyticsAccounts.data.organization_accounts || 0}
+                  </span>
                 </div>
               </div>
             ) : (
@@ -199,22 +245,32 @@ const DashboardNotifications = () => {
             <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Failed Logins (24h)</p>
+                  <p className="text-sm text-muted-foreground mb-1">
+                    Failed Logins (24h)
+                  </p>
                   <p className="text-2xl font-bold text-red-600">
                     {securityOverview.data.failedLogins24h || 0}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Token Issuance</p>
+                  <p className="text-sm text-muted-foreground mb-1">
+                    Token Issuance
+                  </p>
                   <p className="text-2xl font-bold text-blue-600">
                     {securityOverview.data.tokenIssuanceCount || 0}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Suspicious Activity</p>
+                  <p className="text-sm text-muted-foreground mb-1">
+                    Suspicious Activity
+                  </p>
                   <p className="text-2xl font-bold">
                     <span
-                      className={securityOverview.data.suspiciousActivity ? "text-red-600" : "text-green-600"}
+                      className={
+                        securityOverview.data.suspiciousActivity
+                          ? "text-red-600"
+                          : "text-green-600"
+                      }
                     >
                       {securityOverview.data.suspiciousActivity ? "Yes" : "No"}
                     </span>
@@ -222,24 +278,35 @@ const DashboardNotifications = () => {
                 </div>
               </div>
 
-              {securityOverview.data.topIPs && securityOverview.data.topIPs.length > 0 && (
-                <div className="mt-4 pt-4 border-t border-border">
-                  <p className="text-sm font-semibold mb-2">Top IPs</p>
-                  <div className="space-y-2">
-                    {securityOverview.data.topIPs.map(
-                      (ipData: { ip: string; attempts: number }, idx: number) => (
-                        <div key={idx} className="flex justify-between text-sm p-2 bg-muted/50 rounded">
-                          <span className="font-mono">{ipData.ip}</span>
-                          <span className="text-muted-foreground">{ipData.attempts} attempt(s)</span>
-                        </div>
-                      )
-                    )}
+              {securityOverview.data.topIPs &&
+                securityOverview.data.topIPs.length > 0 && (
+                  <div className="mt-4 pt-4 border-t border-border">
+                    <p className="text-sm font-semibold mb-2">Top IPs</p>
+                    <div className="space-y-2">
+                      {securityOverview.data.topIPs.map(
+                        (
+                          ipData: { ip: string; attempts: number },
+                          idx: number,
+                        ) => (
+                          <div
+                            key={idx}
+                            className="flex justify-between text-sm p-2 bg-muted/50 rounded"
+                          >
+                            <span className="font-mono">{ipData.ip}</span>
+                            <span className="text-muted-foreground">
+                              {ipData.attempts} attempt(s)
+                            </span>
+                          </div>
+                        ),
+                      )}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
             </div>
           ) : (
-            <p className="text-sm text-muted-foreground">No security data available</p>
+            <p className="text-sm text-muted-foreground">
+              No security data available
+            </p>
           )}
         </CardContent>
       </Card>
@@ -255,7 +322,9 @@ const DashboardNotifications = () => {
         <CardContent>
           {usersDataLoading ? (
             <Skeleton className="h-64 w-full" />
-          ) : usersData?.data && Array.isArray(usersData.data) && usersData.data.length > 0 ? (
+          ) : usersData?.data &&
+            Array.isArray(usersData.data) &&
+            usersData.data.length > 0 ? (
             <Table>
               <TableHeader>
                 <TableRow>
@@ -284,7 +353,9 @@ const DashboardNotifications = () => {
                         {user.firstName} {user.lastName}
                       </TableCell>
                       <TableCell className="text-sm">{user.email}</TableCell>
-                      <TableCell className="text-sm">{user.phone || "N/A"}</TableCell>
+                      <TableCell className="text-sm">
+                        {user.phone || "N/A"}
+                      </TableCell>
                       <TableCell>
                         <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
                           {user.accounts?.length || 0}
@@ -305,7 +376,7 @@ const DashboardNotifications = () => {
                         {formatDateProfessional(user.lastActivity)}
                       </TableCell>
                     </TableRow>
-                  )
+                  ),
                 )}
               </TableBody>
             </Table>
@@ -371,10 +442,18 @@ const DashboardNotifications = () => {
                       createdAt?: string;
                     }) => (
                       <TableRow key={event.id}>
-                        <TableCell className="font-medium">{event.name || "N/A"}</TableCell>
-                        <TableCell className="text-sm">{event.email || "N/A"}</TableCell>
-                        <TableCell className="text-sm">{event.phone || "N/A"}</TableCell>
-                        <TableCell className="text-sm font-mono">{event.ip || "N/A"}</TableCell>
+                        <TableCell className="font-medium">
+                          {event.name || "N/A"}
+                        </TableCell>
+                        <TableCell className="text-sm">
+                          {event.email || "N/A"}
+                        </TableCell>
+                        <TableCell className="text-sm">
+                          {event.phone || "N/A"}
+                        </TableCell>
+                        <TableCell className="text-sm font-mono">
+                          {event.ip || "N/A"}
+                        </TableCell>
                         <TableCell>
                           <span
                             className={`px-2 py-1 rounded-full text-xs font-medium ${
@@ -390,18 +469,21 @@ const DashboardNotifications = () => {
                           {formatDateProfessional(event.createdAt)}
                         </TableCell>
                       </TableRow>
-                    )
+                    ),
                   )}
                 </TableBody>
               </Table>
               {loginEvents.data.pagination && (
                 <div className="text-xs text-muted-foreground text-center pt-2">
-                  Page {loginEvents.data.pagination.page} of {loginEvents.data.pagination.pages}
+                  Page {loginEvents.data.pagination.page} of{" "}
+                  {loginEvents.data.pagination.pages}
                 </div>
               )}
             </div>
           ) : (
-            <p className="text-sm text-muted-foreground">No login events available</p>
+            <p className="text-sm text-muted-foreground">
+              No login events available
+            </p>
           )}
         </CardContent>
       </Card>

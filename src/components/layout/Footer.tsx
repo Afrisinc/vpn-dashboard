@@ -43,7 +43,9 @@ export const Footer = () => {
             style={{ fontSize: "clamp(40px, 7vw, 88px)" }}
           >
             Innovation Without <br />
-            <span className="font-display italic text-gradient-primary">Borders.</span>
+            <span className="font-display italic text-gradient-primary">
+              Borders.
+            </span>
           </h2>
           <Link
             to="/contact"
@@ -61,14 +63,21 @@ export const Footer = () => {
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <Link to="/" className="flex items-center gap-2.5 mb-6">
-              <img src="/afrisic-logo.png" alt="Afrisinc" className="w-8 h-8 rounded-lg object-cover" />
+              <img
+                src="/afrisic-logo.png"
+                alt="Afrisinc"
+                className="w-8 h-8 rounded-lg object-cover"
+              />
               <span className="font-bold text-background tracking-tight">
-                Afri<span className="font-display italic text-gradient-primary">sinc</span>
+                Afri
+                <span className="font-display italic text-gradient-primary">
+                  sinc
+                </span>
               </span>
             </Link>
             <p className="text-background/38 text-sm leading-relaxed max-w-xs">
-              A multi-department parent company pioneering innovation across technology, media, and global
-              services.
+              A multi-department parent company pioneering innovation across
+              technology, media, and global services.
             </p>
           </div>
 

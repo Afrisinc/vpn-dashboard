@@ -1,12 +1,24 @@
 import { useState } from "react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Progress } from "@/components/ui/progress";
 import {
   Dialog,
@@ -41,7 +53,11 @@ import {
 } from "lucide-react";
 import { VPNUser, VPNDevice, VPNServer } from "@/types/vpn";
 import { formatDistanceToNow, format } from "date-fns";
-import { useCreateDevice, useDeviceConfig, useDeleteDevice } from "@/hooks/useVPN";
+import {
+  useCreateDevice,
+  useDeviceConfig,
+  useDeleteDevice,
+} from "@/hooks/useVPN";
 import { toast } from "sonner";
 
 interface UserDetailsSheetProps {
@@ -52,7 +68,7 @@ interface UserDetailsSheetProps {
   onGenerateConfig?: (
     deviceId: string,
     serverId: string,
-    protocol: "wireguard" | "openvpn" | "ikev2"
+    protocol: "wireguard" | "openvpn" | "ikev2",
   ) => void;
 }
 
@@ -92,14 +108,16 @@ export function UserDetailsSheet({
   const [deviceConfigDialogOpen, setDeviceConfigDialogOpen] = useState(false);
   const [selectedDevice, setSelectedDevice] = useState<VPNDevice | null>(null);
   const [selectedServer, setSelectedServer] = useState<string>("");
-  const [selectedProtocol, setSelectedProtocol] = useState<"wireguard" | "openvpn" | "ikev2">("wireguard");
+  const [selectedProtocol, setSelectedProtocol] = useState<
+    "wireguard" | "openvpn" | "ikev2"
+  >("wireguard");
   const [editMode, setEditMode] = useState(false);
 
   // Device creation form state
   const [deviceName, setDeviceName] = useState("");
-  const [deviceType, setDeviceType] = useState<"desktop" | "mobile" | "router" | "unknown" | "other">(
-    "desktop"
-  );
+  const [deviceType, setDeviceType] = useState<
+    "desktop" | "mobile" | "router" | "unknown" | "other"
+  >("desktop");
 
   const createDeviceMutation = useCreateDevice();
   const deviceConfigMutation = useDeviceConfig();
@@ -107,7 +125,9 @@ export function UserDetailsSheet({
 
   if (!user) return null;
 
-  const dataUsagePercent = user.dataLimit ? ((user.dataUsed ?? 0) / user.dataLimit) * 100 : 0;
+  const dataUsagePercent = user.dataLimit
+    ? ((user.dataUsed ?? 0) / user.dataLimit) * 100
+    : 0;
   const onlineServers = servers?.filter((s) => s.status === "active") ?? [];
   const connectedDevices = user.devices.filter((d) => d.isConnected);
 
@@ -150,7 +170,9 @@ export function UserDetailsSheet({
       setDeviceName("");
       setDeviceType("desktop");
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to create device");
+      toast.error(
+        error instanceof Error ? error.message : "Failed to create device",
+      );
     }
   };
 
@@ -168,7 +190,8 @@ export function UserDetailsSheet({
       });
 
       // Download the config file
-      const deviceName = selectedDevice.name || selectedDevice.deviceName || "device";
+      const deviceName =
+        selectedDevice.name || selectedDevice.deviceName || "device";
       const fileName = `${deviceName.toLowerCase().replace(/\s+/g, "-")}-config.conf`;
       const blob = new Blob([config], { type: "text/plain" });
       const url = URL.createObjectURL(blob);
@@ -185,7 +208,11 @@ export function UserDetailsSheet({
       setSelectedServer("");
       setSelectedDevice(null);
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to download configuration");
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Failed to download configuration",
+      );
     }
   };
 
@@ -208,7 +235,9 @@ export function UserDetailsSheet({
       });
       toast.success(`Device "${device.name}" deleted successfully`);
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to delete device");
+      toast.error(
+        error instanceof Error ? error.message : "Failed to delete device",
+      );
     }
   };
 
@@ -269,8 +298,12 @@ export function UserDetailsSheet({
                         <Smartphone className="h-4 w-4" />
                         <span className="text-xs">Devices</span>
                       </div>
-                      <p className="text-2xl font-bold">{user.devices.length}</p>
-                      <p className="text-xs text-muted-foreground">{connectedDevices.length} online</p>
+                      <p className="text-2xl font-bold">
+                        {user.devices.length}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {connectedDevices.length} online
+                      </p>
                     </CardContent>
                   </Card>
                   <Card>
@@ -279,9 +312,13 @@ export function UserDetailsSheet({
                         <Database className="h-4 w-4" />
                         <span className="text-xs">Data Usage</span>
                       </div>
-                      <p className="text-2xl font-bold">{user.dataUsed.toFixed(1)} GB</p>
+                      <p className="text-2xl font-bold">
+                        {user.dataUsed.toFixed(1)} GB
+                      </p>
                       <p className="text-xs text-muted-foreground">
-                        {user.dataLimit ? `of ${user.dataLimit} GB` : "Unlimited"}
+                        {user.dataLimit
+                          ? `of ${user.dataLimit} GB`
+                          : "Unlimited"}
                       </p>
                     </CardContent>
                   </Card>
@@ -293,7 +330,9 @@ export function UserDetailsSheet({
                     <CardContent className="p-4">
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-sm font-medium">Data Quota</span>
-                        <span className="text-sm text-muted-foreground">{dataUsagePercent.toFixed(0)}%</span>
+                        <span className="text-sm text-muted-foreground">
+                          {dataUsagePercent.toFixed(0)}%
+                        </span>
                       </div>
                       <Progress
                         value={dataUsagePercent}
@@ -326,7 +365,9 @@ export function UserDetailsSheet({
                           <Calendar className="h-4 w-4" />
                           Member since
                         </span>
-                        <span>{format(new Date(user.createdAt), "MMM d, yyyy")}</span>
+                        <span>
+                          {format(new Date(user.createdAt), "MMM d, yyyy")}
+                        </span>
                       </div>
                       <div className="flex items-center justify-between">
                         <span className="text-muted-foreground flex items-center gap-2">
@@ -335,7 +376,10 @@ export function UserDetailsSheet({
                         </span>
                         <span>
                           {user.lastConnection
-                            ? formatDistanceToNow(new Date(user.lastConnection), { addSuffix: true })
+                            ? formatDistanceToNow(
+                                new Date(user.lastConnection),
+                                { addSuffix: true },
+                              )
                             : "Never"}
                         </span>
                       </div>
@@ -345,7 +389,9 @@ export function UserDetailsSheet({
                           Expires
                         </span>
                         <span>
-                          {user.expiresAt ? format(new Date(user.expiresAt), "MMM d, yyyy") : "Never"}
+                          {user.expiresAt
+                            ? format(new Date(user.expiresAt), "MMM d, yyyy")
+                            : "Never"}
                         </span>
                       </div>
                     </div>
@@ -357,15 +403,24 @@ export function UserDetailsSheet({
                   <Card>
                     <CardContent className="p-4">
                       <div className="flex items-center justify-between mb-3">
-                        <h4 className="font-medium text-sm">Currently Online</h4>
-                        <Button variant="ghost" size="sm" onClick={() => setActiveTab("devices")}>
+                        <h4 className="font-medium text-sm">
+                          Currently Online
+                        </h4>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setActiveTab("devices")}
+                        >
                           View all
                         </Button>
                       </div>
                       <div className="space-y-2">
                         {connectedDevices.slice(0, 3).map((device) => {
-                          const DeviceIcon = deviceIcons[device.type] || Monitor;
-                          const osLabel = device.os ? osLabels[device.os] : "Unknown OS";
+                          const DeviceIcon =
+                            deviceIcons[device.type] || Monitor;
+                          const osLabel = device.os
+                            ? osLabels[device.os]
+                            : "Unknown OS";
                           return (
                             <div
                               key={device.id}
@@ -373,8 +428,12 @@ export function UserDetailsSheet({
                             >
                               <DeviceIcon className="h-4 w-4 text-emerald-500" />
                               <div className="flex-1 min-w-0">
-                                <p className="text-sm font-medium truncate">{device.name}</p>
-                                <p className="text-xs text-muted-foreground">{osLabel}</p>
+                                <p className="text-sm font-medium truncate">
+                                  {device.name}
+                                </p>
+                                <p className="text-xs text-muted-foreground">
+                                  {osLabel}
+                                </p>
                               </div>
                               <Wifi className="h-4 w-4 text-emerald-500" />
                             </div>
@@ -389,7 +448,8 @@ export function UserDetailsSheet({
               <TabsContent value="devices" className="mt-0 space-y-4">
                 <div className="flex items-center justify-between">
                   <p className="text-sm text-muted-foreground">
-                    {user.devices.length} device{user.devices.length !== 1 ? "s" : ""} registered
+                    {user.devices.length} device
+                    {user.devices.length !== 1 ? "s" : ""} registered
                   </p>
                   <Dialog open={addDeviceOpen} onOpenChange={setAddDeviceOpen}>
                     <DialogTrigger asChild>
@@ -401,7 +461,9 @@ export function UserDetailsSheet({
                     <DialogContent>
                       <DialogHeader>
                         <DialogTitle>Add Device for {user.name}</DialogTitle>
-                        <DialogDescription>Register a new device for this user.</DialogDescription>
+                        <DialogDescription>
+                          Register a new device for this user.
+                        </DialogDescription>
                       </DialogHeader>
                       <div className="space-y-4 py-4">
                         <div className="space-y-2">
@@ -419,10 +481,19 @@ export function UserDetailsSheet({
                             <Select
                               value={deviceType}
                               onValueChange={(value) =>
-                                setDeviceType(value as "desktop" | "mobile" | "router" | "other" | "unknown")
+                                setDeviceType(
+                                  value as
+                                    | "desktop"
+                                    | "mobile"
+                                    | "router"
+                                    | "other"
+                                    | "unknown",
+                                )
                               }
                             >
-                              <SelectTrigger disabled={createDeviceMutation.isPending}>
+                              <SelectTrigger
+                                disabled={createDeviceMutation.isPending}
+                              >
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
@@ -436,7 +507,9 @@ export function UserDetailsSheet({
                           <div className="space-y-2">
                             <Label>
                               Operating System{" "}
-                              <span className="text-xs text-muted-foreground">(optional)</span>
+                              <span className="text-xs text-muted-foreground">
+                                (optional)
+                              </span>
                             </Label>
                             <Select disabled>
                               <SelectTrigger>
@@ -469,9 +542,13 @@ export function UserDetailsSheet({
                         <Button
                           variant="default"
                           onClick={handleAddDevice}
-                          disabled={createDeviceMutation.isPending || !deviceName.trim()}
+                          disabled={
+                            createDeviceMutation.isPending || !deviceName.trim()
+                          }
                         >
-                          {createDeviceMutation.isPending ? "Creating..." : "Add Device"}
+                          {createDeviceMutation.isPending
+                            ? "Creating..."
+                            : "Add Device"}
                         </Button>
                       </DialogFooter>
                     </DialogContent>
@@ -482,13 +559,17 @@ export function UserDetailsSheet({
                   <div className="text-center py-12 text-muted-foreground">
                     <Smartphone className="h-12 w-12 mx-auto mb-4 opacity-50" />
                     <p>No devices registered</p>
-                    <p className="text-sm">Add a device to generate VPN configurations</p>
+                    <p className="text-sm">
+                      Add a device to generate VPN configurations
+                    </p>
                   </div>
                 ) : (
                   <div className="space-y-3">
                     {user.devices.map((device) => {
                       const DeviceIcon = deviceIcons[device.type] || Monitor;
-                      const osLabel = device.os ? osLabels[device.os] : "Unknown OS";
+                      const osLabel = device.os
+                        ? osLabels[device.os]
+                        : "Unknown OS";
                       return (
                         <Card key={device.id}>
                           <CardContent className="p-4">
@@ -503,7 +584,9 @@ export function UserDetailsSheet({
                                 </div>
                                 <div className="flex-1 min-w-0">
                                   <div className="flex items-center gap-2">
-                                    <p className="font-medium truncate">{device.name}</p>
+                                    <p className="font-medium truncate">
+                                      {device.name}
+                                    </p>
                                     <Badge
                                       variant="outline"
                                       className={`flex-shrink-0 ${
@@ -514,11 +597,13 @@ export function UserDetailsSheet({
                                     >
                                       {device.isConnected ? (
                                         <>
-                                          <Wifi className="h-3 w-3 mr-1" /> Online
+                                          <Wifi className="h-3 w-3 mr-1" />{" "}
+                                          Online
                                         </>
                                       ) : (
                                         <>
-                                          <WifiOff className="h-3 w-3 mr-1" /> Offline
+                                          <WifiOff className="h-3 w-3 mr-1" />{" "}
+                                          Offline
                                         </>
                                       )}
                                     </Badge>
@@ -527,11 +612,16 @@ export function UserDetailsSheet({
                                     {osLabel} • {device.type}
                                   </p>
                                   <div className="text-xs text-muted-foreground mt-1 space-y-0.5">
-                                    {device.lastIp && <p>IP: {device.lastIp}</p>}
+                                    {device.lastIp && (
+                                      <p>IP: {device.lastIp}</p>
+                                    )}
                                     <p>
                                       Last seen:{" "}
                                       {device.lastSeen
-                                        ? formatDistanceToNow(new Date(device.lastSeen), { addSuffix: true })
+                                        ? formatDistanceToNow(
+                                            new Date(device.lastSeen),
+                                            { addSuffix: true },
+                                          )
                                         : "Never"}
                                     </p>
                                   </div>
@@ -544,10 +634,15 @@ export function UserDetailsSheet({
                                 size="sm"
                                 className="flex-1"
                                 onClick={() => openDeviceConfigDialog(device)}
-                                disabled={deviceConfigMutation.isPending || deleteDeviceMutation.isPending}
+                                disabled={
+                                  deviceConfigMutation.isPending ||
+                                  deleteDeviceMutation.isPending
+                                }
                               >
                                 <Download className="h-4 w-4 mr-2" />
-                                {deviceConfigMutation.isPending ? "Downloading..." : "Download Config"}
+                                {deviceConfigMutation.isPending
+                                  ? "Downloading..."
+                                  : "Download Config"}
                               </Button>
                               <Button
                                 variant="ghost"
@@ -598,11 +693,18 @@ export function UserDetailsSheet({
                       <div className="grid sm:grid-cols-2 gap-4">
                         <div className="space-y-2">
                           <Label>Full Name</Label>
-                          <Input defaultValue={user.name} disabled={!editMode} />
+                          <Input
+                            defaultValue={user.name}
+                            disabled={!editMode}
+                          />
                         </div>
                         <div className="space-y-2">
                           <Label>Email</Label>
-                          <Input defaultValue={user.email} disabled={!editMode} type="email" />
+                          <Input
+                            defaultValue={user.email}
+                            disabled={!editMode}
+                            type="email"
+                          />
                         </div>
                       </div>
                       <div className="grid sm:grid-cols-2 gap-4">
@@ -617,13 +719,18 @@ export function UserDetailsSheet({
                         </div>
                         <div className="space-y-2">
                           <Label>Account Status</Label>
-                          <Select disabled={!editMode} defaultValue={user.status}>
+                          <Select
+                            disabled={!editMode}
+                            defaultValue={user.status}
+                          >
                             <SelectTrigger>
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
                               <SelectItem value="active">Active</SelectItem>
-                              <SelectItem value="suspended">Suspended</SelectItem>
+                              <SelectItem value="suspended">
+                                Suspended
+                              </SelectItem>
                               <SelectItem value="pending">Pending</SelectItem>
                             </SelectContent>
                           </Select>
@@ -654,7 +761,9 @@ export function UserDetailsSheet({
                         className={`justify-start ${user.status === "suspended" ? "text-emerald-600" : "text-destructive"}`}
                       >
                         <Ban className="h-4 w-4 mr-2" />
-                        {user.status === "suspended" ? "Reactivate User" : "Suspend User"}
+                        {user.status === "suspended"
+                          ? "Reactivate User"
+                          : "Suspend User"}
                       </Button>
                     </div>
                   </CardContent>
@@ -662,7 +771,9 @@ export function UserDetailsSheet({
 
                 <Card className="border-destructive/50">
                   <CardContent className="p-4">
-                    <h4 className="font-medium text-destructive mb-2">Danger Zone</h4>
+                    <h4 className="font-medium text-destructive mb-2">
+                      Danger Zone
+                    </h4>
                     <p className="text-sm text-muted-foreground mb-4">
                       Permanently delete this user and all associated devices.
                     </p>
@@ -683,7 +794,9 @@ export function UserDetailsSheet({
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Generate VPN Configuration</DialogTitle>
-            <DialogDescription>Create a configuration file for {selectedDevice?.name}</DialogDescription>
+            <DialogDescription>
+              Create a configuration file for {selectedDevice?.name}
+            </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
@@ -695,7 +808,8 @@ export function UserDetailsSheet({
                 <SelectContent>
                   {onlineServers.map((server) => (
                     <SelectItem key={server.id} value={server.id}>
-                      {server.name} - {server.location}, {server.country} ({server.load}% load)
+                      {server.name} - {server.location}, {server.country} (
+                      {server.load}% load)
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -705,13 +819,17 @@ export function UserDetailsSheet({
               <Label>Protocol</Label>
               <Select
                 value={selectedProtocol}
-                onValueChange={(v: "wireguard" | "openvpn" | "ikev2") => setSelectedProtocol(v)}
+                onValueChange={(v: "wireguard" | "openvpn" | "ikev2") =>
+                  setSelectedProtocol(v)
+                }
               >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="wireguard">WireGuard (Recommended)</SelectItem>
+                  <SelectItem value="wireguard">
+                    WireGuard (Recommended)
+                  </SelectItem>
                   <SelectItem value="openvpn">OpenVPN</SelectItem>
                   <SelectItem value="ikev2">IKEv2</SelectItem>
                 </SelectContent>
@@ -719,10 +837,17 @@ export function UserDetailsSheet({
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setConfigDialogOpen(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setConfigDialogOpen(false)}
+            >
               Cancel
             </Button>
-            <Button variant="default" onClick={handleGenerateConfig} disabled={!selectedServer}>
+            <Button
+              variant="default"
+              onClick={handleGenerateConfig}
+              disabled={!selectedServer}
+            >
               <Download className="h-4 w-4 mr-2" />
               Generate & Download
             </Button>
@@ -731,11 +856,16 @@ export function UserDetailsSheet({
       </Dialog>
 
       {/* Device Config Download Dialog */}
-      <Dialog open={deviceConfigDialogOpen} onOpenChange={setDeviceConfigDialogOpen}>
+      <Dialog
+        open={deviceConfigDialogOpen}
+        onOpenChange={setDeviceConfigDialogOpen}
+      >
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Download Device Configuration</DialogTitle>
-            <DialogDescription>Download VPN configuration for {selectedDevice?.name}</DialogDescription>
+            <DialogDescription>
+              Download VPN configuration for {selectedDevice?.name}
+            </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">

@@ -5,7 +5,9 @@ declare global {
 }
 
 const GA_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
-const IS_DEV = import.meta.env.MODE !== "production" || import.meta.env.VITE_GA_DEBUG === "true";
+const IS_DEV =
+  import.meta.env.MODE !== "production" ||
+  import.meta.env.VITE_GA_DEBUG === "true";
 
 /** Internal — only fires when GA is available */
 function send(...args: Parameters<typeof window.gtag>) {
@@ -27,12 +29,18 @@ export function trackPageView(url: string, title?: string) {
 }
 
 // ─── Generic Event ─────────────────────────────────────────────────────────
-export function trackEvent(action: string, params: Record<string, unknown> = {}) {
+export function trackEvent(
+  action: string,
+  params: Record<string, unknown> = {},
+) {
   send("event", action, params);
 }
 
 // ─── User Identity ──────────────────────────────────────────────────────────
-export function identifyUser(userId: string, userProps?: Record<string, unknown>) {
+export function identifyUser(
+  userId: string,
+  userProps?: Record<string, unknown>,
+) {
   send("config", GA_ID, { user_id: userId });
   if (userProps) {
     send("event", "user_identified", { user_id: userId, ...userProps });

@@ -3,7 +3,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Search, Wifi, X, ArrowDownUp } from "lucide-react";
 import { VPNConnection } from "@/types/vpn";
@@ -14,14 +21,17 @@ interface ConnectionsTableProps {
   isLoading: boolean;
 }
 
-export function ConnectionsTable({ connections, isLoading }: ConnectionsTableProps) {
+export function ConnectionsTable({
+  connections,
+  isLoading,
+}: ConnectionsTableProps) {
   const [search, setSearch] = useState("");
 
   const filteredConnections = connections?.filter(
     (conn) =>
       conn.userName.toLowerCase().includes(search.toLowerCase()) ||
       conn.deviceName.toLowerCase().includes(search.toLowerCase()) ||
-      conn.serverName.toLowerCase().includes(search.toLowerCase())
+      conn.serverName.toLowerCase().includes(search.toLowerCase()),
   );
 
   if (isLoading) {
@@ -85,19 +95,25 @@ export function ConnectionsTable({ connections, isLoading }: ConnectionsTablePro
                   <TableCell>
                     <div>
                       <p className="font-medium">{conn.userName}</p>
-                      <p className="text-xs text-muted-foreground">{conn.clientIp}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {conn.clientIp}
+                      </p>
                     </div>
                   </TableCell>
                   <TableCell className="hidden sm:table-cell">
                     <div>
                       <p className="text-sm">{conn.deviceName}</p>
-                      <p className="text-xs text-muted-foreground">{conn.assignedIp}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {conn.assignedIp}
+                      </p>
                     </div>
                   </TableCell>
                   <TableCell>
                     <div>
                       <p className="text-sm">{conn.serverName}</p>
-                      <p className="text-xs text-muted-foreground">{conn.serverLocation}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {conn.serverLocation}
+                      </p>
                     </div>
                   </TableCell>
                   <TableCell className="hidden md:table-cell">
@@ -107,14 +123,20 @@ export function ConnectionsTable({ connections, isLoading }: ConnectionsTablePro
                   </TableCell>
                   <TableCell className="hidden lg:table-cell">
                     <div className="text-sm">
-                      <p className="text-primary">↓ {formatBytes(conn.bytesIn)}</p>
-                      <p className="text-muted-foreground">↑ {formatBytes(conn.bytesOut)}</p>
+                      <p className="text-primary">
+                        ↓ {formatBytes(conn.bytesIn)}
+                      </p>
+                      <p className="text-muted-foreground">
+                        ↑ {formatBytes(conn.bytesOut)}
+                      </p>
                     </div>
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
                       <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-                      <span className="text-sm">{formatDuration(conn.duration)}</span>
+                      <span className="text-sm">
+                        {formatDuration(conn.duration)}
+                      </span>
                     </div>
                   </TableCell>
                   <TableCell className="text-right">
@@ -130,7 +152,10 @@ export function ConnectionsTable({ connections, isLoading }: ConnectionsTablePro
               ))}
               {filteredConnections?.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
+                  <TableCell
+                    colSpan={7}
+                    className="text-center py-8 text-muted-foreground"
+                  >
                     No active connections found
                   </TableCell>
                 </TableRow>

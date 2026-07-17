@@ -40,7 +40,7 @@ const createApiClient = () => {
       }
 
       return Promise.reject(error);
-    }
+    },
   );
 
   return instance;

@@ -7,7 +7,13 @@ import { ConnectionsTable } from "@/components/vpn/ConnectionsTable";
 import { UsersTable } from "@/components/vpn/UsersTable";
 import { ConfigGenerator } from "@/components/vpn/ConfigGenerator";
 import { QRCodeGenerator } from "@/components/vpn/QRCodeDialog";
-import { useVPNStats, useVPNServers, useVPNUsers, useVPNDevices, useVPNConnections } from "@/hooks/useVPN";
+import {
+  useVPNStats,
+  useVPNServers,
+  useVPNUsers,
+  useVPNDevices,
+  useVPNConnections,
+} from "@/hooks/useVPN";
 import { generateConfig } from "@/services/vpnService";
 import { toast } from "sonner";
 
@@ -18,12 +24,13 @@ export default function VPNManagement() {
   const { data: servers, isLoading: serversLoading } = useVPNServers();
   const { data: users, isLoading: usersLoading } = useVPNUsers();
   const { data: devices, isLoading: devicesLoading } = useVPNDevices();
-  const { data: connections, isLoading: connectionsLoading } = useVPNConnections();
+  const { data: connections, isLoading: connectionsLoading } =
+    useVPNConnections();
 
   const handleGenerateConfig = async (
     deviceId: string,
     serverId: string,
-    protocol: "wireguard" | "openvpn" | "ikev2"
+    protocol: "wireguard" | "openvpn" | "ikev2",
   ) => {
     try {
       const config = await generateConfig(deviceId, serverId, protocol);
@@ -50,7 +57,7 @@ export default function VPNManagement() {
   const handleGenerateConfigAsync = async (
     deviceId: string,
     serverId: string,
-    protocol: "wireguard" | "openvpn" | "ikev2"
+    protocol: "wireguard" | "openvpn" | "ikev2",
   ) => {
     return generateConfig(deviceId, serverId, protocol);
   };
@@ -60,14 +67,20 @@ export default function VPNManagement() {
       {/* Header */}
       <div>
         <h1 className="heading-section">VPN Management</h1>
-        <p className="text-secondary">Manage servers, users, and connections for your VPN infrastructure</p>
+        <p className="text-secondary">
+          Manage servers, users, and connections for your VPN infrastructure
+        </p>
       </div>
 
       {/* Stats Cards */}
       <VPNStatsCards stats={stats} isLoading={statsLoading} />
 
       {/* Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+      <Tabs
+        value={activeTab}
+        onValueChange={setActiveTab}
+        className="space-y-6"
+      >
         <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 lg:w-auto lg:inline-grid">
           <TabsTrigger value="overview" className="gap-2">
             <Wifi className="h-4 w-4" />
@@ -88,7 +101,10 @@ export default function VPNManagement() {
         </TabsList>
 
         <TabsContent value="overview" className="space-y-6 mt-6">
-          <ConnectionsTable connections={connections} isLoading={connectionsLoading} />
+          <ConnectionsTable
+            connections={connections}
+            isLoading={connectionsLoading}
+          />
         </TabsContent>
 
         <TabsContent value="servers" className="space-y-6 mt-6">

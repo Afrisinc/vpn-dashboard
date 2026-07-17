@@ -2,7 +2,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -29,12 +36,20 @@ export default function ProductDetail() {
   const { productId } = useParams<{ productId: string }>();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("overview");
-  const [settingsData, setSettingsData] = useState({ name: "", description: "", status: "ACTIVE" });
+  const [settingsData, setSettingsData] = useState({
+    name: "",
+    description: "",
+    status: "ACTIVE",
+  });
 
   // Fetch data
   const { data: products } = useProductEnrollments();
-  const { data: productDetails, isLoading: productLoading } = useProductById(productId || null);
-  const { data: accounts, isLoading: accountsLoading } = useProductAccounts(productId || "");
+  const { data: productDetails, isLoading: productLoading } = useProductById(
+    productId || null,
+  );
+  const { data: accounts, isLoading: accountsLoading } = useProductAccounts(
+    productId || "",
+  );
   const updateMutation = useUpdateProduct();
 
   const enrollment = products?.find((p) => p.productId === productId);
@@ -83,10 +98,30 @@ export default function ProductDetail() {
 
   // Dummy activity (placeholder until API is available)
   const dummyActivity = [
-    { id: 1, action: "New account enrolled", account: "Tech Corp Inc", time: "2 hours ago" },
-    { id: 2, action: "Plan upgraded to Enterprise", account: "John Doe", time: "4 hours ago" },
-    { id: 3, action: "Account suspended", account: "Jane Smith", time: "1 day ago" },
-    { id: 4, action: "Payment received", account: "Digital Solutions", time: "2 days ago" },
+    {
+      id: 1,
+      action: "New account enrolled",
+      account: "Tech Corp Inc",
+      time: "2 hours ago",
+    },
+    {
+      id: 2,
+      action: "Plan upgraded to Enterprise",
+      account: "John Doe",
+      time: "4 hours ago",
+    },
+    {
+      id: 3,
+      action: "Account suspended",
+      account: "Jane Smith",
+      time: "1 day ago",
+    },
+    {
+      id: 4,
+      action: "Payment received",
+      account: "Digital Solutions",
+      time: "2 days ago",
+    },
   ];
 
   return (
@@ -106,8 +141,12 @@ export default function ProductDetail() {
               <Layers className="w-6 h-6 text-primary" />
             </div>
             <div className="flex-1">
-              <h1 className="heading-section">{productDetails?.name || enrollment?.productName}</h1>
-              <p className="text-secondary">Complete dashboard for managing your product</p>
+              <h1 className="heading-section">
+                {productDetails?.name || enrollment?.productName}
+              </h1>
+              <p className="text-secondary">
+                Complete dashboard for managing your product
+              </p>
             </div>
           </div>
         </div>
@@ -128,8 +167,12 @@ export default function ProductDetail() {
                 <p className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
                   Total Enrollments
                 </p>
-                <div className="text-3xl font-bold">{enrollment?.totalEnrollments || 0}</div>
-                <p className="text-xs text-muted-foreground">Accounts using this product</p>
+                <div className="text-3xl font-bold">
+                  {enrollment?.totalEnrollments || 0}
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Accounts using this product
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -137,9 +180,15 @@ export default function ProductDetail() {
           <Card className="border-border hover:shadow-card-hover transition-all duration-300">
             <CardContent className="pt-6">
               <div className="space-y-3">
-                <p className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Active</p>
-                <div className="text-3xl font-bold text-emerald-600">{enrollment?.active || 0}</div>
-                <p className="text-xs text-muted-foreground">Currently active</p>
+                <p className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+                  Active
+                </p>
+                <div className="text-3xl font-bold text-emerald-600">
+                  {enrollment?.active || 0}
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Currently active
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -150,8 +199,12 @@ export default function ProductDetail() {
                 <p className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
                   Suspended
                 </p>
-                <div className="text-3xl font-bold text-red-600">{enrollment?.suspended || 0}</div>
-                <p className="text-xs text-muted-foreground">Suspended accounts</p>
+                <div className="text-3xl font-bold text-red-600">
+                  {enrollment?.suspended || 0}
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Suspended accounts
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -171,7 +224,11 @@ export default function ProductDetail() {
       )}
 
       {/* Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+      <Tabs
+        value={activeTab}
+        onValueChange={setActiveTab}
+        className="space-y-6"
+      >
         <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 lg:w-auto lg:inline-grid">
           <TabsTrigger value="overview" className="gap-2">
             <BarChart3 className="h-4 w-4" />
@@ -206,7 +263,9 @@ export default function ProductDetail() {
                   <div>
                     <div className="flex justify-between mb-2">
                       <span className="text-sm font-medium">Free Plans</span>
-                      <span className="text-sm font-bold">{enrollment?.plans.FREE || 0}</span>
+                      <span className="text-sm font-bold">
+                        {enrollment?.plans.FREE || 0}
+                      </span>
                     </div>
                     <div className="w-full bg-muted rounded-full h-2">
                       <div
@@ -221,7 +280,9 @@ export default function ProductDetail() {
                   <div>
                     <div className="flex justify-between mb-2">
                       <span className="text-sm font-medium">Pro Plans</span>
-                      <span className="text-sm font-bold">{enrollment?.plans.PRO || 0}</span>
+                      <span className="text-sm font-bold">
+                        {enrollment?.plans.PRO || 0}
+                      </span>
                     </div>
                     <div className="w-full bg-muted rounded-full h-2">
                       <div
@@ -235,8 +296,12 @@ export default function ProductDetail() {
 
                   <div>
                     <div className="flex justify-between mb-2">
-                      <span className="text-sm font-medium">Enterprise Plans</span>
-                      <span className="text-sm font-bold">{enrollment?.plans.ENTERPRISE || 0}</span>
+                      <span className="text-sm font-medium">
+                        Enterprise Plans
+                      </span>
+                      <span className="text-sm font-bold">
+                        {enrollment?.plans.ENTERPRISE || 0}
+                      </span>
                     </div>
                     <div className="w-full bg-muted rounded-full h-2">
                       <div
@@ -261,19 +326,27 @@ export default function ProductDetail() {
               <CardContent className="space-y-4">
                 <div className="space-y-2">
                   <div className="flex justify-between">
-                    <span className="text-sm text-muted-foreground">Health Status</span>
+                    <span className="text-sm text-muted-foreground">
+                      Health Status
+                    </span>
                     <Badge>Healthy</Badge>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-sm text-muted-foreground">Last Updated</span>
+                    <span className="text-sm text-muted-foreground">
+                      Last Updated
+                    </span>
                     <span className="text-sm font-medium">2 hours ago</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-sm text-muted-foreground">API Status</span>
+                    <span className="text-sm text-muted-foreground">
+                      API Status
+                    </span>
                     <Badge variant="outline">Operational</Badge>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-sm text-muted-foreground">Uptime</span>
+                    <span className="text-sm text-muted-foreground">
+                      Uptime
+                    </span>
                     <span className="text-sm font-medium">99.98%</span>
                   </div>
                 </div>
@@ -301,7 +374,9 @@ export default function ProductDetail() {
                   ))}
                 </div>
               ) : !accounts || accounts.length === 0 ? (
-                <p className="text-sm text-muted-foreground text-center py-8">No enrolled accounts</p>
+                <p className="text-sm text-muted-foreground text-center py-8">
+                  No enrolled accounts
+                </p>
               ) : (
                 <div className="rounded-lg border border-border/50 overflow-hidden">
                   <Table>
@@ -318,9 +393,13 @@ export default function ProductDetail() {
                       {accounts.map((account, idx) => (
                         <TableRow
                           key={account.id}
-                          className={idx % 2 === 0 ? "bg-transparent" : "bg-muted/10"}
+                          className={
+                            idx % 2 === 0 ? "bg-transparent" : "bg-muted/10"
+                          }
                         >
-                          <TableCell className="font-mono text-xs">{account.id.slice(0, 8)}...</TableCell>
+                          <TableCell className="font-mono text-xs">
+                            {account.id.slice(0, 8)}...
+                          </TableCell>
                           <TableCell>
                             <Badge variant="outline">{account.type}</Badge>
                           </TableCell>
@@ -328,7 +407,13 @@ export default function ProductDetail() {
                             {account.ownerName || account.owner?.email}
                           </TableCell>
                           <TableCell>
-                            <Badge variant={account.status === "ACTIVE" ? "default" : "destructive"}>
+                            <Badge
+                              variant={
+                                account.status === "ACTIVE"
+                                  ? "default"
+                                  : "destructive"
+                              }
+                            >
                               {account.status}
                             </Badge>
                           </TableCell>
@@ -361,7 +446,9 @@ export default function ProductDetail() {
                     <div className="w-2 h-2 rounded-full bg-primary flex-shrink-0" />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium">{item.action}</p>
-                      <p className="text-xs text-muted-foreground">{item.account}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {item.account}
+                      </p>
                     </div>
                     <p className="text-xs text-muted-foreground flex-shrink-0 whitespace-nowrap">
                       {item.time}
@@ -395,7 +482,12 @@ export default function ProductDetail() {
                       </label>
                       <Input
                         value={settingsData.name}
-                        onChange={(e) => setSettingsData({ ...settingsData, name: e.target.value })}
+                        onChange={(e) =>
+                          setSettingsData({
+                            ...settingsData,
+                            name: e.target.value,
+                          })
+                        }
                       />
                     </div>
 
@@ -404,7 +496,9 @@ export default function ProductDetail() {
                         Product Code
                       </label>
                       <Input value={productDetails?.code || ""} disabled />
-                      <p className="text-xs text-muted-foreground">Unique identifier (cannot be changed)</p>
+                      <p className="text-xs text-muted-foreground">
+                        Unique identifier (cannot be changed)
+                      </p>
                     </div>
 
                     <div className="space-y-2">
@@ -413,7 +507,12 @@ export default function ProductDetail() {
                       </label>
                       <textarea
                         value={settingsData.description}
-                        onChange={(e) => setSettingsData({ ...settingsData, description: e.target.value })}
+                        onChange={(e) =>
+                          setSettingsData({
+                            ...settingsData,
+                            description: e.target.value,
+                          })
+                        }
                         placeholder="Add a description for this product"
                         className="w-full p-3 rounded-lg border border-border bg-background text-foreground text-sm"
                         rows={3}
@@ -426,7 +525,12 @@ export default function ProductDetail() {
                       </label>
                       <select
                         value={settingsData.status}
-                        onChange={(e) => setSettingsData({ ...settingsData, status: e.target.value })}
+                        onChange={(e) =>
+                          setSettingsData({
+                            ...settingsData,
+                            status: e.target.value,
+                          })
+                        }
                         className="w-full h-10 px-3 rounded-lg border border-border bg-background text-foreground text-sm"
                       >
                         <option value="PROVISIONING">Provisioning</option>

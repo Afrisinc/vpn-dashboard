@@ -1,4 +1,10 @@
-import { Newspaper, Code2, Package, Sparkles, ArrowUpRight } from "lucide-react";
+import {
+  Newspaper,
+  Code2,
+  Package,
+  Sparkles,
+  ArrowUpRight,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 
 const services = [
@@ -83,11 +89,13 @@ export const ServicesSection = () => {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground leading-[1.0]">
               Four Departments.
-              <span className="block font-display italic text-gradient-primary">One Direction.</span>
+              <span className="block font-display italic text-gradient-primary">
+                One Direction.
+              </span>
             </h2>
             <p className="text-muted-foreground max-w-xs text-sm leading-relaxed flex-shrink-0 md:text-right">
-              Each department runs independently. Each one feeds the next. Together, they're something bigger
-              than any one of them.
+              Each department runs independently. Each one feeds the next.
+              Together, they're something bigger than any one of them.
             </p>
           </div>
         </div>
@@ -95,7 +103,8 @@ export const ServicesSection = () => {
         {/* 2×2 Card Grid */}
         <div className="grid md:grid-cols-2 gap-5">
           {services.map((service) => {
-            const colors = accentColors[service.accent as keyof typeof accentColors];
+            const colors =
+              accentColors[service.accent as keyof typeof accentColors];
             return (
               <Link
                 key={service.index}
@@ -114,7 +123,11 @@ export const ServicesSection = () => {
                 {/* Ghost index number */}
                 <span
                   className="absolute top-4 right-6 font-display italic font-bold leading-none select-none transition-all duration-300 group-hover:scale-110 group-hover:-translate-y-0.5"
-                  style={{ fontSize: "64px", lineHeight: 1, color: colors.border }}
+                  style={{
+                    fontSize: "64px",
+                    lineHeight: 1,
+                    color: colors.border,
+                  }}
                   aria-hidden="true"
                 >
                   {service.index}
@@ -123,9 +136,15 @@ export const ServicesSection = () => {
                 {/* Icon */}
                 <div
                   className="w-12 h-12 rounded-xl flex items-center justify-center mb-6 relative z-10 transition-transform duration-300 group-hover:scale-105"
-                  style={{ background: colors.bg, border: `1px solid ${colors.border}` }}
+                  style={{
+                    background: colors.bg,
+                    border: `1px solid ${colors.border}`,
+                  }}
                 >
-                  <service.icon className="w-5 h-5" style={{ color: colors.text }} />
+                  <service.icon
+                    className="w-5 h-5"
+                    style={{ color: colors.text }}
+                  />
                 </div>
 
                 {/* Content */}
@@ -133,7 +152,9 @@ export const ServicesSection = () => {
                   <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
                     {service.title}
                   </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{service.description}</p>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {service.description}
+                  </p>
                 </div>
 
                 {/* Footer row */}

@@ -40,8 +40,15 @@ export const notificationProductService = {
     return data;
   },
 
-  getSecurityLoginEvents: async (params?: { page?: number; limit?: number; search?: string }) => {
-    const { data } = await apiClient().get("/notifications/security/loginevents", { params });
+  getSecurityLoginEvents: async (params?: {
+    page?: number;
+    limit?: number;
+    search?: string;
+  }) => {
+    const { data } = await apiClient().get(
+      "/notifications/security/loginevents",
+      { params },
+    );
     return data;
   },
 };

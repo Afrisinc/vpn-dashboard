@@ -66,13 +66,17 @@ const DashboardProducts = () => {
                 <div className="p-2.5 rounded-lg bg-primary/10">
                   <p.icon className="w-5 h-5 text-primary" />
                 </div>
-                <Badge variant={p.status === "Live" ? "default" : "secondary"}>{p.status}</Badge>
+                <Badge variant={p.status === "Live" ? "default" : "secondary"}>
+                  {p.status}
+                </Badge>
               </div>
             </CardHeader>
             <CardContent className="space-y-2">
               <CardTitle className="text-lg">{p.name}</CardTitle>
               <p className="text-sm text-muted-foreground">{p.description}</p>
-              <p className="text-xs font-medium text-muted-foreground">{p.users} active users</p>
+              <p className="text-xs font-medium text-muted-foreground">
+                {p.users} active users
+              </p>
             </CardContent>
           </Card>
         ))}

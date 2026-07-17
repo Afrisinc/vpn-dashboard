@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,16 +23,23 @@ interface AccountDetailsSheetProps {
   onClose: () => void;
 }
 
-const typeVariant = (t: string) => (t === "INDIVIDUAL" ? "default" : "secondary");
+const typeVariant = (t: string) =>
+  t === "INDIVIDUAL" ? "default" : "secondary";
 
-export function AccountDetailsSheet({ account, isOpen, onClose }: AccountDetailsSheetProps) {
+export function AccountDetailsSheet({
+  account,
+  isOpen,
+  onClose,
+}: AccountDetailsSheetProps) {
   const [activeTab, setActiveTab] = useState("details");
   const [enrollDialogOpen, setEnrollDialogOpen] = useState(false);
 
   if (!account) return null;
 
   const ownerName = account.owner
-    ? [account.owner.firstName, account.owner.lastName].filter(Boolean).join(" ")
+    ? [account.owner.firstName, account.owner.lastName]
+        .filter(Boolean)
+        .join(" ")
     : "Unknown";
 
   return (
@@ -40,9 +53,14 @@ export function AccountDetailsSheet({ account, isOpen, onClose }: AccountDetails
             </div>
             <div className="flex-1 min-w-0">
               <SheetTitle>{ownerName}</SheetTitle>
-              <SheetDescription className="truncate">{account.owner?.email || "No email"}</SheetDescription>
+              <SheetDescription className="truncate">
+                {account.owner?.email || "No email"}
+              </SheetDescription>
             </div>
-            <Badge variant={typeVariant(account.type)} className="flex-shrink-0">
+            <Badge
+              variant={typeVariant(account.type)}
+              className="flex-shrink-0"
+            >
               {account.type}
             </Badge>
           </div>
@@ -62,7 +80,11 @@ export function AccountDetailsSheet({ account, isOpen, onClose }: AccountDetails
             <TabsTrigger value="products" className="gap-2">
               <Package className="h-4 w-4" />
               <span className="hidden sm:inline">Products</span>
-              {account.products && <span className="ml-1 text-xs">({account.products.length})</span>}
+              {account.products && (
+                <span className="ml-1 text-xs">
+                  ({account.products.length})
+                </span>
+              )}
             </TabsTrigger>
           </TabsList>
 
@@ -72,39 +94,59 @@ export function AccountDetailsSheet({ account, isOpen, onClose }: AccountDetails
               <TabsContent value="details" className="space-y-4 mt-4">
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-base">Account Information</CardTitle>
+                    <CardTitle className="text-base">
+                      Account Information
+                    </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between items-start">
-                        <span className="text-muted-foreground">Account ID</span>
+                        <span className="text-muted-foreground">
+                          Account ID
+                        </span>
                         <CopyableText text={account.id} truncateAt={12} />
                       </div>
 
                       <div className="flex justify-between items-center">
                         <span className="text-muted-foreground">Type</span>
-                        <Badge variant={typeVariant(account.type)}>{account.type}</Badge>
+                        <Badge variant={typeVariant(account.type)}>
+                          {account.type}
+                        </Badge>
                       </div>
 
                       <div className="flex justify-between items-center">
-                        <span className="text-muted-foreground">Owner Name</span>
+                        <span className="text-muted-foreground">
+                          Owner Name
+                        </span>
                         <span className="text-right">{ownerName}</span>
                       </div>
 
                       <div className="flex justify-between items-center">
-                        <span className="text-muted-foreground">Owner Email</span>
-                        <span className="text-right break-words">{account.owner?.email || "—"}</span>
+                        <span className="text-muted-foreground">
+                          Owner Email
+                        </span>
+                        <span className="text-right break-words">
+                          {account.owner?.email || "—"}
+                        </span>
                       </div>
 
                       <div className="flex justify-between items-center">
                         <span className="text-muted-foreground">Owner ID</span>
-                        <CopyableText text={account.owner_user_id} truncateAt={12} />
+                        <CopyableText
+                          text={account.owner_user_id}
+                          truncateAt={12}
+                        />
                       </div>
 
                       {account.organization_id && (
                         <div className="flex justify-between items-start">
-                          <span className="text-muted-foreground">Organization ID</span>
-                          <CopyableText text={account.organization_id} truncateAt={12} />
+                          <span className="text-muted-foreground">
+                            Organization ID
+                          </span>
+                          <CopyableText
+                            text={account.organization_id}
+                            truncateAt={12}
+                          />
                         </div>
                       )}
 
@@ -133,7 +175,11 @@ export function AccountDetailsSheet({ account, isOpen, onClose }: AccountDetails
               {/* Products Tab */}
               <TabsContent value="products" className="space-y-4 mt-4">
                 <div className="flex gap-2">
-                  <Button size="sm" className="flex-1" onClick={() => setEnrollDialogOpen(true)}>
+                  <Button
+                    size="sm"
+                    className="flex-1"
+                    onClick={() => setEnrollDialogOpen(true)}
+                  >
                     <Plus className="h-4 w-4 mr-2" />
                     Enroll Product
                   </Button>
@@ -143,7 +189,9 @@ export function AccountDetailsSheet({ account, isOpen, onClose }: AccountDetails
                   <Card>
                     <CardContent className="py-12 text-center">
                       <Package className="h-12 w-12 mx-auto mb-4 opacity-50 text-muted-foreground" />
-                      <p className="text-muted-foreground">No products enrolled</p>
+                      <p className="text-muted-foreground">
+                        No products enrolled
+                      </p>
                     </CardContent>
                   </Card>
                 ) : (
@@ -158,7 +206,8 @@ export function AccountDetailsSheet({ account, isOpen, onClose }: AccountDetails
                                   {product.product?.name || "Unknown Product"}
                                 </p>
                                 <p className="text-xs text-muted-foreground">
-                                  Code: {product.product?.code || product.product_id}
+                                  Code:{" "}
+                                  {product.product?.code || product.product_id}
                                 </p>
                               </div>
                             </div>
@@ -168,7 +217,11 @@ export function AccountDetailsSheet({ account, isOpen, onClose }: AccountDetails
                                 {product.plan}
                               </Badge>
                               <Badge
-                                variant={product.status === "ACTIVE" ? "default" : "destructive"}
+                                variant={
+                                  product.status === "ACTIVE"
+                                    ? "default"
+                                    : "destructive"
+                                }
                                 className="text-xs"
                               >
                                 {product.status}

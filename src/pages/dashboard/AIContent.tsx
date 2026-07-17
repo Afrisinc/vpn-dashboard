@@ -1,4 +1,10 @@
-import { Sparkles, TrendingUp, Clock, CheckCircle2, AlertCircle } from "lucide-react";
+import {
+  Sparkles,
+  TrendingUp,
+  Clock,
+  CheckCircle2,
+  AlertCircle,
+} from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import CreatePostForm from "@/components/dashboard/CreatePostForm";
 import PostsTable from "@/components/dashboard/PostsTable";
@@ -30,7 +36,9 @@ const AIContent = () => {
         </div>
         <div>
           <h1 className="heading-section">AI Content Studio</h1>
-          <p className="text-secondary">Generate and manage AI-powered social media posts</p>
+          <p className="text-secondary">
+            Generate and manage AI-powered social media posts
+          </p>
         </div>
       </div>
 
@@ -44,7 +52,9 @@ const AIContent = () => {
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xs text-muted-foreground font-semibold uppercase">{stat.label}</p>
+                  <p className="text-xs text-muted-foreground font-semibold uppercase">
+                    {stat.label}
+                  </p>
                   <p className="text-2xl font-bold mt-2">{stat.value}</p>
                 </div>
                 <div className="p-2.5 rounded-lg bg-muted">

@@ -20,7 +20,11 @@ interface UpdateOrganizationDialogProps {
   onClose: () => void;
 }
 
-export function UpdateOrganizationDialog({ organization, isOpen, onClose }: UpdateOrganizationDialogProps) {
+export function UpdateOrganizationDialog({
+  organization,
+  isOpen,
+  onClose,
+}: UpdateOrganizationDialogProps) {
   const [formData, setFormData] = useState({
     name: "",
     legal_name: "",
@@ -62,7 +66,12 @@ export function UpdateOrganizationDialog({ organization, isOpen, onClose }: Upda
     if (!organization) return;
 
     // Validate required fields
-    if (!formData.name || !formData.legal_name || !formData.country || !formData.tax_id) {
+    if (
+      !formData.name ||
+      !formData.legal_name ||
+      !formData.country ||
+      !formData.tax_id
+    ) {
       toast.error("Please fill in all required fields");
       return;
     }

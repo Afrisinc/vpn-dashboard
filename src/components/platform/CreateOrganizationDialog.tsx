@@ -18,7 +18,10 @@ interface CreateOrganizationDialogProps {
   onClose: () => void;
 }
 
-export function CreateOrganizationDialog({ isOpen, onClose }: CreateOrganizationDialogProps) {
+export function CreateOrganizationDialog({
+  isOpen,
+  onClose,
+}: CreateOrganizationDialogProps) {
   const [formData, setFormData] = useState({
     name: "",
     legal_name: "",
@@ -43,7 +46,12 @@ export function CreateOrganizationDialog({ isOpen, onClose }: CreateOrganization
     e.preventDefault();
 
     // Validate required fields
-    if (!formData.name || !formData.legal_name || !formData.country || !formData.tax_id) {
+    if (
+      !formData.name ||
+      !formData.legal_name ||
+      !formData.country ||
+      !formData.tax_id
+    ) {
       toast.error("Please fill in all required fields");
       return;
     }
@@ -71,7 +79,9 @@ export function CreateOrganizationDialog({ isOpen, onClose }: CreateOrganization
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Create Organization</DialogTitle>
-          <DialogDescription>Add a new organization to the platform</DialogDescription>
+          <DialogDescription>
+            Add a new organization to the platform
+          </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">

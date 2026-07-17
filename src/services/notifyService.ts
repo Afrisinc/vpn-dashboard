@@ -6,7 +6,13 @@ const NOTIFY_APP_ID = import.meta.env.VITE_NOTIFY_APP_ID;
 
 // ── Types matching CreateContactSchema ────────────────────────────────────────
 
-type ContactSource = "contact_form" | "import" | "api" | "webhook" | "widget" | "newsletter";
+type ContactSource =
+  | "contact_form"
+  | "import"
+  | "api"
+  | "webhook"
+  | "widget"
+  | "newsletter";
 type ContactStatus = "active" | "inactive" | "unsubscribed";
 
 interface ContactPayload {
@@ -28,7 +34,9 @@ interface ContactPayload {
 
 async function postContact(payload: ContactPayload): Promise<void> {
   if (!NOTIFY_URL || !NOTIFY_APP_ID) {
-    throw new Error("Notify service not configured. Set VITE_NOTIFY_URL and VITE_NOTIFY_APP_ID.");
+    throw new Error(
+      "Notify service not configured. Set VITE_NOTIFY_URL and VITE_NOTIFY_APP_ID.",
+    );
   }
 
   const res = await fetch(`${NOTIFY_URL}/api/apps/${NOTIFY_APP_ID}/contacts`, {
@@ -94,8 +102,16 @@ export interface SubscribeOptions {
   formPage?: string;
 }
 
-export async function subscribeNewsletter(email: string, options: SubscribeOptions = {}): Promise<void> {
-  const { firstName, lastName, categories = [], formPage = "unknown" } = options;
+export async function subscribeNewsletter(
+  email: string,
+  options: SubscribeOptions = {},
+): Promise<void> {
+  const {
+    firstName,
+    lastName,
+    categories = [],
+    formPage = "unknown",
+  } = options;
 
   // Base tags every media subscriber gets
   const tags: string[] = ["newsletter", "media-subscriber"];

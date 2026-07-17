@@ -29,11 +29,24 @@ const secondary = [
   },
 ];
 
-const typeColors: Record<string, { bg: string; text: string; border: string }> = {
-  Documentary: { bg: "hsl(22 88% 52% / 0.1)", text: "hsl(22 82% 46%)", border: "hsl(22 88% 52% / 0.25)" },
-  News: { bg: "hsl(158 42% 26% / 0.1)", text: "hsl(158 42% 32%)", border: "hsl(158 42% 26% / 0.25)" },
-  Podcast: { bg: "hsl(43 95% 52% / 0.1)", text: "hsl(38 80% 38%)", border: "hsl(43 95% 52% / 0.25)" },
-};
+const typeColors: Record<string, { bg: string; text: string; border: string }> =
+  {
+    Documentary: {
+      bg: "hsl(22 88% 52% / 0.1)",
+      text: "hsl(22 82% 46%)",
+      border: "hsl(22 88% 52% / 0.25)",
+    },
+    News: {
+      bg: "hsl(158 42% 26% / 0.1)",
+      text: "hsl(158 42% 32%)",
+      border: "hsl(158 42% 26% / 0.25)",
+    },
+    Podcast: {
+      bg: "hsl(43 95% 52% / 0.1)",
+      text: "hsl(38 80% 38%)",
+      border: "hsl(43 95% 52% / 0.25)",
+    },
+  };
 
 export const MediaSection = () => {
   return (
@@ -47,7 +60,9 @@ export const MediaSection = () => {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground leading-[1.0]">
               Stories That
-              <span className="block font-display italic text-gradient-primary">Matter</span>
+              <span className="block font-display italic text-gradient-primary">
+                Matter
+              </span>
             </h2>
             <Link
               to="/media"
@@ -118,7 +133,9 @@ export const MediaSection = () => {
               <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors duration-200">
                 {featured.title}
               </h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">{featured.description}</p>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                {featured.description}
+              </p>
             </div>
           </article>
 

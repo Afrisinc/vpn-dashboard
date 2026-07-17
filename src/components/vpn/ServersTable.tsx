@@ -6,7 +6,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Progress } from "@/components/ui/progress";
 import {
@@ -18,10 +25,31 @@ import {
   DialogFooter,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Plus, Server, Settings, Power, RefreshCw, Loader2 } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Search,
+  Plus,
+  Server,
+  Settings,
+  Power,
+  RefreshCw,
+  Loader2,
+} from "lucide-react";
 import { toast } from "sonner";
 import { VPNServer } from "@/types/vpn";
 import { useCreateServer } from "@/hooks/useVPN";
@@ -38,20 +66,40 @@ const serverFormSchema = z.object({
     .regex(/^[a-z0-9-]+$/, "Use lowercase letters, numbers, and hyphens only"),
   name: z.string().min(1, "Server name is required").max(100),
   location: z.string().min(1, "Location is required").max(100),
-  countryCode: z.string().length(2, "Country code must be 2 letters").toUpperCase(),
+  countryCode: z
+    .string()
+    .length(2, "Country code must be 2 letters")
+    .toUpperCase(),
   regionCode: z.string().min(1, "Region code is required").max(50),
   publicIp: z.string().ip("Must be a valid IP address"),
   agentUrl: z.string().url("Must be a valid URL"),
   agentApiKey: z.string().min(8, "API key must be at least 8 characters"),
-  wireguardPort: z.coerce.number().min(1).max(65535, "Port must be between 1-65535"),
-  serverPublicKey: z.string().min(20, "Public key must be at least 20 characters"),
+  wireguardPort: z.coerce
+    .number()
+    .min(1)
+    .max(65535, "Port must be between 1-65535"),
+  serverPublicKey: z
+    .string()
+    .min(20, "Public key must be at least 20 characters"),
   networkCidr: z
     .string()
-    .regex(/^(\d{1,3}\.){3}\d{1,3}\/\d{1,2}$/, "Must be valid CIDR notation (e.g., 192.168.0.0/24)"),
-  maxClients: z.coerce.number().min(1, "Must have at least 1 client").max(10000),
-  bandwidthLimitMbps: z.coerce.number().min(1, "Bandwidth limit is required").max(100000),
+    .regex(
+      /^(\d{1,3}\.){3}\d{1,3}\/\d{1,2}$/,
+      "Must be valid CIDR notation (e.g., 192.168.0.0/24)",
+    ),
+  maxClients: z.coerce
+    .number()
+    .min(1, "Must have at least 1 client")
+    .max(10000),
+  bandwidthLimitMbps: z.coerce
+    .number()
+    .min(1, "Bandwidth limit is required")
+    .max(100000),
   latitude: z.coerce.number().min(-90).max(90, "Latitude must be -90 to 90"),
-  longitude: z.coerce.number().min(-180).max(180, "Longitude must be -180 to 180"),
+  longitude: z.coerce
+    .number()
+    .min(-180)
+    .max(180, "Longitude must be -180 to 180"),
 });
 
 type ServerFormData = z.infer<typeof serverFormSchema>;
@@ -112,7 +160,8 @@ export function ServersTable({ servers, isLoading }: ServersTableProps) {
       setAddDialogOpen(false);
       form.reset();
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Failed to create server";
+      const message =
+        error instanceof Error ? error.message : "Failed to create server";
       toast.error(message);
     }
   };
@@ -121,7 +170,7 @@ export function ServersTable({ servers, isLoading }: ServersTableProps) {
     (server) =>
       server.name.toLowerCase().includes(search.toLowerCase()) ||
       server.location.toLowerCase().includes(search.toLowerCase()) ||
-      server.country.toLowerCase().includes(search.toLowerCase())
+      server.country.toLowerCase().includes(search.toLowerCase()),
   );
 
   const getLoadColor = (load: number) => {
@@ -175,10 +224,15 @@ export function ServersTable({ servers, isLoading }: ServersTableProps) {
               <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
                 <DialogHeader>
                   <DialogTitle>Add New Server</DialogTitle>
-                  <DialogDescription>Configure a new VPN server endpoint.</DialogDescription>
+                  <DialogDescription>
+                    Configure a new VPN server endpoint.
+                  </DialogDescription>
                 </DialogHeader>
                 <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                  <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-4"
+                  >
                     {/* Server Identity */}
                     <div className="space-y-3 border-b pb-4">
                       <h3 className="text-sm font-semibold">Server Identity</h3>
@@ -223,7 +277,10 @@ export function ServersTable({ servers, isLoading }: ServersTableProps) {
                             <FormItem>
                               <FormLabel>Location *</FormLabel>
                               <FormControl>
-                                <Input placeholder="e.g. Paris, France" {...field} />
+                                <Input
+                                  placeholder="e.g. Paris, France"
+                                  {...field}
+                                />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -236,7 +293,11 @@ export function ServersTable({ servers, isLoading }: ServersTableProps) {
                             <FormItem>
                               <FormLabel>Country Code *</FormLabel>
                               <FormControl>
-                                <Input placeholder="e.g. FR" maxLength={2} {...field} />
+                                <Input
+                                  placeholder="e.g. FR"
+                                  maxLength={2}
+                                  {...field}
+                                />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -264,7 +325,12 @@ export function ServersTable({ servers, isLoading }: ServersTableProps) {
                             <FormItem>
                               <FormLabel>Latitude *</FormLabel>
                               <FormControl>
-                                <Input placeholder="e.g. 48.8566" type="number" step="0.0001" {...field} />
+                                <Input
+                                  placeholder="e.g. 48.8566"
+                                  type="number"
+                                  step="0.0001"
+                                  {...field}
+                                />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -277,7 +343,12 @@ export function ServersTable({ servers, isLoading }: ServersTableProps) {
                             <FormItem>
                               <FormLabel>Longitude *</FormLabel>
                               <FormControl>
-                                <Input placeholder="e.g. 2.3522" type="number" step="0.0001" {...field} />
+                                <Input
+                                  placeholder="e.g. 2.3522"
+                                  type="number"
+                                  step="0.0001"
+                                  {...field}
+                                />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -288,7 +359,9 @@ export function ServersTable({ servers, isLoading }: ServersTableProps) {
 
                     {/* Network Configuration */}
                     <div className="space-y-3 border-b pb-4">
-                      <h3 className="text-sm font-semibold">Network Configuration</h3>
+                      <h3 className="text-sm font-semibold">
+                        Network Configuration
+                      </h3>
                       <div className="grid grid-cols-2 gap-4">
                         <FormField
                           control={form.control}
@@ -297,7 +370,10 @@ export function ServersTable({ servers, isLoading }: ServersTableProps) {
                             <FormItem>
                               <FormLabel>Public IP *</FormLabel>
                               <FormControl>
-                                <Input placeholder="e.g. 203.0.113.2" {...field} />
+                                <Input
+                                  placeholder="e.g. 203.0.113.2"
+                                  {...field}
+                                />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -310,7 +386,10 @@ export function ServersTable({ servers, isLoading }: ServersTableProps) {
                             <FormItem>
                               <FormLabel>Network CIDR *</FormLabel>
                               <FormControl>
-                                <Input placeholder="e.g. 192.168.89.0/24" {...field} />
+                                <Input
+                                  placeholder="e.g. 192.168.89.0/24"
+                                  {...field}
+                                />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -321,7 +400,9 @@ export function ServersTable({ servers, isLoading }: ServersTableProps) {
 
                     {/* WireGuard Configuration */}
                     <div className="space-y-3 border-b pb-4">
-                      <h3 className="text-sm font-semibold">WireGuard Configuration</h3>
+                      <h3 className="text-sm font-semibold">
+                        WireGuard Configuration
+                      </h3>
                       <div className="grid grid-cols-2 gap-4">
                         <FormField
                           control={form.control}
@@ -330,7 +411,11 @@ export function ServersTable({ servers, isLoading }: ServersTableProps) {
                             <FormItem>
                               <FormLabel>WireGuard Port *</FormLabel>
                               <FormControl>
-                                <Input placeholder="e.g. 51820" type="number" {...field} />
+                                <Input
+                                  placeholder="e.g. 51820"
+                                  type="number"
+                                  {...field}
+                                />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -343,7 +428,11 @@ export function ServersTable({ servers, isLoading }: ServersTableProps) {
                             <FormItem>
                               <FormLabel>Max Clients *</FormLabel>
                               <FormControl>
-                                <Input placeholder="e.g. 250" type="number" {...field} />
+                                <Input
+                                  placeholder="e.g. 250"
+                                  type="number"
+                                  {...field}
+                                />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -371,7 +460,9 @@ export function ServersTable({ servers, isLoading }: ServersTableProps) {
 
                     {/* Agent Configuration */}
                     <div className="space-y-3 border-b pb-4">
-                      <h3 className="text-sm font-semibold">Agent Configuration</h3>
+                      <h3 className="text-sm font-semibold">
+                        Agent Configuration
+                      </h3>
                       <FormField
                         control={form.control}
                         name="agentUrl"
@@ -379,7 +470,10 @@ export function ServersTable({ servers, isLoading }: ServersTableProps) {
                           <FormItem>
                             <FormLabel>Agent URL *</FormLabel>
                             <FormControl>
-                              <Input placeholder="e.g. https://wg-agent-fr.example.com" {...field} />
+                              <Input
+                                placeholder="e.g. https://wg-agent-fr.example.com"
+                                {...field}
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -392,7 +486,11 @@ export function ServersTable({ servers, isLoading }: ServersTableProps) {
                           <FormItem>
                             <FormLabel>Agent API Key *</FormLabel>
                             <FormControl>
-                              <Input placeholder="Enter secret API key" type="password" {...field} />
+                              <Input
+                                placeholder="Enter secret API key"
+                                type="password"
+                                {...field}
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -410,7 +508,11 @@ export function ServersTable({ servers, isLoading }: ServersTableProps) {
                           <FormItem>
                             <FormLabel>Bandwidth Limit (Mbps) *</FormLabel>
                             <FormControl>
-                              <Input placeholder="e.g. 1000" type="number" {...field} />
+                              <Input
+                                placeholder="e.g. 1000"
+                                type="number"
+                                {...field}
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -426,9 +528,17 @@ export function ServersTable({ servers, isLoading }: ServersTableProps) {
                       >
                         Cancel
                       </Button>
-                      <Button variant="default" type="submit" disabled={createServerMutation.isPending}>
-                        {createServerMutation.isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-                        {createServerMutation.isPending ? "Creating..." : "Create Server"}
+                      <Button
+                        variant="default"
+                        type="submit"
+                        disabled={createServerMutation.isPending}
+                      >
+                        {createServerMutation.isPending && (
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        )}
+                        {createServerMutation.isPending
+                          ? "Creating..."
+                          : "Create Server"}
                       </Button>
                     </DialogFooter>
                   </form>
@@ -447,7 +557,9 @@ export function ServersTable({ servers, isLoading }: ServersTableProps) {
                 <TableHead className="hidden sm:table-cell">Location</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead className="hidden md:table-cell">Health</TableHead>
-                <TableHead className="hidden lg:table-cell">IP Address</TableHead>
+                <TableHead className="hidden lg:table-cell">
+                  IP Address
+                </TableHead>
                 <TableHead className="hidden lg:table-cell">Clients</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
@@ -465,10 +577,14 @@ export function ServersTable({ servers, isLoading }: ServersTableProps) {
                   </TableCell>
                   <TableCell className="hidden sm:table-cell">
                     <div className="flex items-center gap-2">
-                      <span className="text-lg">{getFlagEmoji(server.countryCode)}</span>
+                      <span className="text-lg">
+                        {getFlagEmoji(server.countryCode)}
+                      </span>
                       <div>
                         <p className="text-sm">{server.location}</p>
-                        <p className="text-xs text-muted-foreground">{server.countryCode}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {server.countryCode}
+                        </p>
                       </div>
                     </div>
                   </TableCell>
@@ -477,7 +593,9 @@ export function ServersTable({ servers, isLoading }: ServersTableProps) {
                       <div
                         className={`h-2 w-2 rounded-full ${statusColors[server.status as keyof typeof statusColors]}`}
                       />
-                      <span className="text-sm capitalize">{server.status}</span>
+                      <span className="text-sm capitalize">
+                        {server.status}
+                      </span>
                     </div>
                   </TableCell>
                   <TableCell className="hidden md:table-cell">
@@ -485,7 +603,9 @@ export function ServersTable({ servers, isLoading }: ServersTableProps) {
                       <div
                         className={`h-2 w-2 rounded-full ${healthStatusColors[server.healthStatus as keyof typeof healthStatusColors]}`}
                       />
-                      <span className="text-xs capitalize">{server.healthStatus}</span>
+                      <span className="text-xs capitalize">
+                        {server.healthStatus}
+                      </span>
                     </div>
                   </TableCell>
                   <TableCell className="hidden lg:table-cell">

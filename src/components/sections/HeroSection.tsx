@@ -35,11 +35,41 @@ export const HeroSection = () => {
           xmlns="http://www.w3.org/2000/svg"
           className="w-full h-full animate-spin-slow"
         >
-          <circle cx="250" cy="250" r="240" stroke="hsl(22 88% 52% / 0.07)" strokeWidth="1" />
-          <circle cx="250" cy="250" r="200" stroke="hsl(22 88% 52% / 0.09)" strokeWidth="1" />
-          <circle cx="250" cy="250" r="160" stroke="hsl(22 88% 52% / 0.11)" strokeWidth="1" />
-          <circle cx="250" cy="250" r="120" stroke="hsl(22 88% 52% / 0.09)" strokeWidth="1" />
-          <circle cx="250" cy="250" r="80" stroke="hsl(22 88% 52% / 0.07)" strokeWidth="1" />
+          <circle
+            cx="250"
+            cy="250"
+            r="240"
+            stroke="hsl(22 88% 52% / 0.07)"
+            strokeWidth="1"
+          />
+          <circle
+            cx="250"
+            cy="250"
+            r="200"
+            stroke="hsl(22 88% 52% / 0.09)"
+            strokeWidth="1"
+          />
+          <circle
+            cx="250"
+            cy="250"
+            r="160"
+            stroke="hsl(22 88% 52% / 0.11)"
+            strokeWidth="1"
+          />
+          <circle
+            cx="250"
+            cy="250"
+            r="120"
+            stroke="hsl(22 88% 52% / 0.09)"
+            strokeWidth="1"
+          />
+          <circle
+            cx="250"
+            cy="250"
+            r="80"
+            stroke="hsl(22 88% 52% / 0.07)"
+            strokeWidth="1"
+          />
           <polygon
             points="250,10 490,250 250,490 10,250"
             stroke="hsl(43 95% 52% / 0.07)"
@@ -52,10 +82,38 @@ export const HeroSection = () => {
             strokeWidth="1"
             fill="none"
           />
-          <line x1="10" y1="250" x2="490" y2="250" stroke="hsl(22 88% 52% / 0.05)" strokeWidth="1" />
-          <line x1="250" y1="10" x2="250" y2="490" stroke="hsl(22 88% 52% / 0.05)" strokeWidth="1" />
-          <line x1="73" y1="73" x2="427" y2="427" stroke="hsl(22 88% 52% / 0.04)" strokeWidth="1" />
-          <line x1="427" y1="73" x2="73" y2="427" stroke="hsl(22 88% 52% / 0.04)" strokeWidth="1" />
+          <line
+            x1="10"
+            y1="250"
+            x2="490"
+            y2="250"
+            stroke="hsl(22 88% 52% / 0.05)"
+            strokeWidth="1"
+          />
+          <line
+            x1="250"
+            y1="10"
+            x2="250"
+            y2="490"
+            stroke="hsl(22 88% 52% / 0.05)"
+            strokeWidth="1"
+          />
+          <line
+            x1="73"
+            y1="73"
+            x2="427"
+            y2="427"
+            stroke="hsl(22 88% 52% / 0.04)"
+            strokeWidth="1"
+          />
+          <line
+            x1="427"
+            y1="73"
+            x2="73"
+            y2="427"
+            stroke="hsl(22 88% 52% / 0.04)"
+            strokeWidth="1"
+          />
           <circle cx="250" cy="10" r="3.5" fill="hsl(22 88% 52% / 0.28)" />
           <circle cx="490" cy="250" r="3.5" fill="hsl(22 88% 52% / 0.28)" />
           <circle cx="250" cy="490" r="3.5" fill="hsl(22 88% 52% / 0.28)" />
@@ -84,26 +142,37 @@ export const HeroSection = () => {
       <div className="container mx-auto px-6 pt-28 md:pt-40 pb-24 md:pb-32 relative z-10">
         <div className="max-w-5xl">
           {/* Eyebrow */}
-          <p className="line-accent mb-12 animate-fade-in">Technology · Media · Digital Products</p>
+          <p className="line-accent mb-12 animate-fade-in">
+            Technology · Media · Digital Products
+          </p>
 
           {/* Main heading */}
           <div className="animate-fade-up animation-delay-100">
             <h1 className="relative" style={{ lineHeight: 1 }}>
               <span
                 className="block font-bold tracking-[-0.03em] text-foreground font-sans"
-                style={{ fontSize: "clamp(28px, 6.5vw, 76px)", lineHeight: 0.92 }}
+                style={{
+                  fontSize: "clamp(28px, 6.5vw, 76px)",
+                  lineHeight: 0.92,
+                }}
               >
                 Building
               </span>
               <span
                 className="block font-display italic font-bold tracking-[-0.02em] text-gradient-primary"
-                style={{ fontSize: "clamp(28px, 6.5vw, 76px)", lineHeight: 1.02 }}
+                style={{
+                  fontSize: "clamp(28px, 6.5vw, 76px)",
+                  lineHeight: 1.02,
+                }}
               >
                 Tomorrow's
               </span>
               <span
                 className="block font-bold tracking-[-0.03em] text-foreground font-sans"
-                style={{ fontSize: "clamp(28px, 6.5vw, 76px)", lineHeight: 0.92 }}
+                style={{
+                  fontSize: "clamp(28px, 6.5vw, 76px)",
+                  lineHeight: 0.92,
+                }}
               >
                 Platforms.
               </span>
@@ -113,11 +182,16 @@ export const HeroSection = () => {
           {/* Description + CTA */}
           <div className="mt-14 grid md:grid-cols-2 gap-10 items-end animate-fade-up animation-delay-200">
             <p className="text-lg text-muted-foreground leading-[1.75] max-w-md">
-              One company. Four departments. 10+ live products used by people across 15 countries — and we're
-              just getting started.
+              One company. Four departments. 10+ live products used by people
+              across 15 countries — and we're just getting started.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
-              <Button variant="default" size="lg" className="group shadow-primary" asChild>
+              <Button
+                variant="default"
+                size="lg"
+                className="group shadow-primary"
+                asChild
+              >
                 <Link to="/about">
                   Our Story
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -157,15 +231,17 @@ export const HeroSection = () => {
       <div className="absolute bottom-0 left-0 right-0 py-3 border-t border-border/50 bg-background/70 backdrop-blur-sm overflow-hidden z-10 animate-fade-in animation-delay-400">
         <div className="flex overflow-hidden">
           <div className="marquee-track">
-            {[...marqueeItems, ...marqueeItems, ...marqueeItems].map((item, i) => (
-              <span
-                key={i}
-                className="inline-flex items-center gap-5 px-5 text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground/55 whitespace-nowrap"
-              >
-                {item}
-                <span className="w-1 h-1 rounded-full bg-primary/35 inline-block flex-shrink-0" />
-              </span>
-            ))}
+            {[...marqueeItems, ...marqueeItems, ...marqueeItems].map(
+              (item, i) => (
+                <span
+                  key={i}
+                  className="inline-flex items-center gap-5 px-5 text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground/55 whitespace-nowrap"
+                >
+                  {item}
+                  <span className="w-1 h-1 rounded-full bg-primary/35 inline-block flex-shrink-0" />
+                </span>
+              ),
+            )}
           </div>
         </div>
       </div>

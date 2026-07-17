@@ -12,17 +12,50 @@ import {
 import { Button } from "@/components/ui/button";
 
 const stats = [
-  { title: "Total Revenue", value: "$124,500", change: "+12.5%", up: true, icon: DollarSign },
-  { title: "Active Users", value: "2,450", change: "+8.2%", up: true, icon: Users },
+  {
+    title: "Total Revenue",
+    value: "$124,500",
+    change: "+12.5%",
+    up: true,
+    icon: DollarSign,
+  },
+  {
+    title: "Active Users",
+    value: "2,450",
+    change: "+8.2%",
+    up: true,
+    icon: Users,
+  },
   { title: "Products", value: "48", change: "+3", up: true, icon: Package },
-  { title: "Growth Rate", value: "24.5%", change: "-2.1%", up: false, icon: TrendingUp },
+  {
+    title: "Growth Rate",
+    value: "24.5%",
+    change: "-2.1%",
+    up: false,
+    icon: TrendingUp,
+  },
 ];
 
 const activities = [
-  { id: 1, action: "Nairobi team expanded by 3", time: "2 hours ago", icon: Users },
+  {
+    id: 1,
+    action: "Nairobi team expanded by 3",
+    time: "2 hours ago",
+    icon: Users,
+  },
   { id: 2, action: "VPN 2.0 went live", time: "4 hours ago", icon: Package },
-  { id: 3, action: "$100K revenue reached", time: "6 hours ago", icon: DollarSign },
-  { id: 4, action: "Cloud infrastructure scaled", time: "1 day ago", icon: Zap },
+  {
+    id: 3,
+    action: "$100K revenue reached",
+    time: "6 hours ago",
+    icon: DollarSign,
+  },
+  {
+    id: 4,
+    action: "Cloud infrastructure scaled",
+    time: "1 day ago",
+    icon: Zap,
+  },
 ];
 
 const DashboardOverview = () => (
@@ -31,8 +64,9 @@ const DashboardOverview = () => (
     <div className="space-y-3 animate-fade-in">
       <h1 className="heading-hero">Your Performance at a Glance</h1>
       <p className="text-muted-foreground max-w-2xl">
-        The numbers that matter. See your revenue, user growth, product momentum, and trajectory — all updated
-        live. Use these metrics to guide what comes next.
+        The numbers that matter. See your revenue, user growth, product
+        momentum, and trajectory — all updated live. Use these metrics to guide
+        what comes next.
       </p>
     </div>
 
@@ -59,7 +93,11 @@ const DashboardOverview = () => (
                 <div
                   className={`text-xs font-semibold flex items-center gap-1 ${stat.up ? "text-emerald-600 dark:text-emerald-400" : "text-red-600 dark:text-red-400"}`}
                 >
-                  {stat.up ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
+                  {stat.up ? (
+                    <ArrowUpRight className="w-3 h-3" />
+                  ) : (
+                    <ArrowDownRight className="w-3 h-3" />
+                  )}
                   {stat.change}
                 </div>
               </div>
@@ -71,7 +109,10 @@ const DashboardOverview = () => (
 
     {/* Activity & Actions */}
     <div className="grid lg:grid-cols-3 gap-6">
-      <div className="lg:col-span-2 animate-fade-up" style={{ animationDelay: "400ms" }}>
+      <div
+        className="lg:col-span-2 animate-fade-up"
+        style={{ animationDelay: "400ms" }}
+      >
         <Card>
           <CardHeader className="pb-4 border-b border-border/30">
             <div className="flex items-center gap-2">
@@ -90,7 +131,9 @@ const DashboardOverview = () => (
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium">{activity.action}</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">{activity.time}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    {activity.time}
+                  </p>
                 </div>
                 <ArrowUpRight className="w-3 h-3 text-muted-foreground/30 flex-shrink-0" />
               </div>

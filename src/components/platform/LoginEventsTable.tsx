@@ -3,7 +3,10 @@ import { Badge } from "@/components/ui/badge";
 import { DataTable } from "@/components/data-table/DataTable";
 import { useLoginEvents } from "@/hooks/usePlatform";
 import { LoginEventResponse } from "@/types/auth.security";
-import type { DataTableQuery, ColumnConfig } from "@/components/data-table/types";
+import type {
+  DataTableQuery,
+  ColumnConfig,
+} from "@/components/data-table/types";
 
 const columns: ColumnConfig<LoginEventResponse>[] = [
   {
@@ -27,7 +30,9 @@ const columns: ColumnConfig<LoginEventResponse>[] = [
       { label: "Login Failure", value: "login_failure" },
     ],
     render: (value: string) => (
-      <Badge variant="outline">{value === "login_event" ? "Event" : "Failure"}</Badge>
+      <Badge variant="outline">
+        {value === "login_event" ? "Event" : "Failure"}
+      </Badge>
     ),
     width: "10%",
   },
@@ -53,7 +58,9 @@ const columns: ColumnConfig<LoginEventResponse>[] = [
     label: "IP Address",
     sortable: true,
     width: "12%",
-    render: (value: string) => <span className="font-mono text-sm">{value}</span>,
+    render: (value: string) => (
+      <span className="font-mono text-sm">{value}</span>
+    ),
   },
   {
     key: "phone",

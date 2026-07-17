@@ -3,7 +3,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -13,10 +19,26 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useTopics } from "@/hooks/useTopics";
 import { useGenerateAIPost } from "@/hooks/useAIPosts";
-import { Sparkles, Send, Loader2, Hash, Link2, Monitor, Zap, Facebook, Instagram } from "lucide-react";
+import {
+  Sparkles,
+  Send,
+  Loader2,
+  Hash,
+  Link2,
+  Monitor,
+  Zap,
+  Facebook,
+  Instagram,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
@@ -69,7 +91,9 @@ const CreatePostForm = () => {
             </div>
             Generate AI Content
           </CardTitle>
-          <CardDescription>Create AI-powered posts for Facebook & Instagram</CardDescription>
+          <CardDescription>
+            Create AI-powered posts for Facebook & Instagram
+          </CardDescription>
         </CardHeader>
         <CardContent className="flex items-center justify-center py-16">
           <div className="flex flex-col items-center gap-3">
@@ -91,7 +115,9 @@ const CreatePostForm = () => {
           </div>
           Generate AI Content
         </CardTitle>
-        <CardDescription>Create AI-powered posts for Facebook & Instagram</CardDescription>
+        <CardDescription>
+          Create AI-powered posts for Facebook & Instagram
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -140,7 +166,9 @@ const CreatePostForm = () => {
                       {...field}
                     />
                   </FormControl>
-                  <FormDescription className="text-xs">Optional hashtags to include</FormDescription>
+                  <FormDescription className="text-xs">
+                    Optional hashtags to include
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -162,7 +190,9 @@ const CreatePostForm = () => {
                       {...field}
                     />
                   </FormControl>
-                  <FormDescription className="text-xs">Optional URL to reference</FormDescription>
+                  <FormDescription className="text-xs">
+                    Optional URL to reference
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -190,8 +220,18 @@ const CreatePostForm = () => {
                           </div>
                         ),
                       },
-                      { value: "facebook", label: "Facebook", icon: Facebook, color: "text-blue-500" },
-                      { value: "instagram", label: "Instagram", icon: Instagram, color: "text-pink-500" },
+                      {
+                        value: "facebook",
+                        label: "Facebook",
+                        icon: Facebook,
+                        color: "text-blue-500",
+                      },
+                      {
+                        value: "instagram",
+                        label: "Instagram",
+                        icon: Instagram,
+                        color: "text-pink-500",
+                      },
                     ].map((platform) => (
                       <button
                         key={platform.value}
@@ -201,11 +241,15 @@ const CreatePostForm = () => {
                           "flex flex-col items-center gap-1.5 p-3 rounded-lg border-2 transition-all duration-200",
                           selectedPlatform === platform.value
                             ? "border-primary bg-primary/5"
-                            : "border-border/50 hover:border-border bg-muted/20"
+                            : "border-border/50 hover:border-border bg-muted/20",
                         )}
                       >
-                        <platform.icon className={cn("w-5 h-5", platform.color)} />
-                        <span className="text-xs font-medium">{platform.label}</span>
+                        <platform.icon
+                          className={cn("w-5 h-5", platform.color)}
+                        />
+                        <span className="text-xs font-medium">
+                          {platform.label}
+                        </span>
                       </button>
                     ))}
                   </div>
@@ -229,13 +273,15 @@ const CreatePostForm = () => {
                         "flex items-center justify-center gap-2 p-3 rounded-lg border-2 transition-all duration-200",
                         selectedMode === "test"
                           ? "border-amber-500 bg-amber-500/10"
-                          : "border-border/50 hover:border-border bg-muted/20"
+                          : "border-border/50 hover:border-border bg-muted/20",
                       )}
                     >
                       <div
                         className={cn(
                           "w-2 h-2 rounded-full",
-                          selectedMode === "test" ? "bg-amber-500" : "bg-muted-foreground"
+                          selectedMode === "test"
+                            ? "bg-amber-500"
+                            : "bg-muted-foreground",
                         )}
                       />
                       <span className="text-sm font-medium">Test Mode</span>
@@ -247,13 +293,15 @@ const CreatePostForm = () => {
                         "flex items-center justify-center gap-2 p-3 rounded-lg border-2 transition-all duration-200",
                         selectedMode === "production"
                           ? "border-emerald-500 bg-emerald-500/10"
-                          : "border-border/50 hover:border-border bg-muted/20"
+                          : "border-border/50 hover:border-border bg-muted/20",
                       )}
                     >
                       <div
                         className={cn(
                           "w-2 h-2 rounded-full",
-                          selectedMode === "production" ? "bg-emerald-500" : "bg-muted-foreground"
+                          selectedMode === "production"
+                            ? "bg-emerald-500"
+                            : "bg-muted-foreground",
                         )}
                       />
                       <span className="text-sm font-medium">Production</span>

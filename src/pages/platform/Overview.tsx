@@ -3,8 +3,19 @@ import { usePlatformOverview, useGrowthData } from "@/hooks/usePlatform";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
-import { Users, Building2, Layers, CreditCard, TrendingUp, AlertTriangle } from "lucide-react";
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import {
+  Users,
+  Building2,
+  Layers,
+  CreditCard,
+  TrendingUp,
+  AlertTriangle,
+} from "lucide-react";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
 import {
   BarChart,
   Bar,
@@ -25,22 +36,55 @@ const PIE_COLORS = ["hsl(36, 60%, 50%)", "hsl(160, 40%, 25%)"];
 export default function PlatformOverview() {
   const { data, isLoading } = usePlatformOverview();
   const [growthRange, setGrowthRange] = useState<"7d" | "30d" | "90d">("30d");
-  const { data: growthData, isLoading: growthLoading } = useGrowthData(growthRange);
+  const { data: growthData, isLoading: growthLoading } =
+    useGrowthData(growthRange);
 
   const stats = [
-    { label: "Total Users", value: data?.totalUsers, icon: Users, color: "text-primary" },
-    { label: "Total Accounts", value: data?.totalAccounts, icon: CreditCard, color: "text-secondary" },
-    { label: "Organizations", value: data?.totalOrganizations, icon: Building2, color: "text-accent" },
-    { label: "Total Enrollments", value: data?.totalEnrollments, icon: Layers, color: "text-primary" },
-    { label: "Active Users", value: data?.activeUsers, icon: TrendingUp, color: "text-secondary" },
-    { label: "Suspended", value: data?.suspendedUsers, icon: AlertTriangle, color: "text-destructive" },
+    {
+      label: "Total Users",
+      value: data?.totalUsers,
+      icon: Users,
+      color: "text-primary",
+    },
+    {
+      label: "Total Accounts",
+      value: data?.totalAccounts,
+      icon: CreditCard,
+      color: "text-secondary",
+    },
+    {
+      label: "Organizations",
+      value: data?.totalOrganizations,
+      icon: Building2,
+      color: "text-accent",
+    },
+    {
+      label: "Total Enrollments",
+      value: data?.totalEnrollments,
+      icon: Layers,
+      color: "text-primary",
+    },
+    {
+      label: "Active Users",
+      value: data?.activeUsers,
+      icon: TrendingUp,
+      color: "text-secondary",
+    },
+    {
+      label: "Suspended",
+      value: data?.suspendedUsers,
+      icon: AlertTriangle,
+      color: "text-destructive",
+    },
   ];
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold">Platform Overview</h1>
-        <p className="text-muted-foreground">Global analytics for the Afrisinc Auth platform</p>
+        <p className="text-muted-foreground">
+          Global analytics for the Afrisinc Auth platform
+        </p>
       </div>
 
       {/* Metric Cards */}
@@ -54,9 +98,13 @@ export default function PlatformOverview() {
                 <div className="flex flex-col gap-1">
                   <div className="flex items-center gap-2">
                     <s.icon className={`h-4 w-4 ${s.color}`} />
-                    <span className="text-xs text-muted-foreground font-medium">{s.label}</span>
+                    <span className="text-xs text-muted-foreground font-medium">
+                      {s.label}
+                    </span>
                   </div>
-                  <span className="text-2xl font-bold">{s.value?.toLocaleString()}</span>
+                  <span className="text-2xl font-bold">
+                    {s.value?.toLocaleString()}
+                  </span>
                 </div>
               )}
             </CardContent>
@@ -69,18 +117,25 @@ export default function PlatformOverview() {
         {/* Enrollments by Product */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-base font-semibold">Enrollments by Product</CardTitle>
+            <CardTitle className="text-base font-semibold">
+              Enrollments by Product
+            </CardTitle>
           </CardHeader>
           <CardContent>
             {isLoading ? (
               <Skeleton className="h-64 w-full" />
             ) : (
               <ChartContainer
-                config={{ count: { label: "Enrollments", color: "hsl(var(--primary))" } }}
+                config={{
+                  count: { label: "Enrollments", color: "hsl(var(--primary))" },
+                }}
                 className="h-64"
               >
                 <BarChart data={data?.enrollmentsByProduct}>
-                  <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    className="stroke-border"
+                  />
                   <XAxis
                     dataKey="product"
                     className="text-xs"
@@ -88,7 +143,11 @@ export default function PlatformOverview() {
                   />
                   <YAxis tick={{ fill: "hsl(var(--muted-foreground))" }} />
                   <ChartTooltip content={<ChartTooltipContent />} />
-                  <Bar dataKey="count" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
+                  <Bar
+                    dataKey="count"
+                    fill="hsl(var(--primary))"
+                    radius={[4, 4, 0, 0]}
+                  />
                 </BarChart>
               </ChartContainer>
             )}
@@ -98,7 +157,9 @@ export default function PlatformOverview() {
         {/* Account Type Split */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-base font-semibold">Account Type Distribution</CardTitle>
+            <CardTitle className="text-base font-semibold">
+              Account Type Distribution
+            </CardTitle>
           </CardHeader>
           <CardContent>
             {isLoading ? (
@@ -118,7 +179,10 @@ export default function PlatformOverview() {
                       label={({ type, count }) => `${type}: ${count}`}
                     >
                       {data?.accountTypeSplit.map((_, i) => (
-                        <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
+                        <Cell
+                          key={i}
+                          fill={PIE_COLORS[i % PIE_COLORS.length]}
+                        />
                       ))}
                     </Pie>
                     <ChartTooltip />
@@ -133,7 +197,9 @@ export default function PlatformOverview() {
       {/* Growth Metrics */}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between pb-3">
-          <CardTitle className="text-base font-semibold">Growth Metrics</CardTitle>
+          <CardTitle className="text-base font-semibold">
+            Growth Metrics
+          </CardTitle>
           <div className="flex gap-2">
             <Button
               variant={growthRange === "7d" ? "default" : "outline"}
@@ -165,14 +231,27 @@ export default function PlatformOverview() {
             <ChartContainer
               config={{
                 newUsers: { label: "New Users", color: "hsl(var(--primary))" },
-                newAccounts: { label: "New Accounts", color: "hsl(var(--secondary))" },
-                newEnrollments: { label: "New Enrollments", color: "hsl(var(--accent))" },
+                newAccounts: {
+                  label: "New Accounts",
+                  color: "hsl(var(--secondary))",
+                },
+                newEnrollments: {
+                  label: "New Enrollments",
+                  color: "hsl(var(--accent))",
+                },
               }}
               className="h-80"
             >
               <LineChart data={growthData}>
-                <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
-                <XAxis dataKey="date" className="text-xs" tick={{ fill: "hsl(var(--muted-foreground))" }} />
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  className="stroke-border"
+                />
+                <XAxis
+                  dataKey="date"
+                  className="text-xs"
+                  tick={{ fill: "hsl(var(--muted-foreground))" }}
+                />
                 <YAxis tick={{ fill: "hsl(var(--muted-foreground))" }} />
                 <ChartTooltip content={<ChartTooltipContent />} />
                 <Legend />

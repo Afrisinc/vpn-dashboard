@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,7 +25,11 @@ interface UserAccountsSheetProps {
 const statusVariant = (s: string) =>
   s === "ACTIVE" ? "default" : s === "SUSPENDED" ? "destructive" : "secondary";
 
-export function UserAccountsSheet({ user, isOpen, onClose }: UserAccountsSheetProps) {
+export function UserAccountsSheet({
+  user,
+  isOpen,
+  onClose,
+}: UserAccountsSheetProps) {
   const [activeTab, setActiveTab] = useState("overview");
 
   const { data, isLoading } = usePlatformUserAccounts(user?.id || null);
@@ -37,9 +47,14 @@ export function UserAccountsSheet({ user, isOpen, onClose }: UserAccountsSheetPr
             </div>
             <div className="flex-1 min-w-0">
               <SheetTitle>{user.fullName || user.email}</SheetTitle>
-              <SheetDescription className="truncate">{user.email}</SheetDescription>
+              <SheetDescription className="truncate">
+                {user.email}
+              </SheetDescription>
             </div>
-            <Badge variant={statusVariant(user.status)} className="flex-shrink-0">
+            <Badge
+              variant={statusVariant(user.status)}
+              className="flex-shrink-0"
+            >
               {user.status}
             </Badge>
           </div>
@@ -59,7 +74,9 @@ export function UserAccountsSheet({ user, isOpen, onClose }: UserAccountsSheetPr
             <TabsTrigger value="accounts" className="gap-2">
               <Briefcase className="h-4 w-4" />
               <span className="hidden sm:inline">Accounts</span>
-              {data && <span className="ml-1 text-xs">({data.accounts.length})</span>}
+              {data && (
+                <span className="ml-1 text-xs">({data.accounts.length})</span>
+              )}
             </TabsTrigger>
           </TabsList>
 
@@ -70,7 +87,9 @@ export function UserAccountsSheet({ user, isOpen, onClose }: UserAccountsSheetPr
                 {/* User Details Card */}
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-base">User Information</CardTitle>
+                    <CardTitle className="text-base">
+                      User Information
+                    </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
                     <div className="space-y-2 text-sm">
@@ -81,12 +100,16 @@ export function UserAccountsSheet({ user, isOpen, onClose }: UserAccountsSheetPr
 
                       <div className="flex justify-between items-center">
                         <span className="text-muted-foreground">Email</span>
-                        <span className="text-right break-words">{user.email}</span>
+                        <span className="text-right break-words">
+                          {user.email}
+                        </span>
                       </div>
 
                       <div className="flex justify-between items-center">
                         <span className="text-muted-foreground">Name</span>
-                        <span className="text-right">{user.fullName || "—"}</span>
+                        <span className="text-right">
+                          {user.fullName || "—"}
+                        </span>
                       </div>
 
                       {user.phone && (
@@ -98,14 +121,18 @@ export function UserAccountsSheet({ user, isOpen, onClose }: UserAccountsSheetPr
 
                       {user.location && (
                         <div className="flex justify-between items-center">
-                          <span className="text-muted-foreground">Location</span>
+                          <span className="text-muted-foreground">
+                            Location
+                          </span>
                           <span className="text-right">{user.location}</span>
                         </div>
                       )}
 
                       <div className="flex justify-between items-center pt-2 border-t">
                         <span className="text-muted-foreground">Status</span>
-                        <Badge variant={statusVariant(user.status)}>{user.status}</Badge>
+                        <Badge variant={statusVariant(user.status)}>
+                          {user.status}
+                        </Badge>
                       </div>
 
                       <div className="flex justify-between items-center">
@@ -116,9 +143,13 @@ export function UserAccountsSheet({ user, isOpen, onClose }: UserAccountsSheetPr
                       </div>
 
                       <div className="flex justify-between items-center">
-                        <span className="text-muted-foreground">Last Login</span>
+                        <span className="text-muted-foreground">
+                          Last Login
+                        </span>
                         <span className="text-right text-xs">
-                          {user.lastLogin ? new Date(user.lastLogin).toLocaleDateString() : "Never"}
+                          {user.lastLogin
+                            ? new Date(user.lastLogin).toLocaleDateString()
+                            : "Never"}
                         </span>
                       </div>
                     </div>
@@ -129,16 +160,25 @@ export function UserAccountsSheet({ user, isOpen, onClose }: UserAccountsSheetPr
                 <div className="grid grid-cols-2 gap-3">
                   <Card>
                     <CardContent className="pt-6">
-                      <div className="text-2xl font-bold">{data?.accounts.length || 0}</div>
-                      <p className="text-xs text-muted-foreground">Total Accounts</p>
+                      <div className="text-2xl font-bold">
+                        {data?.accounts.length || 0}
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        Total Accounts
+                      </p>
                     </CardContent>
                   </Card>
                   <Card>
                     <CardContent className="pt-6">
                       <div className="text-2xl font-bold">
-                        {data?.accounts.reduce((sum, acc) => sum + acc.products.length, 0) || 0}
+                        {data?.accounts.reduce(
+                          (sum, acc) => sum + acc.products.length,
+                          0,
+                        ) || 0}
                       </div>
-                      <p className="text-xs text-muted-foreground">Total Products</p>
+                      <p className="text-xs text-muted-foreground">
+                        Total Products
+                      </p>
                     </CardContent>
                   </Card>
                 </div>
@@ -156,7 +196,9 @@ export function UserAccountsSheet({ user, isOpen, onClose }: UserAccountsSheetPr
                   <Card>
                     <CardContent className="py-12 text-center">
                       <Briefcase className="h-12 w-12 mx-auto mb-4 opacity-50 text-muted-foreground" />
-                      <p className="text-muted-foreground">No accounts found for this user</p>
+                      <p className="text-muted-foreground">
+                        No accounts found for this user
+                      </p>
                     </CardContent>
                   </Card>
                 ) : (
@@ -164,7 +206,9 @@ export function UserAccountsSheet({ user, isOpen, onClose }: UserAccountsSheetPr
                     <Card key={account.id}>
                       <CardHeader className="pb-3">
                         <div className="flex items-center justify-between">
-                          <CardTitle className="text-sm font-medium">{account.type} Account</CardTitle>
+                          <CardTitle className="text-sm font-medium">
+                            {account.type} Account
+                          </CardTitle>
                           <Badge variant="outline">{account.type}</Badge>
                         </div>
                         <CopyableText
@@ -176,7 +220,9 @@ export function UserAccountsSheet({ user, isOpen, onClose }: UserAccountsSheetPr
                       </CardHeader>
                       <CardContent>
                         {account.products.length === 0 ? (
-                          <p className="text-sm text-muted-foreground">No products enrolled</p>
+                          <p className="text-sm text-muted-foreground">
+                            No products enrolled
+                          </p>
                         ) : (
                           <div className="space-y-2">
                             <p className="text-xs font-medium text-muted-foreground">
@@ -191,18 +237,27 @@ export function UserAccountsSheet({ user, isOpen, onClose }: UserAccountsSheetPr
                                   <div className="flex items-center gap-2 flex-1 min-w-0">
                                     <Package className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                                     <div className="min-w-0">
-                                      <p className="font-medium truncate">{product.product.name}</p>
+                                      <p className="font-medium truncate">
+                                        {product.product.name}
+                                      </p>
                                       <p className="text-xs text-muted-foreground truncate">
                                         Code: {product.product.code}
                                       </p>
                                     </div>
                                   </div>
                                   <div className="flex items-center gap-2 flex-shrink-0 ml-2">
-                                    <Badge variant="secondary" className="text-xs whitespace-nowrap">
+                                    <Badge
+                                      variant="secondary"
+                                      className="text-xs whitespace-nowrap"
+                                    >
                                       {product.plan}
                                     </Badge>
                                     <Badge
-                                      variant={product.status === "ACTIVE" ? "default" : "destructive"}
+                                      variant={
+                                        product.status === "ACTIVE"
+                                          ? "default"
+                                          : "destructive"
+                                      }
                                       className="text-xs whitespace-nowrap"
                                     >
                                       {product.status}

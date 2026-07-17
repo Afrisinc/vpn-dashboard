@@ -2,7 +2,11 @@ import { useState } from "react";
 import { Eye, Plus } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { DataTable, type ColumnConfig, type DataTableQuery } from "@/components/data-table";
+import {
+  DataTable,
+  type ColumnConfig,
+  type DataTableQuery,
+} from "@/components/data-table";
 import { CopyableText } from "@/components/ui/copyable-text";
 import { OrganizationDetailsSheet } from "@/components/platform/OrganizationDetailsSheet";
 import { CreateOrganizationDialog } from "@/components/platform/CreateOrganizationDialog";
@@ -18,7 +22,9 @@ export default function PlatformOrganizations() {
     filters: {},
   });
 
-  const [selectedOrg, setSelectedOrg] = useState<PlatformOrganization | null>(null);
+  const [selectedOrg, setSelectedOrg] = useState<PlatformOrganization | null>(
+    null,
+  );
   const [detailsSheetOpen, setDetailsSheetOpen] = useState(false);
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [addMemberDialogOpen, setAddMemberDialogOpen] = useState(false);
@@ -37,7 +43,11 @@ export default function PlatformOrganizations() {
   const { data, isLoading, error } = usePlatformOrganizations(params);
 
   const statusVariant = (s?: string) =>
-    s === "ACTIVE" ? "default" : s === "SUSPENDED" ? "destructive" : "secondary";
+    s === "ACTIVE"
+      ? "default"
+      : s === "SUSPENDED"
+        ? "destructive"
+        : "secondary";
 
   // Define columns
   const columns: ColumnConfig<PlatformOrganization>[] = [
@@ -89,7 +99,9 @@ export default function PlatformOrganizations() {
         { label: "Active", value: "ACTIVE" },
         { label: "Suspended", value: "SUSPENDED" },
       ],
-      render: (value) => <Badge variant={statusVariant(value)}>{value || "ACTIVE"}</Badge>,
+      render: (value) => (
+        <Badge variant={statusVariant(value)}>{value || "ACTIVE"}</Badge>
+      ),
     },
     {
       key: "createdAt",
@@ -123,7 +135,9 @@ export default function PlatformOrganizations() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold">Organizations</h1>
-          <p className="text-muted-foreground">Manage platform organizations and their members</p>
+          <p className="text-muted-foreground">
+            Manage platform organizations and their members
+          </p>
         </div>
         <Button size="lg" onClick={() => setCreateDialogOpen(true)}>
           <Plus className="h-4 w-4 mr-2" />
@@ -156,7 +170,10 @@ export default function PlatformOrganizations() {
       />
 
       {/* Create Organization Dialog */}
-      <CreateOrganizationDialog isOpen={createDialogOpen} onClose={() => setCreateDialogOpen(false)} />
+      <CreateOrganizationDialog
+        isOpen={createDialogOpen}
+        onClose={() => setCreateDialogOpen(false)}
+      />
 
       {/* Add Member Dialog */}
       <AddMemberDialog

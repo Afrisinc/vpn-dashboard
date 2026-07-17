@@ -43,7 +43,9 @@ export async function loadRuntimeConfig(): Promise<RuntimeConfig> {
 
 export function getRuntimeConfig(): RuntimeConfig {
   if (!configLoaded || !config) {
-    throw new Error("Configuration not loaded. Call loadRuntimeConfig() first.");
+    throw new Error(
+      "Configuration not loaded. Call loadRuntimeConfig() first.",
+    );
   }
   return config;
 }

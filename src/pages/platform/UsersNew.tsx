@@ -20,9 +20,17 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { DataTable, type ColumnConfig, type DataTableQuery } from "@/components/data-table";
+import {
+  DataTable,
+  type ColumnConfig,
+  type DataTableQuery,
+} from "@/components/data-table";
 import { CopyableText } from "@/components/ui/copyable-text";
-import { usePlatformUsers, useSuspendUser, useReactivateUser } from "@/hooks/usePlatform";
+import {
+  usePlatformUsers,
+  useSuspendUser,
+  useReactivateUser,
+} from "@/hooks/usePlatform";
 import type { PlatformUser } from "@/types/platform";
 import { toast } from "sonner";
 
@@ -53,7 +61,11 @@ export default function UsersNew() {
   const reactivateMutation = useReactivateUser();
 
   const statusVariant = (s: string) =>
-    s === "ACTIVE" ? "default" : s === "SUSPENDED" ? "destructive" : "secondary";
+    s === "ACTIVE"
+      ? "default"
+      : s === "SUSPENDED"
+        ? "destructive"
+        : "secondary";
 
   const handleAction = async () => {
     if (!confirmAction) return;
@@ -119,7 +131,8 @@ export default function UsersNew() {
       key: "lastLogin",
       label: "Last Login",
       sortable: true,
-      render: (value) => (value ? new Date(value).toLocaleDateString() : "Never"),
+      render: (value) =>
+        value ? new Date(value).toLocaleDateString() : "Never",
     },
     {
       key: "actions",
@@ -194,7 +207,9 @@ export default function UsersNew() {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>User Details</DialogTitle>
-            <DialogDescription>Full details for {selectedUser?.email}</DialogDescription>
+            <DialogDescription>
+              Full details for {selectedUser?.email}
+            </DialogDescription>
           </DialogHeader>
           {selectedUser && (
             <div className="grid gap-3 text-sm">
@@ -206,14 +221,19 @@ export default function UsersNew() {
                 <span className="text-muted-foreground">Name</span>
                 <span>{selectedUser.fullName || "—"}</span>
                 <span className="text-muted-foreground">Status</span>
-                <Badge variant={statusVariant(selectedUser.status)} className="w-fit">
+                <Badge
+                  variant={statusVariant(selectedUser.status)}
+                  className="w-fit"
+                >
                   {selectedUser.status}
                 </Badge>
                 <span className="text-muted-foreground">Created</span>
                 <span>{new Date(selectedUser.createdAt).toLocaleString()}</span>
                 <span className="text-muted-foreground">Last Login</span>
                 <span>
-                  {selectedUser.lastLogin ? new Date(selectedUser.lastLogin).toLocaleString() : "Never"}
+                  {selectedUser.lastLogin
+                    ? new Date(selectedUser.lastLogin).toLocaleString()
+                    : "Never"}
                 </span>
               </div>
             </div>
@@ -227,14 +247,20 @@ export default function UsersNew() {
       </Dialog>
 
       {/* Confirm Action */}
-      <AlertDialog open={!!confirmAction} onOpenChange={() => setConfirmAction(null)}>
+      <AlertDialog
+        open={!!confirmAction}
+        onOpenChange={() => setConfirmAction(null)}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              {confirmAction?.action === "suspend" ? "Suspend User" : "Reactivate User"}
+              {confirmAction?.action === "suspend"
+                ? "Suspend User"
+                : "Reactivate User"}
             </AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to {confirmAction?.action} <strong>{confirmAction?.user.email}</strong>?
+              Are you sure you want to {confirmAction?.action}{" "}
+              <strong>{confirmAction?.user.email}</strong>?
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

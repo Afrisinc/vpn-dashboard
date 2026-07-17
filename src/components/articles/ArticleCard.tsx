@@ -12,7 +12,8 @@ interface ArticleCardProps {
 const typeStyles = {
   news: "bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-500/30",
   editorial: "bg-primary/10 text-primary border-primary/30",
-  opinion: "bg-purple-500/10 text-purple-700 dark:text-purple-300 border-purple-500/30",
+  opinion:
+    "bg-purple-500/10 text-purple-700 dark:text-purple-300 border-purple-500/30",
 };
 
 const typeLabels = {
@@ -21,9 +22,16 @@ const typeLabels = {
   opinion: "Opinion",
 };
 
-export function ArticleCard({ article, variant = "default" }: ArticleCardProps) {
-  const timeAgo = formatDistanceToNow(new Date(article.published_at), { addSuffix: true });
-  const categories = Array.isArray(article.category) ? article.category : [article.category];
+export function ArticleCard({
+  article,
+  variant = "default",
+}: ArticleCardProps) {
+  const timeAgo = formatDistanceToNow(new Date(article.published_at), {
+    addSuffix: true,
+  });
+  const categories = Array.isArray(article.category)
+    ? article.category
+    : [article.category];
 
   if (variant === "compact") {
     return (
@@ -37,7 +45,10 @@ export function ArticleCard({ article, variant = "default" }: ArticleCardProps) 
             />
           </div>
           <div className="flex-1 min-w-0">
-            <Badge variant="outline" className={`mb-2 text-[11px] font-medium ${typeStyles[article.type]}`}>
+            <Badge
+              variant="outline"
+              className={`mb-2 text-[11px] font-medium ${typeStyles[article.type]}`}
+            >
               {typeLabels[article.type]}
             </Badge>
             <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2 text-sm leading-snug">
@@ -126,7 +137,9 @@ export function ArticleCard({ article, variant = "default" }: ArticleCardProps) 
                       className="w-6 h-6 rounded-full object-cover ring-2 ring-border"
                     />
                   )}
-                  <span className="font-medium text-foreground">{article.author.name}</span>
+                  <span className="font-medium text-foreground">
+                    {article.author.name}
+                  </span>
                 </>
               )}
             </div>

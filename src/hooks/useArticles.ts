@@ -12,7 +12,9 @@ export function useArticles(filters: ArticleFilters = {}) {
   return useQuery({
     queryKey: ["articles", filters],
     queryFn: () =>
-      filters.category ? fetchArticlesByCategory(filters.category, filters) : fetchArticles(filters),
+      filters.category
+        ? fetchArticlesByCategory(filters.category, filters)
+        : fetchArticles(filters),
     staleTime: 1000 * 60 * 5, // 5 minutes
   });
 }

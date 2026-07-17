@@ -9,7 +9,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import type { ExportDropdownProps } from "./types";
 
-export function ExportDropdown({ onExport, loading = false, disabled = false }: ExportDropdownProps) {
+export function ExportDropdown({
+  onExport,
+  loading = false,
+  disabled = false,
+}: ExportDropdownProps) {
   const [exportingFormat, setExportingFormat] = useState<string | null>(null);
 
   const handleExport = async (format: "csv" | "excel" | "pdf") => {
@@ -41,15 +45,24 @@ export function ExportDropdown({ onExport, loading = false, disabled = false }: 
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => handleExport("csv")} disabled={isExporting}>
+        <DropdownMenuItem
+          onClick={() => handleExport("csv")}
+          disabled={isExporting}
+        >
           <FileText className="h-4 w-4 mr-2" />
           Export as CSV
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => handleExport("excel")} disabled={isExporting}>
+        <DropdownMenuItem
+          onClick={() => handleExport("excel")}
+          disabled={isExporting}
+        >
           <FileSpreadsheet className="h-4 w-4 mr-2" />
           Export as Excel
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => handleExport("pdf")} disabled={isExporting}>
+        <DropdownMenuItem
+          onClick={() => handleExport("pdf")}
+          disabled={isExporting}
+        >
           <FileText className="h-4 w-4 mr-2" />
           Export as PDF
         </DropdownMenuItem>

@@ -75,7 +75,8 @@ export function useCreateServer() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (serverData: CreateVPNServerRequest) => createServer(serverData),
+    mutationFn: (serverData: CreateVPNServerRequest) =>
+      createServer(serverData),
     onSuccess: async () => {
       // Refetch queries to immediately show the newly created server
       await Promise.all([
@@ -90,8 +91,13 @@ export function useCreateDevice() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ userId, deviceData }: { userId: string; deviceData: CreateVPNDeviceRequest }) =>
-      createDevice(userId, deviceData),
+    mutationFn: ({
+      userId,
+      deviceData,
+    }: {
+      userId: string;
+      deviceData: CreateVPNDeviceRequest;
+    }) => createDevice(userId, deviceData),
     onSuccess: async () => {
       // Refetch queries to immediately show the newly created device
       await Promise.all([
@@ -105,8 +111,15 @@ export function useCreateDevice() {
 
 export function useDeviceConfig() {
   return useMutation({
-    mutationFn: ({ userId, deviceId, serverId }: { userId: string; deviceId: string; serverId: string }) =>
-      fetchDeviceConfig(userId, deviceId, serverId),
+    mutationFn: ({
+      userId,
+      deviceId,
+      serverId,
+    }: {
+      userId: string;
+      deviceId: string;
+      serverId: string;
+    }) => fetchDeviceConfig(userId, deviceId, serverId),
   });
 }
 

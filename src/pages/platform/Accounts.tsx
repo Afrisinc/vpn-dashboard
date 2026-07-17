@@ -2,7 +2,11 @@ import { useState } from "react";
 import { Eye, Plus } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { DataTable, type ColumnConfig, type DataTableQuery } from "@/components/data-table";
+import {
+  DataTable,
+  type ColumnConfig,
+  type DataTableQuery,
+} from "@/components/data-table";
 import { CopyableText } from "@/components/ui/copyable-text";
 import { AccountDetailsSheet } from "@/components/platform/AccountDetailsSheet";
 import { usePlatformAccounts } from "@/hooks/usePlatform";
@@ -16,7 +20,8 @@ export default function PlatformAccounts() {
     filters: {},
   });
 
-  const [selectedAccount, setSelectedAccount] = useState<PlatformAccount | null>(null);
+  const [selectedAccount, setSelectedAccount] =
+    useState<PlatformAccount | null>(null);
   const [detailsSheetOpen, setDetailsSheetOpen] = useState(false);
 
   const handleAccountClick = (account: PlatformAccount) => {
@@ -57,7 +62,9 @@ export default function PlatformAccounts() {
       label: "Owner",
       render: (_, account) => {
         const ownerName = account.owner
-          ? [account.owner.firstName, account.owner.lastName].filter(Boolean).join(" ")
+          ? [account.owner.firstName, account.owner.lastName]
+              .filter(Boolean)
+              .join(" ")
           : "—";
         return ownerName;
       },
@@ -79,7 +86,9 @@ export default function PlatformAccounts() {
                 className="flex items-center gap-1 rounded-md bg-secondary/50 px-2 py-1 text-xs"
                 title={`${p.product?.name || "Unknown"} (${p.product?.code || p.product_id})`}
               >
-                <span className="font-medium">{p.product?.name || "Unknown"}</span>
+                <span className="font-medium">
+                  {p.product?.name || "Unknown"}
+                </span>
                 <Badge variant="outline" className="text-xs">
                   {p.plan}
                 </Badge>
@@ -123,7 +132,9 @@ export default function PlatformAccounts() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold">Accounts Management</h1>
-          <p className="text-muted-foreground">View and manage platform accounts</p>
+          <p className="text-muted-foreground">
+            View and manage platform accounts
+          </p>
         </div>
       </div>
 

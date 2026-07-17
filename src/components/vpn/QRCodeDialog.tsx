@@ -10,7 +10,13 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { QrCode, Download, Copy, Check, Smartphone } from "lucide-react";
@@ -26,7 +32,14 @@ interface QRCodeDialogProps {
   protocol: string;
 }
 
-export function QRCodeDialog({ isOpen, onClose, config, device, server, protocol }: QRCodeDialogProps) {
+export function QRCodeDialog({
+  isOpen,
+  onClose,
+  config,
+  device,
+  server,
+  protocol,
+}: QRCodeDialogProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -75,7 +88,8 @@ export function QRCodeDialog({ isOpen, onClose, config, device, server, protocol
             Scan QR Code
           </DialogTitle>
           <DialogDescription>
-            Scan this QR code with your mobile VPN app to import the configuration.
+            Scan this QR code with your mobile VPN app to import the
+            configuration.
           </DialogDescription>
         </DialogHeader>
 
@@ -117,18 +131,27 @@ export function QRCodeDialog({ isOpen, onClose, config, device, server, protocol
           {/* Instructions */}
           <div className="rounded-lg bg-muted/50 p-3">
             <p className="text-xs text-muted-foreground">
-              <strong>Instructions:</strong> Open your VPN app (WireGuard, OpenVPN Connect, etc.) and use the
-              "Scan QR Code" or "Import from QR" option to add this tunnel.
+              <strong>Instructions:</strong> Open your VPN app (WireGuard,
+              OpenVPN Connect, etc.) and use the "Scan QR Code" or "Import from
+              QR" option to add this tunnel.
             </p>
           </div>
         </div>
 
         <DialogFooter className="flex-col sm:flex-row gap-2">
           <Button variant="outline" onClick={handleCopy} className="flex-1">
-            {copied ? <Check className="h-4 w-4 mr-2" /> : <Copy className="h-4 w-4 mr-2" />}
+            {copied ? (
+              <Check className="h-4 w-4 mr-2" />
+            ) : (
+              <Copy className="h-4 w-4 mr-2" />
+            )}
             {copied ? "Copied" : "Copy Config"}
           </Button>
-          <Button variant="outline" onClick={handleDownloadQR} className="flex-1">
+          <Button
+            variant="outline"
+            onClick={handleDownloadQR}
+            className="flex-1"
+          >
             <Download className="h-4 w-4 mr-2" />
             Save QR Image
           </Button>
@@ -145,14 +168,21 @@ interface QRCodeGeneratorProps {
   onGenerateConfig: (
     deviceId: string,
     serverId: string,
-    protocol: "wireguard" | "openvpn" | "ikev2"
+    protocol: "wireguard" | "openvpn" | "ikev2",
   ) => Promise<string>;
 }
 
-export function QRCodeGenerator({ servers, devices, isLoading, onGenerateConfig }: QRCodeGeneratorProps) {
+export function QRCodeGenerator({
+  servers,
+  devices,
+  isLoading,
+  onGenerateConfig,
+}: QRCodeGeneratorProps) {
   const [selectedDevice, setSelectedDevice] = useState<string>("");
   const [selectedServer, setSelectedServer] = useState<string>("");
-  const [selectedProtocol, setSelectedProtocol] = useState<"wireguard" | "openvpn" | "ikev2">("wireguard");
+  const [selectedProtocol, setSelectedProtocol] = useState<
+    "wireguard" | "openvpn" | "ikev2"
+  >("wireguard");
   const [generatedConfig, setGeneratedConfig] = useState<string>("");
   const [showQR, setShowQR] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -162,7 +192,11 @@ export function QRCodeGenerator({ servers, devices, isLoading, onGenerateConfig 
 
     setIsGenerating(true);
     try {
-      const config = await onGenerateConfig(selectedDevice, selectedServer, selectedProtocol);
+      const config = await onGenerateConfig(
+        selectedDevice,
+        selectedServer,
+        selectedProtocol,
+      );
       setGeneratedConfig(config);
       setShowQR(true);
       toast.success("QR code generated successfully");
@@ -199,7 +233,10 @@ export function QRCodeGenerator({ servers, devices, isLoading, onGenerateConfig 
             <div className="w-full max-w-sm space-y-3">
               <div className="space-y-2">
                 <Label className="text-left block">Device</Label>
-                <Select value={selectedDevice} onValueChange={setSelectedDevice}>
+                <Select
+                  value={selectedDevice}
+                  onValueChange={setSelectedDevice}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select device" />
                   </SelectTrigger>
@@ -215,7 +252,10 @@ export function QRCodeGenerator({ servers, devices, isLoading, onGenerateConfig 
 
               <div className="space-y-2">
                 <Label className="text-left block">Server</Label>
-                <Select value={selectedServer} onValueChange={setSelectedServer}>
+                <Select
+                  value={selectedServer}
+                  onValueChange={setSelectedServer}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select server" />
                   </SelectTrigger>
@@ -233,7 +273,9 @@ export function QRCodeGenerator({ servers, devices, isLoading, onGenerateConfig 
                 <Label className="text-left block">Protocol</Label>
                 <Select
                   value={selectedProtocol}
-                  onValueChange={(v: "wireguard" | "openvpn" | "ikev2") => setSelectedProtocol(v)}
+                  onValueChange={(v: "wireguard" | "openvpn" | "ikev2") =>
+                    setSelectedProtocol(v)
+                  }
                 >
                   <SelectTrigger>
                     <SelectValue />

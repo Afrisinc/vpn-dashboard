@@ -40,7 +40,9 @@ export const Header = () => {
       }`}
     >
       {/* Kente accent line at bottom — visible when scrolled */}
-      {isScrolled && <div className="absolute bottom-0 left-0 right-0 kente-border opacity-35" />}
+      {isScrolled && (
+        <div className="absolute bottom-0 left-0 right-0 kente-border opacity-35" />
+      )}
 
       <div className="container mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
@@ -51,7 +53,10 @@ export const Header = () => {
             className="w-9 h-9 rounded-xl object-cover transition-transform duration-300 group-hover:scale-105"
           />
           <span className="text-base font-bold tracking-tight text-foreground">
-            Afri<span className="font-display italic text-gradient-primary">sinc</span>
+            Afri
+            <span className="font-display italic text-gradient-primary">
+              sinc
+            </span>
           </span>
         </Link>
 
@@ -76,7 +81,12 @@ export const Header = () => {
         <div className="hidden lg:flex items-center gap-3">
           <ThemeToggle />
           {user && token ? (
-            <Button variant="default" size="sm" className="group shadow-primary" asChild>
+            <Button
+              variant="default"
+              size="sm"
+              className="group shadow-primary"
+              asChild
+            >
               <Link to="/dashboard">
                 Dashboard
                 <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
@@ -99,7 +109,11 @@ export const Header = () => {
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
         >
-          {isMobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+          {isMobileMenuOpen ? (
+            <X className="w-4 h-4" />
+          ) : (
+            <Menu className="w-4 h-4" />
+          )}
         </button>
       </div>
 
@@ -117,7 +131,9 @@ export const Header = () => {
                   key={link.name}
                   to={link.href}
                   className={`flex items-center gap-5 py-4 transition-colors duration-200 ${
-                    isActive(link.href) ? "text-primary" : "text-background/65 hover:text-background"
+                    isActive(link.href)
+                      ? "text-primary"
+                      : "text-background/65 hover:text-background"
                   }`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
@@ -128,7 +144,9 @@ export const Header = () => {
                   >
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="text-lg font-semibold tracking-tight">{link.name}</span>
+                  <span className="text-lg font-semibold tracking-tight">
+                    {link.name}
+                  </span>
                 </Link>
               ))}
             </nav>
@@ -137,8 +155,16 @@ export const Header = () => {
             <div className="mt-8 pt-6 border-t border-background/10 flex items-center justify-between gap-4">
               <ThemeToggle />
               {user && token ? (
-                <Button variant="default" size="sm" className="group shadow-primary" asChild>
-                  <Link to="/dashboard" onClick={() => setIsMobileMenuOpen(false)}>
+                <Button
+                  variant="default"
+                  size="sm"
+                  className="group shadow-primary"
+                  asChild
+                >
+                  <Link
+                    to="/dashboard"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
                     Dashboard
                     <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
                   </Link>

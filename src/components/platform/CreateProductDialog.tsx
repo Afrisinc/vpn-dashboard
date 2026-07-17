@@ -19,7 +19,10 @@ interface CreateProductDialogProps {
   onClose: () => void;
 }
 
-export function CreateProductDialog({ isOpen, onClose }: CreateProductDialogProps) {
+export function CreateProductDialog({
+  isOpen,
+  onClose,
+}: CreateProductDialogProps) {
   const [formData, setFormData] = useState({
     name: "",
     code: "",
@@ -49,7 +52,8 @@ export function CreateProductDialog({ isOpen, onClose }: CreateProductDialogProp
       console.error("Error creating product:", error);
 
       const err = error as { message?: string; resp_msg?: string };
-      const errorMessage = err?.message || err?.resp_msg || "Failed to create product";
+      const errorMessage =
+        err?.message || err?.resp_msg || "Failed to create product";
       toast.error(errorMessage);
     }
   };
@@ -59,7 +63,9 @@ export function CreateProductDialog({ isOpen, onClose }: CreateProductDialogProp
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Create Product</DialogTitle>
-          <DialogDescription>Add a new product to the platform</DialogDescription>
+          <DialogDescription>
+            Add a new product to the platform
+          </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -69,7 +75,9 @@ export function CreateProductDialog({ isOpen, onClose }: CreateProductDialogProp
               id="name"
               placeholder="e.g., Analytics Service"
               value={formData.name}
-              onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, name: e.target.value }))
+              }
               required
             />
           </div>
@@ -80,7 +88,12 @@ export function CreateProductDialog({ isOpen, onClose }: CreateProductDialogProp
               id="code"
               placeholder="e.g., analytics"
               value={formData.code}
-              onChange={(e) => setFormData((prev) => ({ ...prev, code: e.target.value.toLowerCase() }))}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  code: e.target.value.toLowerCase(),
+                }))
+              }
               required
             />
             <p className="text-xs text-muted-foreground">
@@ -94,7 +107,12 @@ export function CreateProductDialog({ isOpen, onClose }: CreateProductDialogProp
               id="description"
               placeholder="Optional description of the product"
               value={formData.description}
-              onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  description: e.target.value,
+                }))
+              }
               rows={3}
             />
           </div>

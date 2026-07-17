@@ -10,7 +10,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useAddPlatformOrganizationMember } from "@/hooks/usePlatform";
 import type { PlatformOrganization } from "@/types/platform";
 import { toast } from "sonner";
@@ -23,7 +29,11 @@ interface AddMemberDialogProps {
 
 type Role = "OWNER" | "ADMIN" | "MEMBER";
 
-export function AddMemberDialog({ organization, isOpen, onClose }: AddMemberDialogProps) {
+export function AddMemberDialog({
+  organization,
+  isOpen,
+  onClose,
+}: AddMemberDialogProps) {
   const [formData, setFormData] = useState({
     user_id: "",
     role: "MEMBER" as Role,
@@ -63,7 +73,9 @@ export function AddMemberDialog({ organization, isOpen, onClose }: AddMemberDial
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Add Member</DialogTitle>
-          <DialogDescription>Add a new member to {organization?.name || "organization"}</DialogDescription>
+          <DialogDescription>
+            Add a new member to {organization?.name || "organization"}
+          </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -73,7 +85,9 @@ export function AddMemberDialog({ organization, isOpen, onClose }: AddMemberDial
               id="user_id"
               placeholder="usr-0001"
               value={formData.user_id}
-              onChange={(e) => setFormData((prev) => ({ ...prev, user_id: e.target.value }))}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, user_id: e.target.value }))
+              }
               required
             />
           </div>
@@ -82,7 +96,9 @@ export function AddMemberDialog({ organization, isOpen, onClose }: AddMemberDial
             <Label htmlFor="role">Role *</Label>
             <Select
               value={formData.role}
-              onValueChange={(value) => setFormData((prev) => ({ ...prev, role: value as Role }))}
+              onValueChange={(value) =>
+                setFormData((prev) => ({ ...prev, role: value as Role }))
+              }
             >
               <SelectTrigger id="role">
                 <SelectValue />

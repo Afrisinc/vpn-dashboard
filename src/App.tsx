@@ -51,7 +51,10 @@ function injectGAScript() {
   }
 
   // Inject dataLayer and gtag function
-  const win = window as Window & { dataLayer?: unknown[]; gtag?: (...args: unknown[]) => void };
+  const win = window as Window & {
+    dataLayer?: unknown[];
+    gtag?: (...args: unknown[]) => void;
+  };
   win.dataLayer = win.dataLayer || [];
   function gtag(...args: unknown[]) {
     win.dataLayer?.push(...args);
@@ -96,32 +99,65 @@ const App = () => {
                 <AuthProvider>
                   <Routes>
                     {/* Dashboard Routes - at root level */}
-                    <Route
-                      path="/"
-                      element={<DashboardLayout />}
-                    >
+                    <Route path="/" element={<DashboardLayout />}>
                       <Route index element={<DashboardOverview />} />
                       <Route path="ai-content" element={<AIContent />} />
                       <Route path="products" element={<DashboardProducts />} />
                       <Route path="products/vpn" element={<VPNManagement />} />
                       <Route path="users" element={<DashboardUsers />} />
                       <Route path="media" element={<DashboardMedia />} />
-                      <Route path="notifications" element={<DashboardNotifications />} />
-                      <Route path="notifications/overview" element={<DashboardNotifications />} />
-                      <Route path="notifications/users" element={<DashboardNotifications />} />
-                      <Route path="notifications/accounts" element={<DashboardNotifications />} />
-                      <Route path="notifications/security" element={<DashboardNotifications />} />
+                      <Route
+                        path="notifications"
+                        element={<DashboardNotifications />}
+                      />
+                      <Route
+                        path="notifications/overview"
+                        element={<DashboardNotifications />}
+                      />
+                      <Route
+                        path="notifications/users"
+                        element={<DashboardNotifications />}
+                      />
+                      <Route
+                        path="notifications/accounts"
+                        element={<DashboardNotifications />}
+                      />
+                      <Route
+                        path="notifications/security"
+                        element={<DashboardNotifications />}
+                      />
                       <Route path="settings" element={<DashboardSettings />} />
 
                       {/* Platform Admin Routes */}
                       <Route path="platform" element={<PlatformOverview />} />
-                      <Route path="platform/users" element={<PlatformUsers />} />
-                      <Route path="platform/accounts" element={<PlatformAccounts />} />
-                      <Route path="platform/organizations" element={<PlatformOrganizations />} />
-                      <Route path="platform/products" element={<PlatformProducts />} />
-                      <Route path="platform/products/:productId" element={<ProductDetail />} />
-                      <Route path="platform/growth" element={<PlatformGrowth />} />
-                      <Route path="platform/security" element={<PlatformSecurity />} />
+                      <Route
+                        path="platform/users"
+                        element={<PlatformUsers />}
+                      />
+                      <Route
+                        path="platform/accounts"
+                        element={<PlatformAccounts />}
+                      />
+                      <Route
+                        path="platform/organizations"
+                        element={<PlatformOrganizations />}
+                      />
+                      <Route
+                        path="platform/products"
+                        element={<PlatformProducts />}
+                      />
+                      <Route
+                        path="platform/products/:productId"
+                        element={<ProductDetail />}
+                      />
+                      <Route
+                        path="platform/growth"
+                        element={<PlatformGrowth />}
+                      />
+                      <Route
+                        path="platform/security"
+                        element={<PlatformSecurity />}
+                      />
                     </Route>
 
                     {/* Test Component Route */}

@@ -6,13 +6,17 @@ import { seoMiddleware } from "./seo-middleware.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const isProduction = process.env.NODE_ENV === "production";
-const PORT = process.env.PORT || 8090;
+const PORT = process.env.PORT || 8018;
 
 // In production, server runs from /app/dist-server/server/
 // In dev, server runs from /project/server/
 // So production needs ../../dist, dev needs ../dist
-const distPath = isProduction ? resolve(__dirname, "../../dist") : resolve(__dirname, "../dist");
-const rootPath = isProduction ? resolve(__dirname, "../..") : resolve(__dirname, "..");
+const distPath = isProduction
+  ? resolve(__dirname, "../../dist")
+  : resolve(__dirname, "../dist");
+const rootPath = isProduction
+  ? resolve(__dirname, "../..")
+  : resolve(__dirname, "..");
 
 // Type for Vite dev server (only used in development)
 type ViteDevServer = {
@@ -43,7 +47,9 @@ async function createServer() {
 
   // Fallback: serve index.html for SPA routing
   app.get("*", async (req, res) => {
-    const indexPath = isProduction ? resolve(distPath, "index.html") : resolve(rootPath, "index.html");
+    const indexPath = isProduction
+      ? resolve(distPath, "index.html")
+      : resolve(rootPath, "index.html");
 
     let html = fs.readFileSync(indexPath, "utf-8");
 

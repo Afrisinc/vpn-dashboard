@@ -1,8 +1,20 @@
 import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, ChevronsUp, ChevronDown } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsUp,
+  ChevronDown,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
 import { FilterBar } from "./FilterBar";
 import { ExportDropdown } from "./ExportDropdown";
@@ -47,7 +59,8 @@ export function DataTable<T extends Record<string, unknown>>({
 
     let newSortOrder: SortOrder;
     if (sortBy === columnKey) {
-      newSortOrder = sortOrder === "asc" ? "desc" : sortOrder === "desc" ? null : "asc";
+      newSortOrder =
+        sortOrder === "asc" ? "desc" : sortOrder === "desc" ? null : "asc";
     } else {
       newSortOrder = "asc";
     }
@@ -89,7 +102,9 @@ export function DataTable<T extends Record<string, unknown>>({
   };
 
   const totalPages = Math.ceil(total / query.limit);
-  const filterableColumns = enableColumnFilters ? columns.filter((c) => c.filterable) : [];
+  const filterableColumns = enableColumnFilters
+    ? columns.filter((c) => c.filterable)
+    : [];
 
   const renderCellValue = (column: (typeof columns)[0], row: T) => {
     const value = row[column.key as keyof T];
@@ -125,7 +140,10 @@ export function DataTable<T extends Record<string, unknown>>({
             </div>
             {enableExport && (
               <div className="flex items-center">
-                <ExportDropdown onExport={handleExport} disabled={loading || data.length === 0} />
+                <ExportDropdown
+                  onExport={handleExport}
+                  disabled={loading || data.length === 0}
+                />
               </div>
             )}
           </div>
@@ -142,7 +160,9 @@ export function DataTable<T extends Record<string, unknown>>({
         <CardContent>
           {error ? (
             <div className="text-center py-12">
-              <p className="text-destructive">Error loading data: {error.message}</p>
+              <p className="text-destructive">
+                Error loading data: {error.message}
+              </p>
             </div>
           ) : loading ? (
             <div className="space-y-3">
@@ -151,7 +171,9 @@ export function DataTable<T extends Record<string, unknown>>({
               ))}
             </div>
           ) : data.length === 0 ? (
-            <div className="text-center py-12 text-muted-foreground">{emptyMessage}</div>
+            <div className="text-center py-12 text-muted-foreground">
+              {emptyMessage}
+            </div>
           ) : (
             <>
               <div className="overflow-x-auto">
@@ -163,9 +185,13 @@ export function DataTable<T extends Record<string, unknown>>({
                           key={String(column.key)}
                           style={{ width: column.width }}
                           className={`${column.align === "center" ? "text-center" : column.align === "right" ? "text-right" : ""} ${
-                            column.sortable ? "cursor-pointer select-none hover:bg-muted/50" : ""
+                            column.sortable
+                              ? "cursor-pointer select-none hover:bg-muted/50"
+                              : ""
                           }`}
-                          onClick={() => column.sortable && handleSort(String(column.key))}
+                          onClick={() =>
+                            column.sortable && handleSort(String(column.key))
+                          }
                         >
                           <div className="flex items-center gap-2">
                             {column.label}
@@ -189,7 +215,9 @@ export function DataTable<T extends Record<string, unknown>>({
                     {data.map((row) => (
                       <TableRow
                         key={String(row[rowKey as keyof T])}
-                        className={onRowClick ? "cursor-pointer hover:bg-muted/50" : ""}
+                        className={
+                          onRowClick ? "cursor-pointer hover:bg-muted/50" : ""
+                        }
                         onClick={() => onRowClick?.(row)}
                       >
                         {columns.map((column) => (
@@ -215,7 +243,8 @@ export function DataTable<T extends Record<string, unknown>>({
               {/* Pagination */}
               <div className="flex items-center justify-between pt-4 border-t">
                 <span className="text-sm text-muted-foreground">
-                  Page {query.page} of {totalPages} ({total.toLocaleString()} total)
+                  Page {query.page} of {totalPages} ({total.toLocaleString()}{" "}
+                  total)
                 </span>
                 <div className="flex gap-2">
                   <Button

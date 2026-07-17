@@ -69,7 +69,9 @@ export function generateArticleMetaTags(article: ArticleSEO): string {
     `<meta property="og:image:alt" content="${escapeHtml(article.title)}" />`,
     `<meta property="og:site_name" content="${SITE_SEO.siteName}" />`,
     `<meta property="og:locale" content="en_US" />`,
-    ...(FB_APP_ID ? [`<meta property="fb:app_id" content="${FB_APP_ID}" />`] : []),
+    ...(FB_APP_ID
+      ? [`<meta property="fb:app_id" content="${FB_APP_ID}" />`]
+      : []),
 
     // Twitter
     `<meta name="twitter:card" content="summary_large_image" />`,
@@ -82,16 +84,24 @@ export function generateArticleMetaTags(article: ArticleSEO): string {
 
   // Article-specific meta tags
   if (article.publishedTime) {
-    tags.push(`<meta property="article:published_time" content="${article.publishedTime}" />`);
+    tags.push(
+      `<meta property="article:published_time" content="${article.publishedTime}" />`,
+    );
   }
   if (article.modifiedTime) {
-    tags.push(`<meta property="article:modified_time" content="${article.modifiedTime}" />`);
+    tags.push(
+      `<meta property="article:modified_time" content="${article.modifiedTime}" />`,
+    );
   }
   if (article.author) {
-    tags.push(`<meta property="article:author" content="${escapeHtml(article.author)}" />`);
+    tags.push(
+      `<meta property="article:author" content="${escapeHtml(article.author)}" />`,
+    );
   }
   if (article.section) {
-    tags.push(`<meta property="article:section" content="${escapeHtml(article.section)}" />`);
+    tags.push(
+      `<meta property="article:section" content="${escapeHtml(article.section)}" />`,
+    );
   }
   if (article.tags?.length) {
     article.tags.forEach((tag) => {
@@ -106,7 +116,9 @@ export function generateArticleMetaTags(article: ArticleSEO): string {
  * Generate default site meta tags
  */
 export function generateDefaultMetaTags(): string {
-  const fbAppIdTag = FB_APP_ID ? `\n    <meta property="fb:app_id" content="${FB_APP_ID}" />` : "";
+  const fbAppIdTag = FB_APP_ID
+    ? `\n    <meta property="fb:app_id" content="${FB_APP_ID}" />`
+    : "";
   return `
     <title>Afrisinc | Technology &amp; Media from Africa to the World</title>
     <meta name="description" content="Afrisinc is a multi-department parent company pioneering innovation across technology, media, digital products, and global services." />

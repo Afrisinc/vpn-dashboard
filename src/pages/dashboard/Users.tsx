@@ -1,11 +1,33 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 
 const users = [
-  { name: "John Doe", email: "john@example.com", role: "Admin", status: "Active" },
-  { name: "Jane Smith", email: "jane@example.com", role: "User", status: "Active" },
-  { name: "Bob Johnson", email: "bob@example.com", role: "User", status: "Inactive" },
+  {
+    name: "John Doe",
+    email: "john@example.com",
+    role: "Admin",
+    status: "Active",
+  },
+  {
+    name: "Jane Smith",
+    email: "jane@example.com",
+    role: "User",
+    status: "Active",
+  },
+  {
+    name: "Bob Johnson",
+    email: "bob@example.com",
+    role: "User",
+    status: "Inactive",
+  },
 ];
 
 const DashboardUsers = () => (
@@ -35,7 +57,11 @@ const DashboardUsers = () => (
                 <TableCell>{u.email}</TableCell>
                 <TableCell>{u.role}</TableCell>
                 <TableCell>
-                  <Badge variant={u.status === "Active" ? "default" : "secondary"}>{u.status}</Badge>
+                  <Badge
+                    variant={u.status === "Active" ? "default" : "secondary"}
+                  >
+                    {u.status}
+                  </Badge>
                 </TableCell>
               </TableRow>
             ))}

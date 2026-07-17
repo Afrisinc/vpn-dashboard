@@ -9,10 +9,16 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { LayoutDashboard, Users, Settings, Globe, LogOut, Lock } from "lucide-react";
+import {
+  LayoutDashboard,
+  Users,
+  Settings,
+  Globe,
+  LogOut,
+  Lock,
+} from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
-
 
 const mainItems = [
   { title: "Overview", url: "/", icon: LayoutDashboard },
@@ -41,9 +47,15 @@ export const DashboardSidebar = () => {
           to="/"
           className="group flex items-center gap-3 hover:opacity-80 transition-opacity duration-200"
         >
-          <img src="/afrisic-logo.png" alt="Afrisinc" className="w-10 h-10 object-contain" />
+          <img
+            src="/afrisic-logo.png"
+            alt="Afrisinc"
+            className="w-10 h-10 object-contain"
+          />
           <div className="flex flex-col">
-            <span className="font-bold text-foreground text-sm leading-tight">Afrisinc</span>
+            <span className="font-bold text-foreground text-sm leading-tight">
+              Afrisinc
+            </span>
             <span className="text-xs text-muted-foreground">Dashboard</span>
           </div>
         </Link>

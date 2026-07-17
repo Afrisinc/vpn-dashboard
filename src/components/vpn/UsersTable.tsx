@@ -3,7 +3,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Progress } from "@/components/ui/progress";
 import {
@@ -16,7 +23,13 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Search, Plus, Users, ChevronRight, Smartphone } from "lucide-react";
 import { VPNUser, VPNServer } from "@/types/vpn";
 import { formatDistanceToNow } from "date-fns";
@@ -29,7 +42,7 @@ interface UsersTableProps {
   onGenerateConfig?: (
     deviceId: string,
     serverId: string,
-    protocol: "wireguard" | "openvpn" | "ikev2"
+    protocol: "wireguard" | "openvpn" | "ikev2",
   ) => void;
 }
 
@@ -39,7 +52,12 @@ const statusColors = {
   pending: "bg-amber-500/10 text-amber-600 border-amber-500/20",
 };
 
-export function UsersTable({ users, servers, isLoading, onGenerateConfig }: UsersTableProps) {
+export function UsersTable({
+  users,
+  servers,
+  isLoading,
+  onGenerateConfig,
+}: UsersTableProps) {
   const [search, setSearch] = useState("");
   const [addDialogOpen, setAddDialogOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<VPNUser | null>(null);
@@ -48,7 +66,7 @@ export function UsersTable({ users, servers, isLoading, onGenerateConfig }: User
   const filteredUsers = users?.filter(
     (user) =>
       user.name.toLowerCase().includes(search.toLowerCase()) ||
-      user.email.toLowerCase().includes(search.toLowerCase())
+      user.email.toLowerCase().includes(search.toLowerCase()),
   );
 
   const handleUserClick = (user: VPNUser) => {
@@ -102,7 +120,9 @@ export function UsersTable({ users, servers, isLoading, onGenerateConfig }: User
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>Add New User</DialogTitle>
-                    <DialogDescription>Create a new VPN user account.</DialogDescription>
+                    <DialogDescription>
+                      Create a new VPN user account.
+                    </DialogDescription>
                   </DialogHeader>
                   <div className="space-y-4 py-4">
                     <div className="grid grid-cols-2 gap-4">
@@ -112,13 +132,19 @@ export function UsersTable({ users, servers, isLoading, onGenerateConfig }: User
                       </div>
                       <div className="space-y-2">
                         <Label>Email</Label>
-                        <Input placeholder="e.g. john@example.com" type="email" />
+                        <Input
+                          placeholder="e.g. john@example.com"
+                          type="email"
+                        />
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label>Data Limit (GB)</Label>
-                        <Input placeholder="Leave empty for unlimited" type="number" />
+                        <Input
+                          placeholder="Leave empty for unlimited"
+                          type="number"
+                        />
                       </div>
                       <div className="space-y-2">
                         <Label>Expiration</Label>
@@ -138,10 +164,16 @@ export function UsersTable({ users, servers, isLoading, onGenerateConfig }: User
                     </div>
                   </div>
                   <DialogFooter>
-                    <Button variant="outline" onClick={() => setAddDialogOpen(false)}>
+                    <Button
+                      variant="outline"
+                      onClick={() => setAddDialogOpen(false)}
+                    >
                       Cancel
                     </Button>
-                    <Button variant="default" onClick={() => setAddDialogOpen(false)}>
+                    <Button
+                      variant="default"
+                      onClick={() => setAddDialogOpen(false)}
+                    >
                       Create User
                     </Button>
                   </DialogFooter>
@@ -157,15 +189,23 @@ export function UsersTable({ users, servers, isLoading, onGenerateConfig }: User
                 <TableRow>
                   <TableHead>User</TableHead>
                   <TableHead>Status</TableHead>
-                  <TableHead className="hidden sm:table-cell">Devices</TableHead>
-                  <TableHead className="hidden md:table-cell">Data Usage</TableHead>
-                  <TableHead className="hidden lg:table-cell">Last Active</TableHead>
+                  <TableHead className="hidden sm:table-cell">
+                    Devices
+                  </TableHead>
+                  <TableHead className="hidden md:table-cell">
+                    Data Usage
+                  </TableHead>
+                  <TableHead className="hidden lg:table-cell">
+                    Last Active
+                  </TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filteredUsers?.map((user) => {
-                  const connectedDevices = user.devices.filter((d) => d.isConnected).length;
+                  const connectedDevices = user.devices.filter(
+                    (d) => d.isConnected,
+                  ).length;
                   return (
                     <TableRow
                       key={user.id}
@@ -175,11 +215,16 @@ export function UsersTable({ users, servers, isLoading, onGenerateConfig }: User
                       <TableCell>
                         <div>
                           <p className="font-medium">{user.name}</p>
-                          <p className="text-xs text-muted-foreground">{user.email}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {user.email}
+                          </p>
                         </div>
                       </TableCell>
                       <TableCell>
-                        <Badge variant="outline" className={statusColors[user.status]}>
+                        <Badge
+                          variant="outline"
+                          className={statusColors[user.status]}
+                        >
                           {user.status}
                         </Badge>
                       </TableCell>
@@ -188,7 +233,10 @@ export function UsersTable({ users, servers, isLoading, onGenerateConfig }: User
                           <Smartphone className="h-4 w-4 text-muted-foreground" />
                           <span className="text-sm">{user.devices.length}</span>
                           {connectedDevices > 0 && (
-                            <Badge variant="secondary" className="text-xs h-5 px-1.5">
+                            <Badge
+                              variant="secondary"
+                              className="text-xs h-5 px-1.5"
+                            >
                               {connectedDevices} online
                             </Badge>
                           )}
@@ -198,7 +246,8 @@ export function UsersTable({ users, servers, isLoading, onGenerateConfig }: User
                         <div className="w-32">
                           <div className="flex items-center justify-between mb-1">
                             <span className="text-xs">
-                              {user.dataUsed.toFixed(1)} / {user.dataLimit ? `${user.dataLimit} GB` : "∞"}
+                              {user.dataUsed.toFixed(1)} /{" "}
+                              {user.dataLimit ? `${user.dataLimit} GB` : "∞"}
                             </span>
                           </div>
                           {user.dataLimit && (
@@ -206,7 +255,9 @@ export function UsersTable({ users, servers, isLoading, onGenerateConfig }: User
                               value={(user.dataUsed / user.dataLimit) * 100}
                               className="h-1.5"
                               indicatorClassName={
-                                user.dataUsed > user.dataLimit ? "bg-destructive" : "bg-primary"
+                                user.dataUsed > user.dataLimit
+                                  ? "bg-destructive"
+                                  : "bg-primary"
                               }
                             />
                           )}
@@ -215,7 +266,10 @@ export function UsersTable({ users, servers, isLoading, onGenerateConfig }: User
                       <TableCell className="hidden lg:table-cell">
                         <span className="text-sm text-muted-foreground">
                           {user.lastConnection
-                            ? formatDistanceToNow(new Date(user.lastConnection), { addSuffix: true })
+                            ? formatDistanceToNow(
+                                new Date(user.lastConnection),
+                                { addSuffix: true },
+                              )
                             : "Never"}
                         </span>
                       </TableCell>

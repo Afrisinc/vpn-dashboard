@@ -9,12 +9,25 @@ interface ArticlesListProps {
   variant?: "grid" | "list";
 }
 
-export function ArticlesList({ articles, isLoading, variant = "grid" }: ArticlesListProps) {
+export function ArticlesList({
+  articles,
+  isLoading,
+  variant = "grid",
+}: ArticlesListProps) {
   if (isLoading) {
     return (
-      <div className={variant === "grid" ? "grid sm:grid-cols-2 lg:grid-cols-3 gap-6" : "space-y-4"}>
+      <div
+        className={
+          variant === "grid"
+            ? "grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            : "space-y-4"
+        }
+      >
         {Array.from({ length: 6 }).map((_, i) => (
-          <ArticleCardSkeleton key={i} variant={variant === "list" ? "compact" : "default"} />
+          <ArticleCardSkeleton
+            key={i}
+            variant={variant === "list" ? "compact" : "default"}
+          />
         ))}
       </div>
     );
@@ -26,17 +39,34 @@ export function ArticlesList({ articles, isLoading, variant = "grid" }: Articles
         <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mx-auto mb-4">
           <FileText className="w-8 h-8 text-muted-foreground" />
         </div>
-        <h3 className="text-lg font-semibold text-foreground mb-2">No articles found</h3>
-        <p className="text-muted-foreground">Try adjusting your filters or search terms.</p>
+        <h3 className="text-lg font-semibold text-foreground mb-2">
+          No articles found
+        </h3>
+        <p className="text-muted-foreground">
+          Try adjusting your filters or search terms.
+        </p>
       </div>
     );
   }
 
   return (
-    <div className={variant === "grid" ? "grid sm:grid-cols-2 lg:grid-cols-3 gap-6" : "space-y-4"}>
+    <div
+      className={
+        variant === "grid"
+          ? "grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          : "space-y-4"
+      }
+    >
       {articles.map((article, index) => (
-        <div key={article.id} className="animate-fade-up" style={{ animationDelay: `${index * 50}ms` }}>
-          <ArticleCard article={article} variant={variant === "list" ? "compact" : "default"} />
+        <div
+          key={article.id}
+          className="animate-fade-up"
+          style={{ animationDelay: `${index * 50}ms` }}
+        >
+          <ArticleCard
+            article={article}
+            variant={variant === "list" ? "compact" : "default"}
+          />
         </div>
       ))}
     </div>

@@ -1,7 +1,20 @@
 import { useAIPosts } from "@/hooks/useAIPosts";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { format } from "date-fns";
 import {
   FileText,
@@ -26,12 +39,14 @@ const statusConfig = {
   pending: {
     label: "Pending",
     icon: Clock,
-    className: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30",
+    className:
+      "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30",
   },
   published: {
     label: "Published",
     icon: CheckCircle,
-    className: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
+    className:
+      "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
   },
   failed: {
     label: "Failed",
@@ -77,7 +92,9 @@ const PostsTable = () => {
         <CardContent className="py-10 text-center">
           <XCircle className="w-10 h-10 text-destructive mx-auto mb-3" />
           <p className="text-destructive font-medium">Failed to load posts</p>
-          <p className="text-sm text-muted-foreground mt-1">Please try again later</p>
+          <p className="text-sm text-muted-foreground mt-1">
+            Please try again later
+          </p>
         </CardContent>
       </Card>
     );
@@ -93,7 +110,9 @@ const PostsTable = () => {
             </div>
             <div>
               <CardTitle>Recent Posts</CardTitle>
-              <CardDescription>{posts?.length || 0} total posts generated</CardDescription>
+              <CardDescription>
+                {posts?.length || 0} total posts generated
+              </CardDescription>
             </div>
           </div>
         </div>
@@ -106,7 +125,8 @@ const PostsTable = () => {
             </div>
             <h3 className="font-semibold text-foreground mb-1">No posts yet</h3>
             <p className="text-sm text-muted-foreground max-w-sm">
-              Create your first AI-generated post using the form on the left. Your posts will appear here.
+              Create your first AI-generated post using the form on the left.
+              Your posts will appear here.
             </p>
           </div>
         ) : (
@@ -123,17 +143,24 @@ const PostsTable = () => {
               </TableHeader>
               <TableBody>
                 {posts.map((post, index) => {
-                  const status = statusConfig[post.status as keyof typeof statusConfig] || statusConfig.draft;
+                  const status =
+                    statusConfig[post.status as keyof typeof statusConfig] ||
+                    statusConfig.draft;
                   const StatusIcon = status.icon;
 
                   return (
                     <TableRow
                       key={post.id}
-                      className={cn("transition-colors", index % 2 === 0 ? "bg-transparent" : "bg-muted/10")}
+                      className={cn(
+                        "transition-colors",
+                        index % 2 === 0 ? "bg-transparent" : "bg-muted/10",
+                      )}
                     >
                       <TableCell>
                         <div className="space-y-1">
-                          <p className="font-medium text-foreground">{post.topic_name || post.topic}</p>
+                          <p className="font-medium text-foreground">
+                            {post.topic_name || post.topic}
+                          </p>
                           {(post.fb_hashtags || post.insta_hashtags) && (
                             <p className="text-xs text-muted-foreground line-clamp-1">
                               {post.fb_hashtags || post.insta_hashtags}
@@ -155,7 +182,9 @@ const PostsTable = () => {
                       <TableCell>
                         <div className="flex items-center gap-2">
                           <PlatformIcon platform={post.platform} />
-                          <span className="text-sm capitalize">{post.platform}</span>
+                          <span className="text-sm capitalize">
+                            {post.platform}
+                          </span>
                         </div>
                       </TableCell>
                       <TableCell>
@@ -163,7 +192,7 @@ const PostsTable = () => {
                           variant="outline"
                           className={cn(
                             "flex items-center gap-1.5 w-fit font-medium border",
-                            status.className
+                            status.className,
                           )}
                         >
                           <StatusIcon className="w-3 h-3" />
@@ -173,14 +202,18 @@ const PostsTable = () => {
                       <TableCell className="text-sm text-muted-foreground whitespace-nowrap">
                         {format(new Date(post.created_at), "MMM d, yyyy")}
                         <br />
-                        <span className="text-xs">{format(new Date(post.created_at), "HH:mm")}</span>
+                        <span className="text-xs">
+                          {format(new Date(post.created_at), "HH:mm")}
+                        </span>
                       </TableCell>
                       <TableCell className="text-sm text-muted-foreground whitespace-nowrap">
                         {post.published_at && post.published_at !== "null" ? (
                           <>
                             {format(new Date(post.published_at), "MMM d, yyyy")}
                             <br />
-                            <span className="text-xs">{format(new Date(post.published_at), "HH:mm")}</span>
+                            <span className="text-xs">
+                              {format(new Date(post.published_at), "HH:mm")}
+                            </span>
                           </>
                         ) : (
                           <span className="text-muted-foreground/50">—</span>

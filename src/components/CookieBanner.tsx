@@ -72,8 +72,9 @@ export function CookieBanner() {
 
                 {/* Description */}
                 <p className="text-sm md:text-base leading-relaxed text-muted-foreground max-w-2xl">
-                  We use analytics to understand how you use our site and to enhance your experience. You can
-                  accept all cookies or customize your preferences.
+                  We use analytics to understand how you use our site and to
+                  enhance your experience. You can accept all cookies or
+                  customize your preferences.
                 </p>
 
                 {/* Privacy link */}

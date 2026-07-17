@@ -13,9 +13,24 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Smartphone, Monitor, Router, Plus, Download, Trash2, Wifi, WifiOff } from "lucide-react";
+import {
+  Smartphone,
+  Monitor,
+  Router,
+  Plus,
+  Download,
+  Trash2,
+  Wifi,
+  WifiOff,
+} from "lucide-react";
 import { VPNDevice, VPNServer } from "@/types/vpn";
 import { formatDistanceToNow } from "date-fns";
 
@@ -26,7 +41,7 @@ interface DevicesPanelProps {
   onGenerateConfig?: (
     deviceId: string,
     serverId: string,
-    protocol: "wireguard" | "openvpn" | "ikev2"
+    protocol: "wireguard" | "openvpn" | "ikev2",
   ) => void;
 }
 
@@ -46,12 +61,19 @@ const osLabels: Record<string, string> = {
   other: "Other",
 };
 
-export function DevicesPanel({ devices, servers, isLoading, onGenerateConfig }: DevicesPanelProps) {
+export function DevicesPanel({
+  devices,
+  servers,
+  isLoading,
+  onGenerateConfig,
+}: DevicesPanelProps) {
   const [addDialogOpen, setAddDialogOpen] = useState(false);
   const [configDialogOpen, setConfigDialogOpen] = useState(false);
   const [selectedDevice, setSelectedDevice] = useState<VPNDevice | null>(null);
   const [selectedServer, setSelectedServer] = useState<string>("");
-  const [selectedProtocol, setSelectedProtocol] = useState<"wireguard" | "openvpn" | "ikev2">("wireguard");
+  const [selectedProtocol, setSelectedProtocol] = useState<
+    "wireguard" | "openvpn" | "ikev2"
+  >("wireguard");
 
   const handleGenerateConfig = () => {
     if (selectedDevice && selectedServer && onGenerateConfig) {
@@ -101,7 +123,9 @@ export function DevicesPanel({ devices, servers, isLoading, onGenerateConfig }: 
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>Add New Device</DialogTitle>
-                  <DialogDescription>Register a new device for VPN access.</DialogDescription>
+                  <DialogDescription>
+                    Register a new device for VPN access.
+                  </DialogDescription>
                 </DialogHeader>
                 <div className="space-y-4 py-4">
                   <div className="space-y-2">
@@ -142,10 +166,16 @@ export function DevicesPanel({ devices, servers, isLoading, onGenerateConfig }: 
                   </div>
                 </div>
                 <DialogFooter>
-                  <Button variant="outline" onClick={() => setAddDialogOpen(false)}>
+                  <Button
+                    variant="outline"
+                    onClick={() => setAddDialogOpen(false)}
+                  >
                     Cancel
                   </Button>
-                  <Button variant="default" onClick={() => setAddDialogOpen(false)}>
+                  <Button
+                    variant="default"
+                    onClick={() => setAddDialogOpen(false)}
+                  >
                     Add Device
                   </Button>
                 </DialogFooter>
@@ -173,7 +203,9 @@ export function DevicesPanel({ devices, servers, isLoading, onGenerateConfig }: 
                       </div>
                       <div>
                         <p className="font-medium">{device.name}</p>
-                        <p className="text-xs text-muted-foreground">{osLabels[device.os]}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {osLabels[device.os]}
+                        </p>
                       </div>
                     </div>
                     <Badge
@@ -201,7 +233,9 @@ export function DevicesPanel({ devices, servers, isLoading, onGenerateConfig }: 
                     <p>
                       Last seen:{" "}
                       {device.lastSeen
-                        ? formatDistanceToNow(new Date(device.lastSeen), { addSuffix: true })
+                        ? formatDistanceToNow(new Date(device.lastSeen), {
+                            addSuffix: true,
+                          })
                         : "Never"}
                     </p>
                   </div>
@@ -216,7 +250,11 @@ export function DevicesPanel({ devices, servers, isLoading, onGenerateConfig }: 
                       <Download className="h-4 w-4 mr-2" />
                       Config
                     </Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 text-destructive"
+                    >
                       <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
@@ -229,7 +267,9 @@ export function DevicesPanel({ devices, servers, isLoading, onGenerateConfig }: 
             <div className="text-center py-8 text-muted-foreground">
               <Smartphone className="h-12 w-12 mx-auto mb-4 opacity-50" />
               <p>No devices registered</p>
-              <p className="text-sm">Add a device to generate VPN configurations</p>
+              <p className="text-sm">
+                Add a device to generate VPN configurations
+              </p>
             </div>
           )}
         </CardContent>
@@ -239,7 +279,9 @@ export function DevicesPanel({ devices, servers, isLoading, onGenerateConfig }: 
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Generate VPN Configuration</DialogTitle>
-            <DialogDescription>Create a configuration file for {selectedDevice?.name}</DialogDescription>
+            <DialogDescription>
+              Create a configuration file for {selectedDevice?.name}
+            </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
@@ -253,7 +295,8 @@ export function DevicesPanel({ devices, servers, isLoading, onGenerateConfig }: 
                     ?.filter((s) => s.status === "online")
                     .map((server) => (
                       <SelectItem key={server.id} value={server.id}>
-                        {server.name} - {server.location}, {server.country} ({server.load}% load)
+                        {server.name} - {server.location}, {server.country} (
+                        {server.load}% load)
                       </SelectItem>
                     ))}
                 </SelectContent>
@@ -263,13 +306,17 @@ export function DevicesPanel({ devices, servers, isLoading, onGenerateConfig }: 
               <Label>Protocol</Label>
               <Select
                 value={selectedProtocol}
-                onValueChange={(v: "wireguard" | "openvpn" | "ikev2") => setSelectedProtocol(v)}
+                onValueChange={(v: "wireguard" | "openvpn" | "ikev2") =>
+                  setSelectedProtocol(v)
+                }
               >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="wireguard">WireGuard (Recommended)</SelectItem>
+                  <SelectItem value="wireguard">
+                    WireGuard (Recommended)
+                  </SelectItem>
                   <SelectItem value="openvpn">OpenVPN</SelectItem>
                   <SelectItem value="ikev2">IKEv2</SelectItem>
                 </SelectContent>
@@ -277,10 +324,17 @@ export function DevicesPanel({ devices, servers, isLoading, onGenerateConfig }: 
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setConfigDialogOpen(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setConfigDialogOpen(false)}
+            >
               Cancel
             </Button>
-            <Button variant="default" onClick={handleGenerateConfig} disabled={!selectedServer}>
+            <Button
+              variant="default"
+              onClick={handleGenerateConfig}
+              disabled={!selectedServer}
+            >
               <Download className="h-4 w-4 mr-2" />
               Generate & Download
             </Button>

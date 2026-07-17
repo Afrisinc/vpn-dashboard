@@ -7,7 +7,11 @@ interface ArticlePaginationProps {
   onPageChange: (page: number) => void;
 }
 
-export function ArticlePagination({ currentPage, totalPages, onPageChange }: ArticlePaginationProps) {
+export function ArticlePagination({
+  currentPage,
+  totalPages,
+  onPageChange,
+}: ArticlePaginationProps) {
   if (totalPages <= 1) return null;
 
   const pages = generatePageNumbers(currentPage, totalPages);
@@ -26,7 +30,10 @@ export function ArticlePagination({ currentPage, totalPages, onPageChange }: Art
 
       {pages.map((page, index) =>
         page === "..." ? (
-          <span key={`ellipsis-${index}`} className="px-2 text-muted-foreground">
+          <span
+            key={`ellipsis-${index}`}
+            className="px-2 text-muted-foreground"
+          >
             ...
           </span>
         ) : (
@@ -39,7 +46,7 @@ export function ArticlePagination({ currentPage, totalPages, onPageChange }: Art
           >
             {page}
           </Button>
-        )
+        ),
       )}
 
       <Button
@@ -55,7 +62,10 @@ export function ArticlePagination({ currentPage, totalPages, onPageChange }: Art
   );
 }
 
-function generatePageNumbers(current: number, total: number): (number | "...")[] {
+function generatePageNumbers(
+  current: number,
+  total: number,
+): (number | "...")[] {
   if (total <= 7) {
     return Array.from({ length: total }, (_, i) => i + 1);
   }

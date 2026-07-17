@@ -11,7 +11,11 @@ interface AuthContextType {
   session: null;
   token: string | null;
   loading: boolean;
-  signUp: (email: string, password: string, fullName?: string) => Promise<{ error: Error | null }>;
+  signUp: (
+    email: string,
+    password: string,
+    fullName?: string,
+  ) => Promise<{ error: Error | null }>;
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
   resetPassword: (email: string) => Promise<{ error: Error | null }>;
@@ -27,7 +31,9 @@ export const useAuth = () => {
   return context;
 };
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [user, setUser] = useState<CustomUser | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -74,12 +80,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       if (!response.ok) {
         const errorData = await response.json();
-        return { error: new Error(errorData.resp_msg || "Registration failed") };
+        return {
+          error: new Error(errorData.resp_msg || "Registration failed"),
+        };
       }
 
       return { error: null };
     } catch (error) {
-      return { error: error instanceof Error ? error : new Error("Registration failed") };
+      return {
+        error:
+          error instanceof Error ? error : new Error("Registration failed"),
+      };
     }
   };
 
@@ -120,7 +131,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           localStorage.setItem("token_type", data.data.token_type);
         }
         if (data.data.expires_in) {
-          localStorage.setItem("token_expires_at", String(Date.now() + data.data.expires_in * 1000));
+          localStorage.setItem(
+            "token_expires_at",
+            String(Date.now() + data.data.expires_in * 1000),
+          );
         }
 
         return { error: null };
@@ -128,7 +142,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       return { error: new Error(data.resp_msg || "Login failed") };
     } catch (error) {
-      return { error: error instanceof Error ? error : new Error("Login failed") };
+      return {
+        error: error instanceof Error ? error : new Error("Login failed"),
+      };
     }
   };
 
@@ -155,12 +171,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       if (!response.ok) {
         const errorData = await response.json();
-        return { error: new Error(errorData.resp_msg || "Password reset failed") };
+        return {
+          error: new Error(errorData.resp_msg || "Password reset failed"),
+        };
       }
 
       return { error: null };
     } catch (error) {
-      return { error: error instanceof Error ? error : new Error("Password reset failed") };
+      return {
+        error:
+          error instanceof Error ? error : new Error("Password reset failed"),
+      };
     }
   };
 

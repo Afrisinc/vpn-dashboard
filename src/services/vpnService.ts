@@ -1,4 +1,10 @@
-import { VPNServer, VPNUser, VPNDevice, VPNConnection, VPNStats } from "@/types/vpn";
+import {
+  VPNServer,
+  VPNUser,
+  VPNDevice,
+  VPNConnection,
+  VPNStats,
+} from "@/types/vpn";
 
 // API Response Types
 interface VPNServerResponse {
@@ -112,7 +118,10 @@ export async function fetchVPNStats(): Promise<VPNStats> {
 
   const onlineServers = servers.filter((s) => s.status === "active").length;
   const activeUsers = users.filter((u) => u.status === "active").length;
-  const activeConnections = users.reduce((acc, u) => acc + (u.connectedCount || 0), 0);
+  const activeConnections = users.reduce(
+    (acc, u) => acc + (u.connectedCount || 0),
+    0,
+  );
 
   return {
     totalServers: servers.length,
@@ -145,7 +154,10 @@ export async function fetchServers(): Promise<VPNServer[]> {
 
   // Map API response to VPNServer type with backward compatibility
   return data.data.map((server) => {
-    const healthStatus = (server.healthStatus || "healthy") as "healthy" | "degraded" | "unhealthy";
+    const healthStatus = (server.healthStatus || "healthy") as
+      | "healthy"
+      | "degraded"
+      | "unhealthy";
     return {
       id: server.id,
       name: server.name,
@@ -223,7 +235,11 @@ export async function fetchUsers(): Promise<VPNUser[]> {
       ip: user.ip,
       publicKey: user.publicKey,
       status:
-        user.status === "active" ? "active" : user.status === "disconnected" ? "disconnected" : "pending",
+        user.status === "active"
+          ? "active"
+          : user.status === "disconnected"
+            ? "disconnected"
+            : "pending",
       dataUsageLimit: user.dataUsageLimit,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
@@ -296,7 +312,7 @@ export async function fetchConnections(): Promise<VPNConnection[]> {
 export async function generateConfig(
   deviceId: string,
   serverId: string,
-  protocol: "wireguard" | "openvpn" | "ikev2"
+  protocol: "wireguard" | "openvpn" | "ikev2",
 ): Promise<string> {
   try {
     const apiUrl = import.meta.env.VITE_API_URL;
@@ -417,7 +433,10 @@ export function formatDuration(seconds: number): string {
   return `${minutes}m`;
 }
 
-export async function createDevice(userId: string, deviceData: CreateVPNDeviceRequest): Promise<VPNDevice> {
+export async function createDevice(
+  userId: string,
+  deviceData: CreateVPNDeviceRequest,
+): Promise<VPNDevice> {
   try {
     const apiUrl = import.meta.env.VITE_API_URL;
     const response = await fetch(`${apiUrl}/vpn/users/${userId}/devices`, {
@@ -431,7 +450,9 @@ export async function createDevice(userId: string, deviceData: CreateVPNDeviceRe
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || `Failed to create device: ${response.statusText}`);
+      throw new Error(
+        errorData.message || `Failed to create device: ${response.statusText}`,
+      );
     }
 
     const apiResponse: CreateVPNDeviceResponse = await response.json();
@@ -444,8 +465,14 @@ export async function createDevice(userId: string, deviceData: CreateVPNDeviceRe
       userId,
       name: apiResponse.deviceName,
       deviceName: apiResponse.deviceName,
-      type: ["desktop", "mobile", "router", "unknown"].includes(deviceType.toLowerCase())
-        ? (deviceType.toLowerCase() as "desktop" | "mobile" | "router" | "unknown")
+      type: ["desktop", "mobile", "router", "unknown"].includes(
+        deviceType.toLowerCase(),
+      )
+        ? (deviceType.toLowerCase() as
+            | "desktop"
+            | "mobile"
+            | "router"
+            | "unknown")
         : "other",
       deviceType: deviceType,
       ip: apiResponse.ip,
@@ -456,12 +483,15 @@ export async function createDevice(userId: string, deviceData: CreateVPNDeviceRe
       createdAt: apiResponse.createdAt,
     };
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Failed to create device";
+    const message =
+      error instanceof Error ? error.message : "Failed to create device";
     throw new Error(message);
   }
 }
 
-export async function createServer(serverData: CreateVPNServerRequest): Promise<VPNServer> {
+export async function createServer(
+  serverData: CreateVPNServerRequest,
+): Promise<VPNServer> {
   try {
     const apiUrl = import.meta.env.VITE_API_URL;
     const response = await fetch(`${apiUrl}/vpn/admin/servers`, {
@@ -475,7 +505,9 @@ export async function createServer(serverData: CreateVPNServerRequest): Promise<
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || `Failed to create server: ${response.statusText}`);
+      throw new Error(
+        errorData.message || `Failed to create server: ${response.statusText}`,
+      );
     }
 
     const responseData = await response.json();
@@ -514,12 +546,17 @@ export async function createServer(serverData: CreateVPNServerRequest): Promise<
       lastHeartbeat: server.updatedAt || new Date().toISOString(),
     };
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Failed to create server";
+    const message =
+      error instanceof Error ? error.message : "Failed to create server";
     throw new Error(message);
   }
 }
 
-export async function fetchDeviceConfig(userId: string, deviceId: string, serverId: string): Promise<string> {
+export async function fetchDeviceConfig(
+  userId: string,
+  deviceId: string,
+  serverId: string,
+): Promise<string> {
   const apiUrl = import.meta.env.VITE_API_URL;
   const response = await fetch(
     `${apiUrl}/vpn/users/${userId}/devices/${deviceId}/config?serverId=${serverId}`,
@@ -528,7 +565,7 @@ export async function fetchDeviceConfig(userId: string, deviceId: string, server
       headers: {
         accept: "text/plain",
       },
-    }
+    },
   );
 
   if (!response.ok) {
@@ -538,14 +575,20 @@ export async function fetchDeviceConfig(userId: string, deviceId: string, server
   return await response.text();
 }
 
-export async function deleteDevice(userId: string, deviceId: string): Promise<void> {
+export async function deleteDevice(
+  userId: string,
+  deviceId: string,
+): Promise<void> {
   const apiUrl = import.meta.env.VITE_API_URL;
-  const response = await fetch(`${apiUrl}/vpn/users/${userId}/devices/${deviceId}`, {
-    method: "DELETE",
-    headers: {
-      accept: "application/json",
+  const response = await fetch(
+    `${apiUrl}/vpn/users/${userId}/devices/${deviceId}`,
+    {
+      method: "DELETE",
+      headers: {
+        accept: "application/json",
+      },
     },
-  });
+  );
 
   if (!response.ok) {
     throw new Error(`Failed to delete device: ${response.statusText}`);

@@ -1,6 +1,13 @@
 import { useSecurityOverview } from "@/hooks/usePlatform";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ShieldAlert, ShieldCheck, Key, AlertTriangle } from "lucide-react";
@@ -16,7 +23,12 @@ export default function PlatformSecurity() {
       icon: ShieldAlert,
       color: "text-destructive",
     },
-    { label: "Token Issuance", value: data?.tokenIssuanceCount, icon: Key, color: "text-primary" },
+    {
+      label: "Token Issuance",
+      value: data?.tokenIssuanceCount,
+      icon: Key,
+      color: "text-primary",
+    },
     {
       label: "Suspicious Activity",
       value: data?.suspiciousActivity ? "Detected" : "None",
@@ -29,7 +41,9 @@ export default function PlatformSecurity() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold">Security Monitoring</h1>
-        <p className="text-muted-foreground">Monitor login attempts, tokens, and suspicious activity</p>
+        <p className="text-muted-foreground">
+          Monitor login attempts, tokens, and suspicious activity
+        </p>
       </div>
 
       {/* Stat cards */}
@@ -43,10 +57,14 @@ export default function PlatformSecurity() {
                 <div className="flex flex-col gap-1">
                   <div className="flex items-center gap-2">
                     <s.icon className={`h-4 w-4 ${s.color}`} />
-                    <span className="text-xs text-muted-foreground font-medium">{s.label}</span>
+                    <span className="text-xs text-muted-foreground font-medium">
+                      {s.label}
+                    </span>
                   </div>
                   <span className="text-2xl font-bold">
-                    {typeof s.value === "number" ? s.value.toLocaleString() : s.value}
+                    {typeof s.value === "number"
+                      ? s.value.toLocaleString()
+                      : s.value}
                   </span>
                 </div>
               )}
@@ -75,9 +93,17 @@ export default function PlatformSecurity() {
                 <TableBody>
                   {data?.topIPs.map((ip) => (
                     <TableRow key={ip.ip}>
-                      <TableCell className="font-mono text-sm">{ip.ip}</TableCell>
+                      <TableCell className="font-mono text-sm">
+                        {ip.ip}
+                      </TableCell>
                       <TableCell className="text-right">
-                        <Badge variant={ip.attempts > 10 ? "destructive" : "secondary"}>{ip.attempts}</Badge>
+                        <Badge
+                          variant={
+                            ip.attempts > 10 ? "destructive" : "secondary"
+                          }
+                        >
+                          {ip.attempts}
+                        </Badge>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -109,13 +135,17 @@ export default function PlatformSecurity() {
                   {data?.failedLogins.slice(0, 8).map((fl) => (
                     <TableRow key={fl.id}>
                       <TableCell className="text-sm">{fl.email}</TableCell>
-                      <TableCell className="font-mono text-xs">{fl.ip}</TableCell>
+                      <TableCell className="font-mono text-xs">
+                        {fl.ip}
+                      </TableCell>
                       <TableCell>
                         <Badge variant="outline" className="text-xs">
                           {fl.reason}
                         </Badge>
                       </TableCell>
-                      <TableCell className="text-xs">{new Date(fl.timestamp).toLocaleTimeString()}</TableCell>
+                      <TableCell className="text-xs">
+                        {new Date(fl.timestamp).toLocaleTimeString()}
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
