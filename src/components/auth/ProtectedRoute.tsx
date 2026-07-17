@@ -1,5 +1,6 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { getConfigValue } from "@/lib/config";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -23,8 +24,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   }
 
   if (!user && !token) {
-    // Redirect to external auth service
-    window.location.href = `http://localhost:8098/login?redirect=${encodeURIComponent(window.location.href)}`;
+    const authUrl = getConfigValue("authUiUrl");
+    const redirectUrl = authUrl
+      ? `${authUrl}?redirect=${encodeURIComponent(window.location.href)}`
+      : window.location.href;
+    window.location.href = redirectUrl;
     return null;
   }
 

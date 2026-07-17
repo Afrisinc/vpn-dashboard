@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
+import { logoutHandler } from "@/lib/authUtils";
 
 const mainItems = [
   { title: "Overview", url: "/", icon: LayoutDashboard },
@@ -36,8 +37,7 @@ export const DashboardSidebar = () => {
 
   const handleSignOut = async () => {
     await signOut();
-    // Redirect to landing page
-    window.location.href = "/";
+    logoutHandler();
   };
 
   return (
@@ -115,13 +115,15 @@ export const DashboardSidebar = () => {
         </SidebarGroup>
       </SidebarContent>
       <div className="mt-auto px-4 py-5 border-t border-border/50 space-y-3">
-        <Link
-          to="/"
+        <a
+          href="https://afrisinc.com"
+          target="_blank"
+          rel="noopener noreferrer"
           className="group flex items-center gap-2.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 px-2 py-2"
         >
           <Globe className="w-4 h-4 flex-shrink-0" />
           Website
-        </Link>
+        </a>
         <Button
           variant="ghost"
           size="sm"

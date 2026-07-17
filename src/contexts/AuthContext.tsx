@@ -39,30 +39,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check for stored custom user and token
     const storedUser = localStorage.getItem("user");
     const storedToken = localStorage.getItem("token");
     const tokenExpiresAt = localStorage.getItem("token_expires_at");
 
-    if (storedUser && storedToken) {
+    if (storedToken) {
       try {
-        // Check if token has expired
         if (tokenExpiresAt && Date.now() > parseInt(tokenExpiresAt)) {
-          // Token expired, clear storage
           localStorage.removeItem("user");
           localStorage.removeItem("token");
           localStorage.removeItem("token_type");
           localStorage.removeItem("token_expires_at");
         } else {
-          setUser(JSON.parse(storedUser));
           setToken(storedToken);
+          if (storedUser) {
+            setUser(JSON.parse(storedUser));
+          }
         }
       } catch {
-        // Failed to parse stored user data
+        // Invalid data format
       }
     }
 
-    // Mark as not loading after checking localStorage
     setLoading(false);
   }, []);
 

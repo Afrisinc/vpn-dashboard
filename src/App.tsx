@@ -34,6 +34,9 @@ import ProductDetail from "./pages/platform/ProductDetail";
 import PlatformGrowth from "./pages/platform/Growth";
 import PlatformSecurity from "./pages/platform/Security";
 
+// Auth Pages
+import SSOCallback from "./pages/SSOCallback";
+
 import NotFound from "./pages/NotFound";
 import TestComponent from "./pages/TestComponent";
 
@@ -98,6 +101,9 @@ const App = () => {
                 <ScrollToTop />
                 <AuthProvider>
                   <Routes>
+                    {/* SSO Callback Route */}
+                    <Route path="/sso/callback" element={<SSOCallback />} />
+
                     {/* Dashboard Routes - at root level */}
                     <Route path="/" element={<DashboardLayout />}>
                       <Route index element={<DashboardOverview />} />

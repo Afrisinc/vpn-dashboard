@@ -6,13 +6,15 @@ import { toast } from "sonner";
 import { jwtDecode } from "jwt-decode";
 import { AxiosErrorResponse } from "@/types/response";
 import { TokenPayload } from "@/types/shared";
+import { getConfigValue } from "@/lib/config";
 
 export const logoutHandler = (route?: string): void => {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
   localStorage.removeItem("token_type");
   localStorage.removeItem("token_expires_at");
-  window.location.href = route || "/";
+  const authUrl = route || getConfigValue("authUiUrl") || "/";
+  window.location.href = authUrl;
 };
 
 export const onError = (error: AxiosErrorResponse) => {

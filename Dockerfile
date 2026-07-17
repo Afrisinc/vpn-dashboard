@@ -48,12 +48,15 @@ COPY --from=builder /app/dist ./dist
 # Copy built server
 COPY --from=builder /app/dist-server ./dist-server
 
-# Copy config
+# Copy config and entrypoint
 COPY --from=builder /app/dist/config.json ./dist/config.json
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 ENV NODE_ENV=production
 ENV PORT=8018
 
 EXPOSE 8018
 
+ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["node", "dist-server/server/index.js"]
